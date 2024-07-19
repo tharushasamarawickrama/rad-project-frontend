@@ -1,0 +1,52 @@
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Home from "./pages/Home";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
+import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
+import { createContext, useEffect, useState } from "react";
+import NavBar from "./components/NavBar";
+import Footer from "./components/Footer";
+import NotFound from "./pages/NotFound";
+
+export const ThemeContext = createContext();
+
+function App() {
+  const [mode, setMode] = useState("light");
+
+  const changeTheme = () => {
+    setMode(mode === "light" ? "dark" : "light");
+    localStorage.setItem("theme", mode === "light" ? "dark" : "light");
+  };
+  const theme = createTheme({
+    palette: {
+      mode,
+    },
+  });
+
+  useEffect(() => {
+    const localTheme = localStorage.getItem("theme");
+    if (localTheme) {
+      setMode(localTheme);
+    }
+  }, [mode]);
+
+  return (
+    <ThemeContext.Provider value={{ mode, changeTheme }}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <BrowserRouter>
+          <NavBar />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+          <Footer />
+        </BrowserRouter>
+      </ThemeProvider>
+    </ThemeContext.Provider>
+  );
+}
+
+export default App;
