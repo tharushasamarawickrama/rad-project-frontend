@@ -1,5 +1,5 @@
 import { Button, TextField, Typography } from "@mui/material";
-import { login } from "../api/api";
+import { loginApi } from "../api/api";
 import { useState } from "react";
 
 function Login() {
@@ -7,7 +7,7 @@ function Login() {
   const [password, setPassword] = useState("");
 
   const handleLogin = async () => {
-    const response = await login({ email, password });
+    const response = await loginApi({ email, password });
     console.log(response);
   };
   return (

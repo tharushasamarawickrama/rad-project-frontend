@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BaseUrl = "http://localhost:3000/api/v1";
+const BaseUrl = "http://localhost:5000/v1";
 
 const getAuthToken = () => {
   return localStorage.getItem("authToken");
@@ -13,7 +13,7 @@ const axiosInstance = axios.create({
   },
 });
 
-export const login = async (data) => {
+export const loginApi = async (data) => {
   try {
     const response = await axiosInstance.post("/auth/login", data);
     return response.data;
@@ -22,7 +22,7 @@ export const login = async (data) => {
   }
 };
 
-export const register = async (data) => {
+export const registerApi = async (data) => {
   try {
     const response = await axiosInstance.post("/auth/register", data);
     return response.data;
