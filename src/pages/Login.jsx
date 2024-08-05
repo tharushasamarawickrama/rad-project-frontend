@@ -23,7 +23,7 @@ function Login() {
     <Container maxWidth="sm">
       <Box
         sx={{
-          my: 4,
+          height: "90vh",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
@@ -35,7 +35,6 @@ function Login() {
           sx={{
             px: 2,
             py: 8,
-            mt: 2,
             borderRadius: 2,
             display: "flex",
             flexDirection: "column",
@@ -47,7 +46,14 @@ function Login() {
             },
           }}
         >
-          <Typography variant="h4">Login</Typography>
+          <Typography
+            variant="h4"
+            sx={{
+              mb: 3,
+            }}
+          >
+            Login
+          </Typography>
           <TextField
             label="Email"
             type="email"
@@ -60,15 +66,22 @@ function Login() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <Button variant="contained" color="primary" onClick={handleLogin}>
-            Login
-          </Button>
-          <Typography variant="body2">
-            Don't have an account? <NavLink to="/signup">SignUp</NavLink>
-          </Typography>
-          <Button variant="contained" color="secondary">
-            SignUp
-          </Button>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              gap: 3,
+              mt: 3,
+            }}
+          >
+            <Button variant="contained" color="primary" onClick={handleLogin}>
+              Login
+            </Button>
+            <Typography variant="body2">Don't have an account?</Typography>
+            <Button variant="contained" color="secondary">
+              SignUp
+            </Button>
+          </Box>
         </Paper>
       </Box>
     </Container>

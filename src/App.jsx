@@ -47,7 +47,7 @@ function App() {
       MuiButton: {
         styleOverrides: {
           root: {
-            borderRadius: 20,
+            borderRadius: 15,
             width: 150,
             height: 40,
           },
