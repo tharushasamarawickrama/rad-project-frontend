@@ -33,7 +33,16 @@ function App() {
       text: {
         primary: "#7D0202",
         secondary: "#000000",
-        text: "#fff",
+        text: "#ffffff",
+      },
+    },
+    components: {
+      MuiTextField: {
+        styleOverrides: {
+          root: {
+            width: "100%",
+          },
+        },
       },
     },
   });

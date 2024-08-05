@@ -24,6 +24,7 @@ const NavBar = () => {
     { text: "Home", path: "/" },
     { text: "About", path: "/about" },
     { text: "Contact", path: "/contact" },
+    { text: "Login", path: "/login" },
   ];
 
   const handleNavigation = (path) => {
@@ -39,13 +40,14 @@ const NavBar = () => {
       }}
     >
       <Toolbar>
-        <Logo height={70} />
+        <Logo height={70} width={150} />
         {isMobile ? (
           <>
             <IconButton
               edge="end"
               color="inherit"
               onClick={() => setDrawerOpen(!drawerOpen)}
+              sx={{ display: "flex", justifyContent: "flex-end", flexGrow: 1 }}
             >
               <MenuIcon />
             </IconButton>
@@ -60,7 +62,12 @@ const NavBar = () => {
                     key={item.text}
                     onClick={() => handleNavigation(item.path)}
                   >
-                    <Typography textAlign="center">{item.text}</Typography>
+                    <Typography
+                      textAlign="center"
+                      color={theme.palette.primary.main}
+                    >
+                      {item.text}
+                    </Typography>
                   </MenuItem>
                 ))}
               </Box>
@@ -75,7 +82,9 @@ const NavBar = () => {
                 key={item.text}
                 onClick={() => handleNavigation(item.path)}
               >
-                <Typography>{item.text}</Typography>
+                <Typography color={theme.palette.primary.main}>
+                  {item.text}
+                </Typography>
               </MenuItem>
             ))}
           </Box>

@@ -9,6 +9,7 @@ import {
 import { loginApi } from "../api/api";
 import { useState } from "react";
 import { ReactComponent as Logo } from "../assets/logo.svg";
+import { NavLink } from "react-router-dom";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -29,17 +30,21 @@ function Login() {
           flexDirection: "column",
         }}
       >
-        <Logo />
         <Paper
           elevation={3}
           sx={{
-            p: 2,
+            px: 2,
+            py: 8,
             mt: 2,
             borderRadius: 2,
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
             gap: 2,
+            width: {
+              xs: "100%",
+              sm: 400,
+            },
           }}
         >
           <Typography variant="h4">Login</Typography>
@@ -57,6 +62,12 @@ function Login() {
           />
           <Button variant="contained" color="primary" onClick={handleLogin}>
             Login
+          </Button>
+          <Typography variant="body2">
+            Don't have an account? <NavLink to="/signup">SignUp</NavLink>
+          </Typography>
+          <Button variant="contained" color="secondary">
+            SignUp
           </Button>
         </Paper>
       </Box>
