@@ -21,6 +21,38 @@ function App() {
   const theme = createTheme({
     palette: {
       mode,
+      primary: {
+        main: "#A80000",
+      },
+      secondary: {
+        main: "#FFABAB",
+      },
+      background: {
+        default: "#FFE5E5",
+      },
+      text: {
+        primary: "#7D0202",
+        secondary: "#000000",
+        text: "#ffffff",
+      },
+    },
+    components: {
+      MuiTextField: {
+        styleOverrides: {
+          root: {
+            width: "100%",
+          },
+        },
+      },
+      MuiButton: {
+        styleOverrides: {
+          root: {
+            borderRadius: 15,
+            width: 150,
+            height: 40,
+          },
+        },
+      },
     },
   });
 
