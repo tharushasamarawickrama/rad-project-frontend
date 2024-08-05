@@ -44,6 +44,15 @@ function App() {
           },
         },
       },
+      MuiButton: {
+        styleOverrides: {
+          root: {
+            borderRadius: 20,
+            width: 150,
+            height: 40,
+          },
+        },
+      },
     },
   });
 
