@@ -1,13 +1,18 @@
 import React from "react";
 import { AppBar, Toolbar, Typography } from "@mui/material";
+import { ReactComponent as Logo } from "../assets/logo.svg";
 
 const NavBar = () => {
   return (
-    <AppBar position="static">
+    <AppBar
+      position="static"
+      elevation={0}
+      sx={{
+        backgroundColor: "transparent",
+      }}
+    >
       <Toolbar>
-        <Typography variant="h6" sx={{ flexGrow: 1 }}>
-          BloodMe
-        </Typography>
+        <Logo height={70} />
       </Toolbar>
     </AppBar>
   );

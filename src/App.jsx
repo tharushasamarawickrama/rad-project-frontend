@@ -21,6 +21,20 @@ function App() {
   const theme = createTheme({
     palette: {
       mode,
+      primary: {
+        main: "#A80000",
+      },
+      secondary: {
+        main: "#FFABAB",
+      },
+      background: {
+        default: "#FFE5E5",
+      },
+      text: {
+        primary: "#7D0202",
+        secondary: "#000000",
+        text: "#fff",
+      },
     },
   });
 
