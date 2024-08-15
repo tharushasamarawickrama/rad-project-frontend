@@ -11,7 +11,7 @@ import { useState } from "react";
 import { ReactComponent as Logo } from "../assets/logo.svg";
 import { NavLink, useNavigate } from "react-router-dom";
 
-function Login() {
+function SignUp() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -53,7 +53,7 @@ function Login() {
               mb: 3,
             }}
           >
-            Login
+            Sign Up
           </Typography>
           <TextField
             label="Email"
@@ -76,15 +76,15 @@ function Login() {
             }}
           >
             <Button variant="contained" color="primary" onClick={handleLogin}>
-              Login
+              SignUp
             </Button>
-            <Typography variant="body2">Don't have an account?</Typography>
+            <Typography variant="body2">Already have an account?</Typography>
             <Button
               variant="contained"
               color="secondary"
-              onClick={() => navigate("/signup")}
+              onClick={() => navigate("/login")}
             >
-              SignUp
+              Login
             </Button>
           </Box>
         </Paper>
@@ -93,4 +93,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default SignUp;

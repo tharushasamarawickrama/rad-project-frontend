@@ -8,6 +8,7 @@ import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
+import SignUp from "./pages/SignUp";
 
 export const ThemeContext = createContext();
 
@@ -47,9 +48,9 @@ function App() {
       MuiButton: {
         styleOverrides: {
           root: {
-            borderRadius: 15,
-            width: 150,
-            height: 40,
+            // borderRadius: 15,
+            // width: 150,
+            // height: 40,
           },
         },
       },
@@ -74,6 +75,10 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/requester/dashboard" element={<Home />} />
+            <Route path="/requester/requests" element={<Home />} />
+            <Route path="/requester/profile" element={<Home />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
           <Footer />
