@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import BloodRequesterDashboard from "./pages/BloodRequesterDashboard";
 import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
 import { createContext, useEffect, useState } from "react";
 import NavBar from "./components/NavBar";
@@ -74,6 +75,7 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/requester-dashboard" element={<BloodRequesterDashboard />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
           <Footer />
