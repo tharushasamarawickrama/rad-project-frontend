@@ -17,6 +17,7 @@ export default function SideBar({ drawerOpen, setDrawerOpen, isMobile }) {
       anchor="left"
       open={drawerOpen}
       onClose={() => setDrawerOpen(false)}
+      sx={{ borderRadius: 5 }}
     >
       <List>
         <Logo height={70} width={150} />

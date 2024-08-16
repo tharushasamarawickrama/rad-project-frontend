@@ -131,7 +131,9 @@ function AdminDashboard() {
                 <Typography variant="h3">200</Typography>
               </Box>
             </Box>
-            <Typography variant="h5">Blood Requests</Typography>
+            <Typography variant="h5" sx={{ my: 5 }}>
+              Blood Requests
+            </Typography>
             <BarChart
               series={[
                 { data: [35, 44, 24, 34] },
@@ -183,8 +185,66 @@ function AdminDashboard() {
             </Box>
           </Grid>
           <Grid item sx={12} md={2}>
-            <Typography variant="h5">Upcoming Events</Typography>
-            <Typography>Event 1</Typography>
+            <Box
+              sx={{
+                backgroundColor: "white",
+                px: 1,
+                py: 2,
+                alignItems: "center",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "left",
+                boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
+                borderRadius: "8px",
+                gap: 2,
+              }}
+            >
+              <Typography variant="h6">Upcoming Events</Typography>
+              <Typography
+                variant="div"
+                sx={{
+                  backgroundColor: "lightgray",
+                  p: 1,
+                  borderRadius: 2,
+                  width: "100%",
+                }}
+              >
+                Event 1
+              </Typography>
+              <Typography
+                variant="div"
+                sx={{
+                  backgroundColor: "lightgray",
+                  p: 1,
+                  borderRadius: 2,
+                  width: "100%",
+                }}
+              >
+                Event 2
+              </Typography>
+              <Typography
+                variant="div"
+                sx={{
+                  backgroundColor: "lightgray",
+                  p: 1,
+                  borderRadius: 2,
+                  width: "100%",
+                }}
+              >
+                Event 3
+              </Typography>
+              <Typography
+                variant="div"
+                sx={{
+                  backgroundColor: "lightgray",
+                  p: 1,
+                  borderRadius: 2,
+                  width: "100%",
+                }}
+              >
+                Event 4
+              </Typography>
+            </Box>
           </Grid>
         </Grid>
       </Grid>
