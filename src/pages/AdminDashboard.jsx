@@ -1,6 +1,7 @@
 import {
   AppBar,
   Box,
+  Button,
   Drawer,
   Grid,
   IconButton,
@@ -9,6 +10,7 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  Toolbar,
   Typography,
   useMediaQuery,
 } from "@mui/material";
@@ -90,14 +92,22 @@ function AdminDashboard() {
           sx={{ background: "transparent" }}
           elevation={0}
         >
-          {isMobile && (
-            <IconButton onClick={() => setDrawerOpen(true)}>
-              <Menu />
-            </IconButton>
-          )}
-          <Typography variant="h4" color="primary">
-            Admin Dashboard
-          </Typography>
+          <Toolbar>
+            {isMobile && (
+              <IconButton onClick={() => setDrawerOpen(true)}>
+                <Menu />
+              </IconButton>
+            )}
+            <Typography
+              variant="h6"
+              component="div"
+              color="primary"
+              sx={{ flexGrow: 1 }}
+            >
+              Admin Dashboard
+            </Typography>
+            <Button color="primary">LogOut</Button>
+          </Toolbar>
         </AppBar>
         <Grid container>
           <Grid item sx={12} md={10}>
