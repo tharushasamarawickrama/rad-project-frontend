@@ -6,7 +6,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { loginApi } from "../api/api";
+import { loginApi, signUpApi } from "../api/api";
 import { useState } from "react";
 import { ReactComponent as Logo } from "../assets/logo.svg";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -17,7 +17,7 @@ function SignUp() {
   const [password, setPassword] = useState("");
 
   const handleLogin = async () => {
-    const response = await loginApi({ email, password });
+    const response = await signUpApi({ email, password });
     console.log(response);
   };
   return (

@@ -9,6 +9,7 @@ import Footer from "./components/Footer";
 import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
+import AdminDashboard from "./pages/AdminDashboard";
 
 export const ThemeContext = createContext();
 
@@ -71,14 +72,21 @@ function App() {
         <BrowserRouter>
           <NavBar />
           <Routes>
+            {/* General Routes */}
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
+            {/* Blood Requester Routes */}
             <Route path="/requester/dashboard" element={<Home />} />
             <Route path="/requester/requests" element={<Home />} />
             <Route path="/requester/profile" element={<Home />} />
+            {/* Admin Routes */}
+            <Route path="/admin/dashboard" element={<AdminDashboard />} />
+            <Route path="/admin/requests" element={<Home />} />
+            <Route path="/admin/campaigns" element={<Home />} />
+
             <Route path="*" element={<NotFound />} />
           </Routes>
           <Footer />
