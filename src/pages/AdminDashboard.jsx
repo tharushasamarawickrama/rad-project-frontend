@@ -73,6 +73,64 @@ function AdminDashboard() {
         </AppBar>
         <Grid container>
           <Grid item sx={12} md={10}>
+            <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap" }}>
+              <Box
+                sx={{
+                  backgroundColor: "white",
+                  px: 5,
+                  py: 5,
+                  alignItems: "center",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "left",
+                  boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
+                  borderRadius: "8px",
+                }}
+              >
+                <Typography variant="h5" sx={{ textAlign: "center" }}>
+                  Donation Requests
+                </Typography>
+                <Typography variant="h3">100</Typography>
+              </Box>
+
+              <Box
+                sx={{
+                  backgroundColor: "white",
+                  px: 5,
+                  py: 5,
+                  alignItems: "center",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "left",
+                  boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
+                  borderRadius: "8px",
+                }}
+              >
+                <Typography variant="h5" sx={{ textAlign: "center" }}>
+                  Donation Campaigns
+                </Typography>
+                <Typography variant="h3">20</Typography>
+              </Box>
+
+              <Box
+                sx={{
+                  backgroundColor: "white",
+                  px: 5,
+                  py: 5,
+                  alignItems: "center",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "left",
+                  boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
+                  borderRadius: "8px",
+                }}
+              >
+                <Typography variant="h5" sx={{ textAlign: "center" }}>
+                  No. of Registered Donators
+                </Typography>
+                <Typography variant="h3">200</Typography>
+              </Box>
+            </Box>
             <Typography variant="h5">Blood Requests</Typography>
             <BarChart
               series={[
