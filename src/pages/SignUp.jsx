@@ -10,6 +10,8 @@ import { loginApi, signUpApi } from "../api/api";
 import { useState } from "react";
 import { ReactComponent as Logo } from "../assets/logo.svg";
 import { NavLink, useNavigate } from "react-router-dom";
+import NavBar from "../components/NavBar";
+import Footer from "../components/Footer";
 
 function SignUp() {
   const navigate = useNavigate();
@@ -21,75 +23,79 @@ function SignUp() {
     console.log(response);
   };
   return (
-    <Container maxWidth="sm">
-      <Box
-        sx={{
-          height: "90vh",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          flexDirection: "column",
-        }}
-      >
-        <Paper
-          elevation={3}
+    <>
+      <NavBar />
+      <Container maxWidth="sm">
+        <Box
           sx={{
-            px: 2,
-            py: 8,
-            borderRadius: 2,
+            height: "90vh",
             display: "flex",
-            flexDirection: "column",
+            justifyContent: "center",
             alignItems: "center",
-            gap: 2,
-            width: {
-              xs: "100%",
-              sm: 400,
-            },
+            flexDirection: "column",
           }}
         >
-          <Typography
-            variant="h4"
+          <Paper
+            elevation={3}
             sx={{
-              mb: 3,
-            }}
-          >
-            Sign Up
-          </Typography>
-          <TextField
-            label="Email"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <TextField
-            label="Password"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <Box
-            sx={{
+              px: 2,
+              py: 8,
+              borderRadius: 2,
               display: "flex",
               flexDirection: "column",
-              gap: 3,
-              mt: 3,
+              alignItems: "center",
+              gap: 2,
+              width: {
+                xs: "100%",
+                sm: 400,
+              },
             }}
           >
-            <Button variant="contained" color="primary" onClick={handleLogin}>
-              SignUp
-            </Button>
-            <Typography variant="body2">Already have an account?</Typography>
-            <Button
-              variant="contained"
-              color="secondary"
-              onClick={() => navigate("/login")}
+            <Typography
+              variant="h4"
+              sx={{
+                mb: 3,
+              }}
             >
-              Login
-            </Button>
-          </Box>
-        </Paper>
-      </Box>
-    </Container>
+              Sign Up
+            </Typography>
+            <TextField
+              label="Email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <TextField
+              label="Password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                gap: 3,
+                mt: 3,
+              }}
+            >
+              <Button variant="contained" color="primary" onClick={handleLogin}>
+                SignUp
+              </Button>
+              <Typography variant="body2">Already have an account?</Typography>
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={() => navigate("/login")}
+              >
+                Login
+              </Button>
+            </Box>
+          </Paper>
+        </Box>
+      </Container>
+      <Footer />
+    </>
   );
 }
 

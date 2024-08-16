@@ -70,7 +70,6 @@ function App() {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <BrowserRouter>
-          <NavBar />
           <Routes>
             {/* General Routes */}
             <Route path="/" element={<Home />} />
@@ -89,7 +88,6 @@ function App() {
 
             <Route path="*" element={<NotFound />} />
           </Routes>
-          <Footer />
         </BrowserRouter>
       </ThemeProvider>
     </ThemeContext.Provider>
