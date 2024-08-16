@@ -26,6 +26,7 @@ import {
 import { BarChart, Gauge } from "@mui/x-charts";
 import { useEffect, useState } from "react";
 import { useTheme } from "@emotion/react";
+import SideBar from "../components/SideBar";
 
 function AdminDashboard() {
   const [drawerOpen, setDrawerOpen] = useState(true);
@@ -41,50 +42,11 @@ function AdminDashboard() {
   return (
     <Grid container>
       <Grid item md={3} lg={2}>
-        <Drawer
-          variant="persistent"
-          anchor="left"
-          open={drawerOpen}
-          onClose={() => setDrawerOpen(false)}
-        >
-          <List>
-            <Logo height={70} width={150} />
-            <ListItem>
-              <ListItemButton>
-                <ListItemIcon>
-                  <Dashboard />
-                </ListItemIcon>
-                <ListItemText primary="Dashboard" />
-              </ListItemButton>
-            </ListItem>
-            <ListItem>
-              <ListItemButton>
-                <ListItemIcon>
-                  <RequestPage />
-                </ListItemIcon>
-                <ListItemText primary="Requests" />
-              </ListItemButton>
-            </ListItem>
-            <ListItem>
-              <ListItemButton>
-                <ListItemIcon>
-                  <Campaign />
-                </ListItemIcon>
-                <ListItemText primary="Campaigns" />
-              </ListItemButton>
-            </ListItem>
-            {isMobile && (
-              <ListItem>
-                <ListItemButton onClick={() => setDrawerOpen(false)}>
-                  <ListItemIcon>
-                    <Close />
-                  </ListItemIcon>
-                  <ListItemText primary="Close" />
-                </ListItemButton>
-              </ListItem>
-            )}
-          </List>
-        </Drawer>
+        <SideBar
+          drawerOpen={drawerOpen}
+          setDrawerOpen={setDrawerOpen}
+          isMobile={isMobile}
+        />
       </Grid>
       <Grid item md={9} lg={10}>
         <AppBar
