@@ -12,6 +12,7 @@ import {
 import React, { useEffect, useState } from "react";
 import SideBar from "../components/SideBar";
 import { Box } from "@mui/system";
+import Request from "../components/Request";
 
 export default function AdminRequests() {
   const [drawerOpen, setDrawerOpen] = useState(true);
@@ -78,27 +79,7 @@ export default function AdminRequests() {
                 borderRadius: "15px",
               }}
             >
-              <Box
-                sx={{
-                  backgroundColor: "white",
-                  px: 5,
-                  py: 5,
-                  alignItems: "center",
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "left",
-                  boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
-                  borderRadius: "15px",
-                  m: 2,
-                }}
-              >
-                <Typography variant="h6" component="div" color="primary">
-                  Request 1
-                </Typography>
-                <Typography variant="body1" component="div" color="primary">
-                  Request 1 details
-                </Typography>
-              </Box>
+              <Request />
             </Box>
           </Grid>
           <Grid item lg={4} md={3} sx={12}></Grid>
