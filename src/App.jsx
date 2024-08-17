@@ -10,6 +10,8 @@ import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import AdminDashboard from "./pages/AdminDashboard";
+import AdminRequests from "./pages/AdminRequests";
+import AdminCampaigns from "./pages/AdminCampaigns";
 
 export const ThemeContext = createContext();
 
@@ -83,8 +85,8 @@ function App() {
             <Route path="/requester/profile" element={<Home />} />
             {/* Admin Routes */}
             <Route path="/admin/dashboard" element={<AdminDashboard />} />
-            <Route path="/admin/requests" element={<Home />} />
-            <Route path="/admin/campaigns" element={<Home />} />
+            <Route path="/admin/requests" element={<AdminRequests />} />
+            <Route path="/admin/campaigns" element={<AdminCampaigns />} />
 
             <Route path="*" element={<NotFound />} />
           </Routes>
