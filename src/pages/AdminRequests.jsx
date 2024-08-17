@@ -52,7 +52,7 @@ export default function AdminRequests() {
             )}
           </Toolbar>
         </AppBar>
-        <Grid container>
+        <Box sx={{ display: "flex", mb: 2 }}>
           <Typography variant="h4" component="div" color="primary">
             Requests
           </Typography>
@@ -60,11 +60,10 @@ export default function AdminRequests() {
             variant="contained"
             color="primary"
             onClick={handleNewRequest}
-            mx={2}
           >
             New Request
           </Button>
-        </Grid>
+        </Box>
         <Grid container gap={1}>
           <Grid item lg={7} md={9} sx={12}>
             <Box

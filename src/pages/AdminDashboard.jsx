@@ -27,6 +27,7 @@ import { BarChart, Gauge } from "@mui/x-charts";
 import { useEffect, useState } from "react";
 import { useTheme } from "@emotion/react";
 import SideBar from "../components/SideBar";
+import UpcomingEvents from "../components/UpcomingEvents";
 
 function AdminDashboard() {
   const [drawerOpen, setDrawerOpen] = useState(true);
@@ -51,7 +52,7 @@ function AdminDashboard() {
       <Grid item md={9} lg={10}>
         <AppBar
           position="static"
-          sx={{ background: "transparent" }}
+          sx={{ background: "transparent", my: 2 }}
           elevation={0}
         >
           <Toolbar>
@@ -61,7 +62,7 @@ function AdminDashboard() {
               </IconButton>
             )}
             <Typography
-              variant="h6"
+              variant="h4"
               component="div"
               color="primary"
               sx={{ flexGrow: 1 }}
@@ -72,7 +73,7 @@ function AdminDashboard() {
           </Toolbar>
         </AppBar>
         <Grid container>
-          <Grid item sx={12} md={10}>
+          <Grid item lg={7} sx={12} md={10}>
             <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap" }}>
               <Box
                 sx={{
@@ -84,11 +85,12 @@ function AdminDashboard() {
                   flexDirection: "column",
                   justifyContent: "left",
                   boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
-                  borderRadius: "8px",
+                  borderRadius: "20px",
+                  width: "30%",
                 }}
               >
                 <Typography variant="h5" sx={{ textAlign: "center" }}>
-                  Donation Requests
+                  Requests
                 </Typography>
                 <Typography variant="h3">100</Typography>
               </Box>
@@ -103,11 +105,12 @@ function AdminDashboard() {
                   flexDirection: "column",
                   justifyContent: "left",
                   boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
-                  borderRadius: "8px",
+                  borderRadius: "20px",
+                  width: "30%",
                 }}
               >
                 <Typography variant="h5" sx={{ textAlign: "center" }}>
-                  Donation Campaigns
+                  Campaigns
                 </Typography>
                 <Typography variant="h3">20</Typography>
               </Box>
@@ -122,129 +125,28 @@ function AdminDashboard() {
                   flexDirection: "column",
                   justifyContent: "left",
                   boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
-                  borderRadius: "8px",
+                  borderRadius: "20px",
+                  width: "30%",
                 }}
               >
                 <Typography variant="h5" sx={{ textAlign: "center" }}>
-                  No. of Registered Donators
+                  Donors
                 </Typography>
                 <Typography variant="h3">200</Typography>
               </Box>
             </Box>
             <Typography variant="h5" sx={{ my: 5 }}>
-              Blood Requests
+              Blood Stock Statistics
             </Typography>
             <BarChart
-              series={[
-                { data: [35, 44, 24, 34] },
-                { data: [51, 6, 49, 30] },
-                { data: [15, 25, 30, 50] },
-                { data: [60, 50, 15, 25] },
-              ]}
+              series={[{ data: [15, 25, 30, 50] }]}
               height={290}
-              xAxis={[{ data: ["Q1", "Q2", "Q3", "Q4"], scaleType: "band" }]}
+              xAxis={[{ data: ["A+", "O+", "B+", "O-"], scaleType: "band" }]}
               margin={{ top: 10, bottom: 30, left: 40, right: 10 }}
             />
-            <Typography variant="h5">Blood Stock Stats</Typography>
-            <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap" }}>
-              <Gauge
-                width={100}
-                height={100}
-                value={50}
-                valueMin={10}
-                valueMax={60}
-              />
-              <Gauge
-                width={100}
-                height={100}
-                value={50}
-                valueMin={10}
-                valueMax={60}
-              />
-              <Gauge
-                width={100}
-                height={100}
-                value={50}
-                valueMin={10}
-                valueMax={60}
-              />
-              <Gauge
-                width={100}
-                height={100}
-                value={50}
-                valueMin={10}
-                valueMax={60}
-              />
-              <Gauge
-                width={100}
-                height={100}
-                value={50}
-                valueMin={10}
-                valueMax={60}
-              />
-            </Box>
           </Grid>
-          <Grid item sx={12} md={2}>
-            <Box
-              sx={{
-                backgroundColor: "white",
-                px: 1,
-                py: 2,
-                alignItems: "center",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "left",
-                boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
-                borderRadius: "8px",
-                gap: 2,
-              }}
-            >
-              <Typography variant="h6">Upcoming Events</Typography>
-              <Typography
-                variant="div"
-                sx={{
-                  backgroundColor: "lightgray",
-                  p: 1,
-                  borderRadius: 2,
-                  width: "100%",
-                }}
-              >
-                Event 1
-              </Typography>
-              <Typography
-                variant="div"
-                sx={{
-                  backgroundColor: "lightgray",
-                  p: 1,
-                  borderRadius: 2,
-                  width: "100%",
-                }}
-              >
-                Event 2
-              </Typography>
-              <Typography
-                variant="div"
-                sx={{
-                  backgroundColor: "lightgray",
-                  p: 1,
-                  borderRadius: 2,
-                  width: "100%",
-                }}
-              >
-                Event 3
-              </Typography>
-              <Typography
-                variant="div"
-                sx={{
-                  backgroundColor: "lightgray",
-                  p: 1,
-                  borderRadius: 2,
-                  width: "100%",
-                }}
-              >
-                Event 4
-              </Typography>
-            </Box>
+          <Grid item lg={4} sx={12} md={2}>
+            <UpcomingEvents />
           </Grid>
         </Grid>
       </Grid>
