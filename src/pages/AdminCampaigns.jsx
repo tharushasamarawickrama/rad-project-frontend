@@ -14,8 +14,10 @@ import SideBar from "../components/SideBar";
 import { Box } from "@mui/system";
 import Request from "../components/Request";
 import ChatBox from "../components/ChatBox";
+import Campaign from "../components/Campaign";
+import UpcomingEvents from "../components/UpcomingEvents";
 
-export default function AdminRequests() {
+export default function AdminCampaigns() {
   const [drawerOpen, setDrawerOpen] = useState(true);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
@@ -58,7 +60,7 @@ export default function AdminRequests() {
         </AppBar>
         <Grid container>
           <Typography variant="h4" component="div" color="primary">
-            Requests
+            Campaigns
           </Typography>
           <Button
             variant="contained"
@@ -66,7 +68,7 @@ export default function AdminRequests() {
             onClick={handleNewRequest}
             mx={2}
           >
-            New Request
+            Add Campaign
           </Button>
         </Grid>
         <Grid container gap={1}>
@@ -79,12 +81,11 @@ export default function AdminRequests() {
                 borderRadius: "15px",
               }}
             >
-              <Request />
-              <Request />
+              <Campaign />
             </Box>
           </Grid>
-          <Grid item lg={4} md={3} sx={12}>
-            <ChatBox />
+          <Grid item lg={4} md={9} sx={12}>
+            <UpcomingEvents />
           </Grid>
         </Grid>
       </Grid>

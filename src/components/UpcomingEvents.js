@@ -1,17 +1,28 @@
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import React from "react";
+import Event from "./Event";
 
-export default function ChatBox() {
+export default function UpcomingEvents() {
   return (
     <Box
       sx={{
         display: "flex",
         flexDirection: "column",
-        backgroundColor: "white",
+        backgroundColor: "whitesmoke",
         borderRadius: "15px",
         width: "100%",
         height: "100%",
+        alignItems: "center",
+        justifyContent: "center",
+        p: 2,
+        gap: 2,
       }}
-    ></Box>
+    >
+      <Typography variant="h5" sx={{ mb: 2 }}>
+        Upcoming Events
+      </Typography>
+      <Event />
+      <Event />
+    </Box>
   );
 }
