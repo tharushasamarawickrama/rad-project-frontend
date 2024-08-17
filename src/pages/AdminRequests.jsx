@@ -50,10 +50,6 @@ export default function AdminRequests() {
                 <Menu />
               </IconButton>
             )}
-
-            <Button sx={{ flexGrow: 2 }} color="primary">
-              LogOut
-            </Button>
           </Toolbar>
         </AppBar>
         <Grid container>
@@ -77,6 +73,8 @@ export default function AdminRequests() {
                 flexWrap: "wrap",
                 backgroundColor: "whitesmoke",
                 borderRadius: "15px",
+                p: 2,
+                gap: 2,
               }}
             >
               <Request />

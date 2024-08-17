@@ -21,7 +21,7 @@ export default function SideBar({ drawerOpen, setDrawerOpen, isMobile }) {
       <List>
         <Logo height={70} width={150} />
         <ListItem>
-          <ListItemButton>
+          <ListItemButton onClick={() => (window.location.href = "dashboard")}>
             <ListItemIcon>
               <Dashboard />
             </ListItemIcon>
@@ -29,7 +29,7 @@ export default function SideBar({ drawerOpen, setDrawerOpen, isMobile }) {
           </ListItemButton>
         </ListItem>
         <ListItem>
-          <ListItemButton>
+          <ListItemButton onClick={() => (window.location.href = "requests")}>
             <ListItemIcon>
               <RequestPage />
             </ListItemIcon>
@@ -37,7 +37,7 @@ export default function SideBar({ drawerOpen, setDrawerOpen, isMobile }) {
           </ListItemButton>
         </ListItem>
         <ListItem>
-          <ListItemButton>
+          <ListItemButton onClick={() => (window.location.href = "campaigns")}>
             <ListItemIcon>
               <Campaign />
             </ListItemIcon>

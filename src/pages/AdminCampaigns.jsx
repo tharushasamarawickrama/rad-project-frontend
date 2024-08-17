@@ -52,10 +52,6 @@ export default function AdminCampaigns() {
                 <Menu />
               </IconButton>
             )}
-
-            <Button sx={{ flexGrow: 2 }} color="primary">
-              LogOut
-            </Button>
           </Toolbar>
         </AppBar>
         <Grid container>
@@ -84,7 +80,7 @@ export default function AdminCampaigns() {
               <Campaign />
             </Box>
           </Grid>
-          <Grid item lg={4} md={9} sx={12}>
+          <Grid item lg={4} md={9}>
             <UpcomingEvents />
           </Grid>
         </Grid>
