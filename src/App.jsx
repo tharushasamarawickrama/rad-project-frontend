@@ -9,6 +9,10 @@ import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
+import SignUp from "./pages/SignUp";
+import AdminDashboard from "./pages/AdminDashboard";
+import AdminRequests from "./pages/AdminRequests";
+import AdminCampaigns from "./pages/AdminCampaigns";
 
 export const ThemeContext = createContext();
 
@@ -48,9 +52,9 @@ function App() {
       MuiButton: {
         styleOverrides: {
           root: {
-            borderRadius: 15,
-            width: 150,
-            height: 40,
+            // borderRadius: 15,
+            // width: 150,
+            // height: 40,
           },
         },
       },
@@ -69,16 +73,25 @@ function App() {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <BrowserRouter>
-          <NavBar />
           <Routes>
+            {/* General Routes */}
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/login" element={<Login />} />
             <Route path="/requester-dashboard" element={<BloodRequesterDashboard />} />
+            <Route path="/signup" element={<SignUp />} />
+            {/* Blood Requester Routes */}
+            <Route path="/requester/dashboard" element={<Home />} />
+            <Route path="/requester/requests" element={<Home />} />
+            <Route path="/requester/profile" element={<Home />} />
+            {/* Admin Routes */}
+            <Route path="/admin/dashboard" element={<AdminDashboard />} />
+            <Route path="/admin/requests" element={<AdminRequests />} />
+            <Route path="/admin/campaigns" element={<AdminCampaigns />} />
+
             <Route path="*" element={<NotFound />} />
           </Routes>
-          <Footer />
         </BrowserRouter>
       </ThemeProvider>
     </ThemeContext.Provider>

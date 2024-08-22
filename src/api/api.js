@@ -18,15 +18,15 @@ export const loginApi = async (data) => {
     const response = await axiosInstance.post("/auth/login", data);
     return response.data;
   } catch (error) {
-    return error.response.data;
+    return error;
   }
 };
 
-export const registerApi = async (data) => {
+export const signUpApi = async (data) => {
   try {
-    const response = await axiosInstance.post("/auth/register", data);
+    const response = await axiosInstance.post("/auth/signup", data);
     return response.data;
   } catch (error) {
-    return error.response.data;
+    return error;
   }
 };
