@@ -82,7 +82,7 @@ function App() {
             <Route path="/requester-dashboard" element={<BloodRequesterDashboard />} />
             <Route path="/signup" element={<SignUp />} />
             {/* Blood Requester Routes */}
-            <Route path="/requester/dashboard" element={<Home />} />
+            <Route path="/requester/dashboard" element={<BloodRequesterDashboard />} />
             <Route path="/requester/requests" element={<Home />} />
             <Route path="/requester/profile" element={<Home />} />
             {/* Admin Routes */}
