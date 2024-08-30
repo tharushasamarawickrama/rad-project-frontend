@@ -64,8 +64,9 @@ export default function AdminRequests() {
             New Request
           </Button>
         </Box>
-        <Grid container gap={1}>
-          <Grid item lg={7} md={9} sx={12}>
+        <Grid container gap={1} 
+        sx={{paddingLeft: 2, paddingRight: 2}} >
+          <Grid item lg={7} md={12} xs={12}>
             <Box
               sx={{
                 display: "flex",
@@ -80,7 +81,8 @@ export default function AdminRequests() {
               <Request />
             </Box>
           </Grid>
-          <Grid item lg={4} md={3} sx={12}>
+          <Grid item lg={4} md={12} xs={12}
+          >
             <ChatBox />
           </Grid>
         </Grid>

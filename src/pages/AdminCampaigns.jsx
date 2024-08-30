@@ -68,7 +68,7 @@ export default function AdminCampaigns() {
           </Button>
         </Grid>
         <Grid container gap={1}>
-          <Grid item lg={7} md={9} sx={12}>
+          <Grid item lg={7} md={9} xs={12}>
             <Box
               sx={{
                 display: "flex",

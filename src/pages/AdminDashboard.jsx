@@ -73,7 +73,7 @@ function AdminDashboard() {
           </Toolbar>
         </AppBar>
         <Grid container>
-          <Grid item lg={7} sx={12} md={10}>
+          <Grid item lg={7} xs={12} md={10}>
             <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap" }}>
               <Box
                 sx={{
@@ -145,7 +145,7 @@ function AdminDashboard() {
               margin={{ top: 10, bottom: 30, left: 40, right: 10 }}
             />
           </Grid>
-          <Grid item lg={4} sx={12} md={2}>
+          <Grid item lg={4} xs={12} md={2}>
             <UpcomingEvents />
           </Grid>
         </Grid>
