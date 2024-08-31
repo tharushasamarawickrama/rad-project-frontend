@@ -10,8 +10,8 @@ export default function Campaign({ title, description }) {
     <Box
       sx={{
         backgroundColor: "white",
-        px: 5,
-        py: 5,
+        px: 3,
+        py: 3,
         alignItems: "flex-start",
         display: "flex",
         flexDirection: "column",
