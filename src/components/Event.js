@@ -1,7 +1,9 @@
 import { Box, Typography } from "@mui/material";
 import React from "react";
 
-export default function Event() {
+export default function Event({ title, date }) {
+  const formattedDate = new Date(date).toLocaleDateString();
+
   return (
     <Box
       sx={{
@@ -18,10 +20,10 @@ export default function Event() {
       }}
     >
       <Typography variant="h6" component="div" color="primary">
-        Campaign Name
+        {title}
       </Typography>
       <Typography variant="body1" component="div" color="primary">
-        Date and Time
+        {formattedDate}
       </Typography>
     </Box>
   );

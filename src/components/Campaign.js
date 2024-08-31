@@ -2,7 +2,7 @@ import { Avatar, Box, Button, Typography } from "@mui/material";
 import React from "react";
 import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
 
-export default function Campaign() {
+export default function Campaign({ title, description }) {
   const handleEdit = () => {
     alert("Editing Event details");
   };
@@ -10,8 +10,8 @@ export default function Campaign() {
     <Box
       sx={{
         backgroundColor: "white",
-        px: 5,
-        py: 5,
+        px: 3,
+        py: 3,
         alignItems: "flex-start",
         display: "flex",
         flexDirection: "column",
@@ -23,14 +23,11 @@ export default function Campaign() {
       }}
     >
       <Typography variant="h5" component="div" color="primary">
-        Campaign Name
+        {title}
       </Typography>
       <Box sx={{ display: "flex", mt: 2 }}>
         <Typography variant="body2" component="div" color="primary">
-          Lorem ipsum dolor sit amet consectetur. In facilisis auctor proin sit
-          dui quis. Lacus et donec pellentesque phasellusLorem ipsum dolor sit
-          amet consectetur. In facilisis auctor proin sit dui quis. Lacus et
-          donec pellentesque phasellus
+          {description}
         </Typography>
         <Box>
           <img

@@ -1,8 +1,18 @@
 import { Box, Typography } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Event from "./Event";
+import { upcomingCampaignsApi } from "../api/api";
 
 export default function UpcomingEvents() {
+  const [upcomingCampaigns, setUpcomingCampaigns] = useState([]);
+
+  useEffect(() => {
+    upcomingCampaignsApi().then((data) => {
+      console.log(data);
+      setUpcomingCampaigns(data.campaigns);
+    });
+  }, []);
+
   return (
     <Box
       sx={{
@@ -20,8 +30,10 @@ export default function UpcomingEvents() {
       <Typography variant="h5" sx={{ mb: 2 }}>
         Upcoming Events
       </Typography>
-      <Event />
-      <Event />
+      {upcomingCampaigns &&
+        upcomingCampaigns.map((event) => (
+          <Event key={event._id} title={event.title} date={event.date} />
+        ))}
     </Box>
   );
 }

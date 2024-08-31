@@ -1,25 +1,23 @@
-
-
 function saveUser(user) {
-    localStorage.setItem('user', JSON.stringify(user));
+  localStorage.setItem("user", JSON.stringify(user));
 }
 
 function getUser() {
-    return JSON.parse(localStorage.getItem('user'));
+  return JSON.parse(localStorage.getItem("user"));
 }
 
 function getToken() {
-    const user = getUser();
-    return `Bearer ${user?.token}`;
+  const user = getUser();
+  return `Bearer ${user?.token}`;
 }
 
 function clearUser() {
-    localStorage.removeItem('user');
+  localStorage.removeItem("user");
 }
 
 module.exports = {
-    saveUser,
-    getUser,
-    getToken,
-    clearUser
+  saveUser,
+  getUser,
+  getToken,
+  clearUser,
 };

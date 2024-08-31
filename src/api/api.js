@@ -5,10 +5,20 @@ const BaseUrl = "http://localhost:5000/v1";
 
 const axiosInstance = axios.create({
   baseURL: BaseUrl,
-  headers: {
-    Authorization: getToken(),
-  },
 });
+
+axiosInstance.interceptors.request.use(
+  (config) => {
+    const token = getToken();
+    if (token) {
+      config.headers.Authorization = token;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
 export const loginApi = async (data) => {
   try {
@@ -24,6 +34,43 @@ export const signUpApi = async (data) => {
     const response = await axiosInstance.post("/auth/signup", data);
     return response?.data;
   } catch (error) {
+    return error;
+  }
+};
+
+export const dashboardApi = async () => {
+  try {
+    const response = await axiosInstance.get("/admin/dashboard-data");
+    return response?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const upcomingCampaignsApi = async () => {
+  try {
+    const response = await axiosInstance.get("/open/get-upcoming-campaigns");
+    return response?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const campaignsApi = async () => {
+  try {
+    const response = await axiosInstance.get("/open/get-campaigns");
+    return response?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const createCampaignApi = async (data) => {
+  try {
+    const response = await axiosInstance.post("/admin/add-campaign", data);
+    return response?.data;
+  } catch (error) {
+    console.log(error);
     return error;
   }
 };
