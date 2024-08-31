@@ -14,10 +14,8 @@ import SideBar from "../components/SideBar";
 import { Box } from "@mui/system";
 import Request from "../components/Request";
 import ChatBox from "../components/ChatBox";
-import Campaign from "../components/Campaign";
-import UpcomingEvents from "../components/UpcomingEvents";
 
-export default function AdminCampaigns() {
+export default function RequesterProfile() {
   const [drawerOpen, setDrawerOpen] = useState(true);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
@@ -38,10 +36,10 @@ export default function AdminCampaigns() {
           drawerOpen={drawerOpen}
           setDrawerOpen={setDrawerOpen}
           isMobile={isMobile}
-          userType="ADMIN"
+          userType="REQUESTER"
         />
       </Grid>
-      <Grid item md={9} lg={10}>
+      <Grid item md={10} lg={10}>
         <AppBar
           position="static"
           sx={{ background: "transparent", my: 2 }}
@@ -55,34 +53,27 @@ export default function AdminCampaigns() {
             )}
           </Toolbar>
         </AppBar>
-        <Grid container>
+        <Box sx={{ display: "flex", mb: 2 }}>
           <Typography variant="h4" component="div" color="primary">
-            Campaigns
+            Profile
           </Typography>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleNewRequest}
-            mx={2}
-          >
-            Add Campaign
-          </Button>
-        </Grid>
-        <Grid container gap={1}>
-          <Grid item lg={7} md={9} xs={12}>
+        </Box>
+        <Grid container gap={1} 
+        sx={{paddingLeft: 2, paddingRight: 2}} >
+          <Grid item lg={7} md={12} xs={12}>
             <Box
               sx={{
                 display: "flex",
                 flexWrap: "wrap",
                 backgroundColor: "whitesmoke",
                 borderRadius: "15px",
+                p: 2,
+                gap: 2,
               }}
             >
-              <Campaign />
+              <Request />
+              <Request />
             </Box>
-          </Grid>
-          <Grid item lg={4} md={9}>
-            <UpcomingEvents />
           </Grid>
         </Grid>
       </Grid>

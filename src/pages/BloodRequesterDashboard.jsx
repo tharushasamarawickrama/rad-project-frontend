@@ -1,103 +1,158 @@
-import React from "react";
-import { Box, Container, Typography, Button, Grid, Avatar } from "@mui/material";
-import Event from "../components/Event";
-import Footer from "../components/Footer";
-import NavBar from "../components/NavBar";
+import {
+  AppBar,
+  Box,
+  Button,
+  Drawer,
+  Grid,
+  IconButton,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Toolbar,
+  Typography,
+  useMediaQuery,
+} from "@mui/material";
+import { ReactComponent as Logo } from "../assets/logo.svg";
+import {
+  Campaign,
+  Close,
+  Dashboard,
+  Home,
+  Menu,
+  RequestPage,
+} from "@mui/icons-material";
+import { BarChart, Gauge } from "@mui/x-charts";
+import { useEffect, useState } from "react";
+import { useTheme } from "@emotion/react";
 import SideBar from "../components/SideBar";
 import UpcomingEvents from "../components/UpcomingEvents";
-import Request from "../components/Request";
 
-const BloodRequesterDashboard = () => {
-  const drawerOpen = true; // assuming the sidebar is always open for desktop view
-  const isMobile = false; // this should be set based on media query in a real implementation
-
+function BloodRequesterDashboard() {
+  const [drawerOpen, setDrawerOpen] = useState(true);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  useEffect(() => {
+    if (isMobile) {
+      setDrawerOpen(false);
+    } else {
+      setDrawerOpen(true);
+    }
+  }, [isMobile]);
   return (
-    <Box sx={{ display: "flex", height: "100vh", backgroundColor: "#FBE9E7" }}>
-      <SideBar drawerOpen={drawerOpen} setDrawerOpen={() => {}} isMobile={isMobile} />
-      <Box sx={{ flexGrow: 1, p: 3, display: "flex", flexDirection: "column" }}>
-        <NavBar />
-
-        <Container sx={{ mt: 3, flexGrow: 1 }}>
-          <Grid container spacing={3}>
-            <Grid item xs={12} sm={8}>
+    <Grid container>
+      <Grid item md={3} lg={2}>
+        <SideBar
+          drawerOpen={drawerOpen}
+          setDrawerOpen={setDrawerOpen}
+          isMobile={isMobile}
+          userType="REQUESTER"
+        />
+      </Grid>
+      <Grid item md={9} lg={10}>
+        <AppBar
+          position="static"
+          sx={{ background: "transparent", my: 2 }}
+          elevation={0}
+        >
+          <Toolbar>
+            {isMobile && (
+              <IconButton onClick={() => setDrawerOpen(true)}>
+                <Menu />
+              </IconButton>
+            )}
+            <Typography
+              variant="h4"
+              component="div"
+              color="primary"
+              sx={{ flexGrow: 1 }}
+            >
+              Blood Requester Dashboard
+            </Typography>
+            <Button color="primary">LogOut</Button>
+          </Toolbar>
+        </AppBar>
+        <Grid container>
+          <Grid item lg={7} xs={12} md={10}>
+            <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap" }}>
               <Box
                 sx={{
-                  display: "flex",
-                  justifyContent: "space-between",
+                  backgroundColor: "white",
+                  px: 5,
+                  py: 5,
                   alignItems: "center",
-                  mb: 2,
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "left",
+                  boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
+                  borderRadius: "20px",
+                  width: "30%",
                 }}
               >
-                <Typography variant="h4" component="h1" color="textPrimary">
-                  Home
+                <Typography variant="h5" sx={{ textAlign: "center" }}>
+                  All Requests
                 </Typography>
-                <Button variant="contained" color="secondary" sx={{ borderRadius: "20px" }}>
-                  New Request
-                </Button>
+                <Typography variant="h3">100</Typography>
               </Box>
 
-              <Grid container spacing={3}>
-                {["A+", "A-", "B+", "B-"].map((bloodType, index) => (
-                  <Grid item xs={6} sm={3} key={index}>
-                    <Box
-                      sx={{
-                        backgroundColor: "white",
-                        p: 2,
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        borderRadius: "15px",
-                        boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
-                      }}
-                    >
-                      <Typography
-                        variant="h6"
-                        component="div"
-                        color="textPrimary"
-                        sx={{
-                          backgroundColor: "#FBE9E7",
-                          borderRadius: "50%",
-                          padding: "10px",
-                          mb: 2,
-                          minWidth: "50px",
-                          textAlign: "center",
-                        }}
-                      >
-                        {bloodType}
-                      </Typography>
-                      <Typography variant="h4" component="div" color="primary">
-                        82%
-                      </Typography>
-                    </Box>
-                  </Grid>
-                ))}
-              </Grid>
-            </Grid>
-
-            <Grid item xs={12} sm={4}>
               <Box
                 sx={{
-                  display: "flex",
-                  justifyContent: "space-between",
+                  backgroundColor: "white",
+                  px: 5,
+                  py: 5,
                   alignItems: "center",
-                  mb: 2,
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "left",
+                  boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
+                  borderRadius: "20px",
+                  width: "30%",
                 }}
               >
-                
-                
+                <Typography variant="h5" sx={{ textAlign: "center" }}>
+                  Accepted
+                </Typography>
+                <Typography variant="h3">20</Typography>
               </Box>
-              <UpcomingEvents />
-            </Grid>
-          </Grid>
-        </Container>
 
-        <Box sx={{ mt: "auto" }}>
-          <Footer />
-        </Box>
-      </Box>
-    </Box>
+              <Box
+                sx={{
+                  backgroundColor: "white",
+                  px: 5,
+                  py: 5,
+                  alignItems: "center",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "left",
+                  boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
+                  borderRadius: "20px",
+                  width: "30%",
+                }}
+              >
+                <Typography variant="h5" sx={{ textAlign: "center" }}>
+                  Rejected
+                </Typography>
+                <Typography variant="h3">200</Typography>
+              </Box>
+            </Box>
+            <Typography variant="h5" sx={{ my: 5 }}>
+              Blood Stock Statistics
+            </Typography>
+            <BarChart
+              series={[{ data: [15, 25, 30, 50] }]}
+              height={290}
+              xAxis={[{ data: ["A+", "O+", "B+", "O-"], scaleType: "band" }]}
+              margin={{ top: 10, bottom: 30, left: 40, right: 10 }}
+            />
+          </Grid>
+          <Grid item lg={4} xs={12} md={2}>
+            <UpcomingEvents />
+          </Grid>
+        </Grid>
+      </Grid>
+    </Grid>
   );
-};
+}
 
 export default BloodRequesterDashboard;

@@ -47,6 +47,7 @@ function AdminDashboard() {
           drawerOpen={drawerOpen}
           setDrawerOpen={setDrawerOpen}
           isMobile={isMobile}
+          userType="ADMIN"
         />
       </Grid>
       <Grid item md={9} lg={10}>

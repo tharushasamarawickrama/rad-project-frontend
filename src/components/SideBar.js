@@ -1,4 +1,10 @@
-import { Campaign, Close, Dashboard, RequestPage } from "@mui/icons-material";
+import {
+  AccountCircle,
+  Campaign,
+  Close,
+  Dashboard,
+  RequestPage,
+} from "@mui/icons-material";
 import {
   Drawer,
   List,
@@ -7,10 +13,51 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import { ReactComponent as Logo } from "../assets/logo.svg";
 
-export default function SideBar({ drawerOpen, setDrawerOpen, isMobile }) {
+export default function SideBar({
+  drawerOpen,
+  setDrawerOpen,
+  isMobile,
+  userType,
+}) {
+  const [menuItems, setMenuItems] = React.useState([]);
+  useEffect(() => {
+    switch (userType) {
+      case "REQUESTER":
+        setMenuItems([
+          { label: "Dashboard", icon: <Dashboard />, link: "dashboard" },
+          { label: "Requests", icon: <RequestPage />, link: "requests" },
+          { label: "Profile", icon: <AccountCircle />, link: "profile" },
+        ]);
+        break;
+      case "ADMIN":
+        setMenuItems([
+          { label: "Dashboard", icon: <Dashboard />, link: "dashboard" },
+          { label: "Requests", icon: <RequestPage />, link: "requests" },
+          { label: "Campaigns", icon: <Campaign />, link: "campaigns" },
+        ]);
+        break;
+      default:
+        setMenuItems([
+          { label: "Dashboard", icon: <Dashboard />, link: "dashboard" },
+          { label: "Requests", icon: <RequestPage />, link: "requests" },
+          { label: "Campaigns", icon: <Campaign />, link: "campaigns" },
+        ]);
+    }
+  }, [userType]);
+
+  const renderMenuItems = () =>
+    menuItems.map((item, index) => (
+      <ListItem key={index}>
+        <ListItemButton onClick={() => (window.location.href = item.link)}>
+          <ListItemIcon>{item.icon}</ListItemIcon>
+          <ListItemText primary={item.label} />
+        </ListItemButton>
+      </ListItem>
+    ));
+
   return (
     <Drawer
       variant="persistent"
@@ -20,7 +67,7 @@ export default function SideBar({ drawerOpen, setDrawerOpen, isMobile }) {
     >
       <List>
         <Logo height={70} width={150} />
-        <ListItem>
+        {/* <ListItem>
           <ListItemButton onClick={() => (window.location.href = "dashboard")}>
             <ListItemIcon>
               <Dashboard />
@@ -43,7 +90,8 @@ export default function SideBar({ drawerOpen, setDrawerOpen, isMobile }) {
             </ListItemIcon>
             <ListItemText primary="Campaigns" />
           </ListItemButton>
-        </ListItem>
+        </ListItem> */}
+        {renderMenuItems()}
         {isMobile && (
           <ListItem>
             <ListItemButton onClick={() => setDrawerOpen(false)}>

@@ -13,6 +13,8 @@ import SignUp from "./pages/SignUp";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminRequests from "./pages/AdminRequests";
 import AdminCampaigns from "./pages/AdminCampaigns";
+import RequesterRequests from "./pages/RequesterRequests";
+import RequesterProfile from "./pages/RequesterProfile";
 
 export const ThemeContext = createContext();
 
@@ -83,8 +85,8 @@ function App() {
             <Route path="/signup" element={<SignUp />} />
             {/* Blood Requester Routes */}
             <Route path="/requester/dashboard" element={<BloodRequesterDashboard />} />
-            <Route path="/requester/requests" element={<Home />} />
-            <Route path="/requester/profile" element={<Home />} />
+            <Route path="/requester/requests" element={<RequesterRequests />} />
+            <Route path="/requester/profile" element={<RequesterProfile />} />
             {/* Admin Routes */}
             <Route path="/admin/dashboard" element={<AdminDashboard />} />
             <Route path="/admin/requests" element={<AdminRequests />} />
