@@ -46,3 +46,12 @@ export const dashboardApi = async () => {
     return error;
   }
 };
+
+export const upcomingCampaignsApi = async () => {
+  try {
+    const response = await axiosInstance.get("/open/get-upcoming-campaigns");
+    return response?.data;
+  } catch (error) {
+    return error;
+  }
+};

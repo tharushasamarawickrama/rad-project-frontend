@@ -4,7 +4,6 @@ import {
   Button,
   Grid,
   IconButton,
-  Menu,
   Toolbar,
   useMediaQuery,
   Typography,
@@ -16,11 +15,14 @@ import Request from "../components/Request";
 import ChatBox from "../components/ChatBox";
 import Campaign from "../components/Campaign";
 import UpcomingEvents from "../components/UpcomingEvents";
+import { upcomingCampaignsApi } from "../api/api";
+import { Menu } from "@mui/icons-material";
 
 export default function AdminCampaigns() {
   const [drawerOpen, setDrawerOpen] = useState(true);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
   useEffect(() => {
     if (isMobile) {
       setDrawerOpen(false);
@@ -31,6 +33,7 @@ export default function AdminCampaigns() {
   const handleNewRequest = () => {
     alert("New Rquest caputured");
   };
+
   return (
     <Grid container>
       <Grid item md={3} lg={2}>
@@ -81,7 +84,7 @@ export default function AdminCampaigns() {
               <Campaign />
             </Box>
           </Grid>
-          <Grid item lg={4} md={9}>
+          <Grid item lg={4} md={9} xs={12}>
             <UpcomingEvents />
           </Grid>
         </Grid>

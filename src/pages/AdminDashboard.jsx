@@ -38,6 +38,7 @@ function AdminDashboard() {
   const [drawerOpen, setDrawerOpen] = useState(true);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const [dashboardData, setDashboardData] = useState({});
   useEffect(() => {
     if (isMobile) {
       setDrawerOpen(false);
@@ -45,9 +46,11 @@ function AdminDashboard() {
       setDrawerOpen(true);
     }
   }, [isMobile]);
+
   useEffect(() => {
     dashboardApi().then((data) => {
       console.log(data);
+      setDashboardData(data);
     });
   }, []);
 
@@ -104,7 +107,9 @@ function AdminDashboard() {
                 <Typography variant="h5" sx={{ textAlign: "center" }}>
                   Requests
                 </Typography>
-                <Typography variant="h3">100</Typography>
+                <Typography variant="h3">
+                  {dashboardData?.numRequests || 0}
+                </Typography>
               </Box>
 
               <Box
@@ -124,7 +129,9 @@ function AdminDashboard() {
                 <Typography variant="h5" sx={{ textAlign: "center" }}>
                   Campaigns
                 </Typography>
-                <Typography variant="h3">20</Typography>
+                <Typography variant="h3">
+                  {dashboardData?.numCampaigns || 0}
+                </Typography>
               </Box>
 
               <Box
@@ -144,7 +151,9 @@ function AdminDashboard() {
                 <Typography variant="h5" sx={{ textAlign: "center" }}>
                   Donors
                 </Typography>
-                <Typography variant="h3">200</Typography>
+                <Typography variant="h3">
+                  {dashboardData?.numDonors || 0}
+                </Typography>
               </Box>
             </Box>
             <Typography variant="h5" sx={{ my: 5 }}>
@@ -152,7 +161,13 @@ function AdminDashboard() {
             </Typography>
             {/* Bar chart */}
             <BarChart
-              series={[{ data: [15, 25, 30, 50] }]}
+              series={[
+                {
+                  data: dashboardData?.bloodData
+                    ? dashboardData.bloodData.map((group) => group.stock)
+                    : [],
+                },
+              ]}
               height={290}
               xAxis={[{ data: ["A+", "O+", "B+", "O-"], scaleType: "band" }]}
               margin={{ top: 10, bottom: 30, left: 40, right: 10 }}
