@@ -1,10 +1,13 @@
 import { Avatar, Box, Button, Typography } from "@mui/material";
 import React from "react";
+import { getUser } from "../services/user.service";
 
 export default function Request({ data, setSelectedRequest }) {
   const handleRequest = () => {
     setSelectedRequest(data._id);
   };
+
+  const user = getUser();
 
   return (
     <Box
@@ -36,14 +39,44 @@ export default function Request({ data, setSelectedRequest }) {
       <Typography variant="body1" component="div" color="primary">
         {data?.description}
       </Typography>
-      <Button
-        variant="contained"
-        color="primary"
-        sx={{ borderRadius: "20px", px: 3, mt: 2, alignSelf: "flex-end" }}
-        onClick={handleRequest}
+
+      <Box
+        sx={{
+          display: "flex",
+          gap: 1,
+          justifyContent: "flex-end",
+          width: "100%",
+        }}
       >
-        View
-      </Button>
+        <Button
+          variant="contained"
+          color="primary"
+          sx={{ borderRadius: "20px", px: 3, mt: 2, alignSelf: "flex-end" }}
+          onClick={handleRequest}
+        >
+          View
+        </Button>
+        {user.userType === "ADMIN" && (
+          <Button
+            variant="contained"
+            color="primary"
+            sx={{ borderRadius: "20px", px: 3, mt: 2, alignSelf: "flex-end" }}
+            onClick={handleRequest}
+          >
+            Approve
+          </Button>
+        )}
+        {user.userType === "ADMIN" && (
+          <Button
+            variant="contained"
+            color="primary"
+            sx={{ borderRadius: "20px", px: 3, mt: 2, alignSelf: "flex-end" }}
+            onClick={handleRequest}
+          >
+            Decline
+          </Button>
+        )}
+      </Box>
     </Box>
   );
 }
