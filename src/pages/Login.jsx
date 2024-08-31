@@ -21,7 +21,7 @@ function Login() {
 
   const handleLogin = async () => {
     const response = await loginApi({ email, password });
-    saveUser(response.token, response.user);
+    saveUser(response.user);
     if (response.user.userType === "ADMIN") {
       navigate("/admin/dashboard");
     } else if (response.user.userType === "REQUESTER") {

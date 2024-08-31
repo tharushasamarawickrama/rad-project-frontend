@@ -1,5 +1,4 @@
-function saveUser(token, user) {
-    localStorage.setItem('token', token);
+function saveUser(user) {
     localStorage.setItem('user', JSON.stringify(user));
 }
 
@@ -8,7 +7,8 @@ function getUser() {
 }
 
 function getToken() {
-    return localStorage.getItem('token');
+    const user = getUser();
+    return user?.token;
 }
 
 module.exports = {

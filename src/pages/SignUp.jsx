@@ -21,10 +21,10 @@ function SignUp() {
 
   const handleLogin = async () => {
     const response = await signUpApi({ email, password });
-    saveUser(response.token, response.user);
-    if (response.user.type === "ADMIN") {
+    saveUser(response.user);
+    if (response.user.userType === "ADMIN") {
       navigate("/admin/dashboard");
-    } else if (response.user.type === "REQUESTER") {
+    } else if (response.user.userType === "REQUESTER") {
       navigate("/requester/dashboard");
     } else {
       navigate("/campaigns");

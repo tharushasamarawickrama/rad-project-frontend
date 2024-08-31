@@ -17,9 +17,11 @@ import RequesterRequests from "./pages/RequesterRequests";
 import RequesterProfile from "./pages/RequesterProfile";
 
 export const ThemeContext = createContext();
+export const AuthContext = createContext();
 
 function App() {
   const [mode, setMode] = useState("light");
+  const [user, setUser] = useState(null);
 
   const changeTheme = () => {
     setMode(mode === "light" ? "dark" : "light");
@@ -70,32 +72,89 @@ function App() {
     }
   }, [mode]);
 
+  useEffect(() => {
+    const user = localStorage.getItem("user");
+    if (user) {
+      setUser(JSON.parse(user));
+    }
+  }, []);
+
   return (
     <ThemeContext.Provider value={{ mode, changeTheme }}>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <BrowserRouter>
-          <Routes>
-            {/* General Routes */}
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/requester-dashboard" element={<BloodRequesterDashboard />} />
-            <Route path="/signup" element={<SignUp />} />
-            {/* Blood Requester Routes */}
-            <Route path="/requester/dashboard" element={<BloodRequesterDashboard />} />
-            <Route path="/requester/requests" element={<RequesterRequests />} />
-            <Route path="/requester/profile" element={<RequesterProfile />} />
-            {/* Admin Routes */}
-            <Route path="/admin/dashboard" element={<AdminDashboard />} />
-            <Route path="/admin/requests" element={<AdminRequests />} />
-            <Route path="/admin/campaigns" element={<AdminCampaigns />} />
+      <AuthContext.Provider value={{ user, setUser }}>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <BrowserRouter>
+            <Routes>
+              {/* General Routes */}
+              <Route path="/" element={<Home />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/login" element={<Login />} />
+              <Route
+                path="/requester-dashboard"
+                element={<BloodRequesterDashboard />}
+              />
+              <Route path="/signup" element={<SignUp />} />
 
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </ThemeProvider>
+              {/* Blood Requester Routes */}
+              <Route
+                path="/requester/dashboard"
+                element={
+                  user?.userType === "REQUESTER" ? (
+                    <BloodRequesterDashboard />
+                  ) : (
+                    <Login />
+                  )
+                }
+              />
+              <Route
+                path="/requester/requests"
+                element={
+                  user?.userType === "REQUESTER" ? (
+                    <RequesterRequests />
+                  ) : (
+                    <Login />
+                  )
+                }
+              />
+              <Route
+                path="/requester/profile"
+                element={
+                  user?.userType === "REQUESTER" ? (
+                    <RequesterProfile />
+                  ) : (
+                    <Login />
+                  )
+                }
+              />
+
+              {/* Admin Routes */}
+              <Route
+                path="/admin/dashboard"
+                element={
+                  user?.userType === "ADMIN" ? <AdminDashboard /> : <Login />
+                }
+              />
+              <Route
+                path="/admin/requests"
+                element={
+                  user?.userType === "ADMIN" ? <AdminRequests /> : <Login />
+                }
+              />
+
+              <Route
+                path="/admin/campaigns"
+                element={
+                  user?.userType === "ADMIN" ? <AdminCampaigns /> : <Login />
+                }
+              />
+
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </ThemeProvider>
+      </AuthContext.Provider>
     </ThemeContext.Provider>
   );
 }
