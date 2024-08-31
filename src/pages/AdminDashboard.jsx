@@ -24,13 +24,17 @@ import {
   RequestPage,
 } from "@mui/icons-material";
 import { BarChart, Gauge } from "@mui/x-charts";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useTheme } from "@emotion/react";
 import SideBar from "../components/SideBar";
 import UpcomingEvents from "../components/UpcomingEvents";
 import Logout from "../components/Logout";
+import { dashboardApi } from "../api/api";
+import { getUser } from "../services/user.service";
+import { AuthContext } from "../App";
 
 function AdminDashboard() {
+  const savedUser = getUser();
   const [drawerOpen, setDrawerOpen] = useState(true);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
@@ -41,6 +45,12 @@ function AdminDashboard() {
       setDrawerOpen(true);
     }
   }, [isMobile]);
+  useEffect(() => {
+    dashboardApi().then((data) => {
+      console.log(data);
+    });
+  }, []);
+
   return (
     <Grid container>
       <Grid item md={3} lg={2}>
@@ -140,6 +150,7 @@ function AdminDashboard() {
             <Typography variant="h5" sx={{ my: 5 }}>
               Blood Stock Statistics
             </Typography>
+            {/* Bar chart */}
             <BarChart
               series={[{ data: [15, 25, 30, 50] }]}
               height={290}
@@ -147,6 +158,7 @@ function AdminDashboard() {
               margin={{ top: 10, bottom: 30, left: 40, right: 10 }}
             />
           </Grid>
+          {/* Upcoming events */}
           <Grid item lg={4} xs={12} md={2}>
             <UpcomingEvents />
           </Grid>

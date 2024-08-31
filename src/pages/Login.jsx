@@ -23,11 +23,12 @@ function Login() {
 
   const handleLogin = async () => {
     const response = await loginApi({ email, password });
+    if (!response?.user) return;
     saveUser(response.user);
     setUser(response.user);
-    if (response.user.userType === "ADMIN") {
+    if (response.user?.userType === "ADMIN") {
       navigate("/admin/dashboard");
-    } else if (response.user.userType === "REQUESTER") {
+    } else if (response.user?.userType === "REQUESTER") {
       navigate("/requester/dashboard");
     } else {
       navigate("/campaigns");
