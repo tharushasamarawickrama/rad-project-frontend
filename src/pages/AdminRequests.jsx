@@ -24,10 +24,6 @@ export default function AdminRequests() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
-  const handleNewRequest = () => {
-    alert("New Rquest caputured");
-  };
-
   useEffect(() => {
     if (isMobile) {
       setDrawerOpen(false);
@@ -68,15 +64,8 @@ export default function AdminRequests() {
         </AppBar>
         <Box sx={{ display: "flex", mb: 2 }}>
           <Typography variant="h4" component="div" color="primary">
-            Requests
+            Blood Requests
           </Typography>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleNewRequest}
-          >
-            New Request
-          </Button>
         </Box>
         <Grid container gap={1} sx={{ paddingLeft: 2, paddingRight: 2 }}>
           <Grid item lg={7} md={12} xs={12}>
