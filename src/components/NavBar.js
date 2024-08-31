@@ -25,6 +25,7 @@ const NavBar = () => {
     { text: "About", path: "/about" },
     { text: "Contact", path: "/contact" },
     { text: "Login", path: "/login" },
+   
   ];
 
   const handleNavigation = (path) => {
