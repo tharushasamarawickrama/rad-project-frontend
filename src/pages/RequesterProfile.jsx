@@ -7,6 +7,7 @@ import {
   Toolbar,
   useMediaQuery,
   Typography,
+  TextField,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import SideBar from "../components/SideBar";
@@ -26,9 +27,7 @@ export default function RequesterProfile() {
       setDrawerOpen(true);
     }
   }, [isMobile]);
-  const handleNewRequest = () => {
-    alert("New Rquest caputured");
-  };
+
   return (
     <Grid container>
       <Grid item md={3} lg={2}>
@@ -70,8 +69,35 @@ export default function RequesterProfile() {
                 gap: 2,
               }}
             >
-              <Request />
-              <Request />
+              <Grid container gap={1} sx={{ paddingLeft: 2, paddingRight: 2 }}>
+                <Grid item lg={12} md={12} xs={12}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexWrap: "wrap",
+                      backgroundColor: "whitesmoke",
+                      borderRadius: "15px",
+                      p: 2,
+                      gap: 2,
+                    }}
+                  >
+                    <TextField label="Name" variant="outlined" fullWidth />
+                    <TextField label="Email" variant="outlined" fullWidth />
+                    <TextField label="Phone" variant="outlined" fullWidth />
+                  </Box>
+                </Grid>
+              </Grid>
+              <Grid
+                container
+                sx={{
+                  display: "flex",
+                  flexDirection: "row-reverse",
+                }}
+              >
+                <Button variant="contained" color="primary">
+                  Update
+                </Button>
+              </Grid>
             </Box>
           </Grid>
         </Grid>

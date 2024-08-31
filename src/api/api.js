@@ -74,3 +74,65 @@ export const createCampaignApi = async (data) => {
     return error;
   }
 };
+
+export const getAdminRequestsApi = async () => {
+  try {
+    const response = await axiosInstance.get("/admin/get-requests");
+    return response?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const getAdminMessagesApi = async (requestId) => {
+  try {
+    const response = await axiosInstance.get(
+      `/admin/get-messages/${requestId}`
+    );
+    return response?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const sendAdminMessageApi = async (requestId, message) => {
+  try {
+    const response = await axiosInstance.post(
+      `/admin/send-message/${requestId}`,
+      { message }
+    );
+    return response?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const getRequestsApi = async () => {
+  try {
+    const response = await axiosInstance.get("/user/get-requests");
+    return response?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const getMessagesApi = async (requestId) => {
+  try {
+    const response = await axiosInstance.get(`/user/get-messages/${requestId}`);
+    return response?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const sendMessageApi = async (requestId, message) => {
+  try {
+    const response = await axiosInstance.post(
+      `/user/send-message/${requestId}`,
+      { message }
+    );
+    return response?.data;
+  } catch (error) {
+    return error;
+  }
+};
