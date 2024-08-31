@@ -41,6 +41,7 @@ export default function AdminCampaigns() {
   const [description, setDescription] = useState("");
   const [location, setLocation] = useState("");
   const [date, setDate] = useState("");
+  const [imgURL, setURL] = useState("");
 
   useEffect(() => {
     campaignsApi().then((data) => {
@@ -63,6 +64,7 @@ export default function AdminCampaigns() {
       description,
       location,
       date,
+      imgURL,
     });
     handleDialogClose();
   };
@@ -147,6 +149,16 @@ export default function AdminCampaigns() {
               fullWidth
               variant="standard"
             />
+            <TextField
+              margin="dense"
+              id="imgurl"
+              label="Image URL"
+              type="url"
+              value={imgURL}
+              onChange={(e) => setURL(e.target.value)}
+              fullWidth
+              variant="standard"
+            />
             {/* Add more form fields as needed */}
             <DialogActions>
               <Button onClick={handleDialogClose} color="primary">
@@ -191,6 +203,7 @@ export default function AdminCampaigns() {
                   key={event._id}
                   title={event.title}
                   description={event.description}
+                  imgURL={event.imgURL}
                 />
               ))}
             </Box>

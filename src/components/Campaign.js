@@ -2,7 +2,7 @@ import { Avatar, Box, Button, Typography } from "@mui/material";
 import React from "react";
 import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
 
-export default function Campaign({ title, description }) {
+export default function Campaign({ title, description, imgURL }) {
   const handleEdit = () => {
     alert("Editing Event details");
   };
@@ -29,11 +29,11 @@ export default function Campaign({ title, description }) {
         <Typography variant="body2" component="div" color="primary">
           {description}
         </Typography>
-        <Box>
+        <Box sx={{ display: "flex", ml: "auto" }}>
           <img
-            src={process.env.PUBLIC_URL + "/event-img.jpg"}
+            src={imgURL}
             alt="Event Image"
-            style={{ width: 80, height: 80, marginRight: 2 }}
+            style={{ width: 120, height: 120, marginLeft: 10 }}
           />
         </Box>
       </Box>
