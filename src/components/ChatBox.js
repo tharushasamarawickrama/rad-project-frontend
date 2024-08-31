@@ -1,17 +1,84 @@
-import { Box } from "@mui/material";
-import React from "react";
+import styles from "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
+import {
+  ChatContainer,
+  MessageList,
+  Message,
+  MessageInput,
+  ConversationHeader,
+  InfoButton,
+  TypingIndicator,
+} from "@chatscope/chat-ui-kit-react";
+import { Avatar, Box } from "@mui/material";
+import React, { useState } from "react";
+import { ReactComponent as UserAvatar } from "../assets/avatar_1.svg";
 
 export default function ChatBox() {
+  const [messageList, setMessageList] = useState([
+    {
+      message: "Hi",
+      direction: "incoming",
+    },
+    {
+      message: "Hello",
+      direction: "outgoing",
+    },
+    {
+      message: "how are you🤔",
+      direction: "outgoing",
+    },
+  ]);
+
+  const renderMessages = () =>
+    messageList.map((item) => (
+      <Message
+        model={{
+          direction: item.direction,
+          message: item.message,
+          position: "single",
+        }}
+      />
+    ));
+
+  const onSend = (innerHtml, textContent, innerText, nodes) => {
+    setMessageList((preVal) => [
+      ...preVal,
+      {
+        message: textContent,
+        direction: "outgoing",
+      },
+    ]);
+  };
   return (
     <Box
       sx={{
-        display: "flex",
-        flexDirection: "column",
         backgroundColor: "white",
         borderRadius: "15px",
         width: "100%",
         height: "100%",
       }}
-    ></Box>
+    >
+      <ChatContainer
+        style={{
+          height: "500px",
+          width: "100%",
+        }}
+      >
+        <ConversationHeader>
+          <ConversationHeader.Content
+            info="Active 10 mins ago"
+            userName="Kalpa Suraweera"
+          />
+          <ConversationHeader.Actions>
+            <InfoButton />
+          </ConversationHeader.Actions>
+        </ConversationHeader>
+        <MessageList
+          typingIndicator={<TypingIndicator content="Kalpa is typing" />}
+        >
+          {renderMessages()}
+        </MessageList>
+        <MessageInput placeholder="Type message here" onSend={onSend} />
+      </ChatContainer>
+    </Box>
   );
 }

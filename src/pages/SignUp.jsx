@@ -6,21 +6,32 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { loginApi, signUpApi } from "../api/api";
-import { useState } from "react";
+import { signUpApi } from "../api/api";
+import { useContext, useState } from "react";
 import { ReactComponent as Logo } from "../assets/logo.svg";
 import { NavLink, useNavigate } from "react-router-dom";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
+import { saveUser } from "../services/user.service";
+import { AuthContext } from "../App";
 
 function SignUp() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { setUser } = useContext(AuthContext);
 
   const handleLogin = async () => {
     const response = await signUpApi({ email, password });
-    console.log(response);
+    saveUser(response.user);
+    setUser(response.user);
+    if (response.user.userType === "ADMIN") {
+      navigate("/admin/dashboard");
+    } else if (response.user.userType === "REQUESTER") {
+      navigate("/requester/dashboard");
+    } else {
+      navigate("/campaigns");
+    }
   };
   return (
     <>

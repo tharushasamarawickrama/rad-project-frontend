@@ -28,6 +28,7 @@ import { useEffect, useState } from "react";
 import { useTheme } from "@emotion/react";
 import SideBar from "../components/SideBar";
 import UpcomingEvents from "../components/UpcomingEvents";
+import Logout from "../components/Logout";
 
 function AdminDashboard() {
   const [drawerOpen, setDrawerOpen] = useState(true);
@@ -47,6 +48,7 @@ function AdminDashboard() {
           drawerOpen={drawerOpen}
           setDrawerOpen={setDrawerOpen}
           isMobile={isMobile}
+          userType="ADMIN"
         />
       </Grid>
       <Grid item md={9} lg={10}>
@@ -69,11 +71,11 @@ function AdminDashboard() {
             >
               Admin Dashboard
             </Typography>
-            <Button color="primary">LogOut</Button>
+            <Logout />
           </Toolbar>
         </AppBar>
         <Grid container>
-          <Grid item lg={7} sx={12} md={10}>
+          <Grid item lg={7} xs={12} md={10}>
             <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap" }}>
               <Box
                 sx={{
@@ -145,7 +147,7 @@ function AdminDashboard() {
               margin={{ top: 10, bottom: 30, left: 40, right: 10 }}
             />
           </Grid>
-          <Grid item lg={4} sx={12} md={2}>
+          <Grid item lg={4} xs={12} md={2}>
             <UpcomingEvents />
           </Grid>
         </Grid>
