@@ -12,6 +12,7 @@ import { ReactComponent as Logo } from "../assets/logo.svg";
 import { NavLink, useNavigate } from "react-router-dom";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
+import { saveUser } from "../services/user.service";
 
 function Login() {
   const navigate = useNavigate();
@@ -20,7 +21,14 @@ function Login() {
 
   const handleLogin = async () => {
     const response = await loginApi({ email, password });
-    console.log(response);
+    saveUser(response.token, response.user);
+    if (response.user.userType === "ADMIN") {
+      navigate("/admin/dashboard");
+    } else if (response.user.userType === "REQUESTER") {
+      navigate("/requester/dashboard");
+    } else {
+      navigate("/campaigns");
+    }
   };
   return (
     <>
