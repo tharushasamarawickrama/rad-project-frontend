@@ -66,18 +66,28 @@ export default function RequesterRequests() {
             )}
           </Toolbar>
         </AppBar>
-        <Box sx={{ display: "flex", mb: 2 }}>
-          <Typography variant="h4" component="div" color="primary">
-            Requests
-          </Typography>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleNewRequest}
-          >
-            New Request
-          </Button>
-        </Box>
+        <Grid container gap={1} sx={{ paddingLeft: 2, paddingRight: 2 }}>
+          <Grid item lg={7} md={12} xs={12}>
+            <Box
+              sx={{
+                display: "flex",
+                mb: 2,
+                justifyContent: "space-between",
+              }}
+            >
+              <Typography variant="h4" component="div" color="primary">
+                Requests
+              </Typography>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleNewRequest}
+              >
+                New Request
+              </Button>
+            </Box>
+          </Grid>
+        </Grid>
         <Grid container gap={1} sx={{ paddingLeft: 2, paddingRight: 2 }}>
           <Grid item lg={7} md={12} xs={12}>
             <Box
