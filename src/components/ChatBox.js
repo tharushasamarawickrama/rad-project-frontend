@@ -1,16 +1,12 @@
 import styles from "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 import {
-  MainContainer,
   ChatContainer,
   MessageList,
   Message,
   MessageInput,
   ConversationHeader,
-  VoiceCallButton,
-  VideoCallButton,
   InfoButton,
   TypingIndicator,
-  MessageSeparator,
 } from "@chatscope/chat-ui-kit-react";
 import { Avatar, Box } from "@mui/material";
 import React, { useState } from "react";
