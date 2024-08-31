@@ -4,7 +4,6 @@ import {
   Button,
   Grid,
   IconButton,
-  Menu,
   Toolbar,
   useMediaQuery,
   Typography,
@@ -14,11 +13,21 @@ import SideBar from "../components/SideBar";
 import { Box } from "@mui/system";
 import Request from "../components/Request";
 import ChatBox from "../components/ChatBox";
+import { getRequestsApi } from "../api/api";
+import { Menu } from "@mui/icons-material";
 
 export default function RequesterRequests() {
   const [drawerOpen, setDrawerOpen] = useState(true);
+  const [requests, setRequests] = useState([]);
+  const [selectedRequest, setSelectedRequest] = useState(null);
+
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
+  const handleNewRequest = () => {
+    alert("New Rquest caputured");
+  };
+
   useEffect(() => {
     if (isMobile) {
       setDrawerOpen(false);
@@ -26,9 +35,13 @@ export default function RequesterRequests() {
       setDrawerOpen(true);
     }
   }, [isMobile]);
-  const handleNewRequest = () => {
-    alert("New Rquest caputured");
-  };
+
+  useEffect(() => {
+    getRequestsApi().then((res) => {
+      setRequests(res.requests);
+    });
+  }, []);
+
   return (
     <Grid container>
       <Grid item md={3} lg={2}>
@@ -65,8 +78,7 @@ export default function RequesterRequests() {
             New Request
           </Button>
         </Box>
-        <Grid container gap={1} 
-        sx={{paddingLeft: 2, paddingRight: 2}} >
+        <Grid container gap={1} sx={{ paddingLeft: 2, paddingRight: 2 }}>
           <Grid item lg={7} md={12} xs={12}>
             <Box
               sx={{
@@ -78,13 +90,18 @@ export default function RequesterRequests() {
                 gap: 2,
               }}
             >
-              <Request />
-              <Request />
+              {requests &&
+                requests.map((request) => (
+                  <Request
+                    key={request._id}
+                    data={request}
+                    setSelectedRequest={setSelectedRequest}
+                  />
+                ))}
             </Box>
           </Grid>
-          <Grid item lg={4} md={12} xs={12}
-          >
-            <ChatBox />
+          <Grid item lg={4} md={12} xs={12}>
+            {selectedRequest && <ChatBox requestId={selectedRequest} />}
           </Grid>
         </Grid>
       </Grid>

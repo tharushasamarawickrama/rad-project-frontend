@@ -27,3 +27,32 @@ export const signUpApi = async (data) => {
     return error;
   }
 };
+
+export const getRequestsApi = async () => {
+  try {
+    const response = await axiosInstance.get("/user/get-requests");
+    return response?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const getMessagesApi = async (requestId) => {
+  try {
+    const response = await axiosInstance.get(`/user/get-messages/${requestId}`);
+    return response?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const sendMessageApi = async (data) => {
+  try {
+    const response = await axiosInstance.post("/user/send-message", data);
+    return response?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+

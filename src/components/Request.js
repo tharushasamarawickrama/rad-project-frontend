@@ -1,10 +1,11 @@
 import { Avatar, Box, Button, Typography } from "@mui/material";
 import React from "react";
 
-export default function Request() {
+export default function Request({ data, setSelectedRequest }) {
   const handleRequest = () => {
-    alert("View Request");
+    setSelectedRequest(data._id)
   };
+  
   return (
     <Box
       sx={{

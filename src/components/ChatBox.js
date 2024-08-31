@@ -9,28 +9,17 @@ import {
   TypingIndicator,
 } from "@chatscope/chat-ui-kit-react";
 import { Avatar, Box } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ReactComponent as UserAvatar } from "../assets/avatar_1.svg";
+import { getMessagesApi } from "../api/api";
 
-export default function ChatBox() {
-  const [messageList, setMessageList] = useState([
-    {
-      message: "Hi",
-      direction: "incoming",
-    },
-    {
-      message: "Hello",
-      direction: "outgoing",
-    },
-    {
-      message: "how are you🤔",
-      direction: "outgoing",
-    },
-  ]);
+export default function ChatBox({ requestId }) {
+  const [messageList, setMessageList] = useState([]);
 
   const renderMessages = () =>
     messageList.map((item) => (
       <Message
+        key={item._id}
         model={{
           direction: item.direction,
           message: item.message,
@@ -48,6 +37,12 @@ export default function ChatBox() {
       },
     ]);
   };
+
+  useEffect(() => {
+    getMessagesApi(requestId).then((res) => {
+      setMessageList(res.messages);
+    });
+  }, [requestId]);
   return (
     <Box
       sx={{
