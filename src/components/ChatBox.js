@@ -28,33 +28,31 @@ export default function ChatBox({ requestId }) {
       />
     ));
 
+  const fetchMessages = () => {
+    getMessagesApi(requestId).then((res) => {
+      if (res.messages.length !== messageList.length) {
+        setMessageList(res.messages);
+      }
+    });
+  };
+
   const onSend = async (innerHtml, textContent, innerText, nodes) => {
-    setMessageList((preVal) => [
-      ...preVal,
-      {
-        message: textContent,
-        direction: "outgoing",
-      },
-    ]);
+    // setMessageList((preVal) => [
+    //   ...preVal,
+    //   {
+    //     message: textContent,
+    //     direction: "outgoing",
+    //     date: Date.now(),
+    //   },
+    // ]);
     await sendMessageApi(requestId, textContent);
+    fetchMessages();
   };
 
   useEffect(() => {
     if (requestId) {
-      const intervalId = setInterval(() => {
-        getMessagesApi(requestId).then((res) => {
-          //if message list empty set it otherwise push missing messages
-          if (!messageList) {
-            setMessageList(res.messages);
-          } else {
-            const newMessages = res.messages
-              .filter((msg) => !messageList.includes(msg))
-              .concat(messageList)
-              .sort((a, b) => a.date - b.date);
-            setMessageList(newMessages);
-          }
-        });
-      }, 5000);
+      fetchMessages();
+      const intervalId = setInterval(fetchMessages, 2000);
       return () => clearInterval(intervalId);
     }
   }, [requestId]);
@@ -76,18 +74,21 @@ export default function ChatBox({ requestId }) {
       >
         <ConversationHeader>
           <ConversationHeader.Content
-            info="Active 10 mins ago"
-            userName="Kalpa Suraweera"
+            info={
+              messageList?.length > 0
+                ? "Last Seen " +
+                  new Date(
+                    messageList[messageList.length - 1].date
+                  ).toLocaleString()
+                : "Offline"
+            }
+            userName={`Request ID: ${requestId}`}
           />
           <ConversationHeader.Actions>
             <InfoButton />
           </ConversationHeader.Actions>
         </ConversationHeader>
-        <MessageList
-          typingIndicator={<TypingIndicator content="Kalpa is typing" />}
-        >
-          {renderMessages()}
-        </MessageList>
+        <MessageList>{renderMessages()}</MessageList>
         <MessageInput placeholder="Type message here" onSend={onSend} />
       </ChatContainer>
     </Box>
