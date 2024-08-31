@@ -64,3 +64,13 @@ export const campaignsApi = async () => {
     return error;
   }
 };
+
+export const createCampaignApi = async (data) => {
+  try {
+    const response = await axiosInstance.post("/admin/add-campaign", data);
+    return response?.data;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};

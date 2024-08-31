@@ -21,18 +21,26 @@ import Request from "../components/Request";
 import ChatBox from "../components/ChatBox";
 import Campaign from "../components/Campaign";
 import UpcomingEvents from "../components/UpcomingEvents";
-import { campaignsApi, upcomingCampaignsApi } from "../api/api";
+import {
+  campaignsApi,
+  createCampaignApi,
+  upcomingCampaignsApi,
+} from "../api/api";
 import { Menu } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 
 export default function AdminCampaigns() {
   const navigate = useNavigate();
   const theme = useTheme();
-
   const [drawerOpen, setDrawerOpen] = useState(true);
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const [dialogOpen, setDialogOpen] = useState(false);
   const [campaign, setCampaign] = useState([]);
+
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [location, setLocation] = useState("");
+  const [date, setDate] = useState("");
 
   useEffect(() => {
     campaignsApi().then((data) => {
@@ -49,8 +57,14 @@ export default function AdminCampaigns() {
       setDrawerOpen(true);
     }
   }, [isMobile]);
-  const handleNewRequest = () => {
-    alert("New Rquest caputured");
+  const handleCreateCampaign = async () => {
+    const response = await createCampaignApi({
+      title,
+      description,
+      location,
+      date,
+    });
+    handleDialogClose();
   };
 
   const handleDialogOpen = () => {
@@ -59,11 +73,6 @@ export default function AdminCampaigns() {
 
   const handleDialogClose = () => {
     setDialogOpen(false);
-  };
-
-  const handleFormSubmit = (event) => {
-    event.preventDefault();
-    handleDialogClose();
   };
 
   return (
@@ -91,39 +100,67 @@ export default function AdminCampaigns() {
           </Toolbar>
         </AppBar>
         <Dialog open={dialogOpen} onClose={handleDialogClose}>
-          <DialogTitle>New Request</DialogTitle>
+          <DialogTitle>Create New Campaign</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              Please fill out the form below to create a new request.
+              Please fill out the form below to create a new campaign.
             </DialogContentText>
-            <form onSubmit={handleFormSubmit}>
-              <TextField
-                autoFocus
-                margin="dense"
-                id="name"
-                label="Name"
-                type="text"
-                fullWidth
-                variant="standard"
-              />
-              <TextField
-                margin="dense"
-                id="email"
-                label="Email Address"
-                type="email"
-                fullWidth
-                variant="standard"
-              />
-              {/* Add more form fields as needed */}
-              <DialogActions>
-                <Button onClick={handleDialogClose} color="primary">
-                  Cancel
-                </Button>
-                <Button type="submit" color="primary">
-                  Submit
-                </Button>
-              </DialogActions>
-            </form>
+
+            <TextField
+              autoFocus
+              margin="dense"
+              id="name"
+              label="Title"
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              fullWidth
+              variant="standard"
+            />
+            <TextField
+              margin="dense"
+              id="location"
+              label="Location"
+              type="text"
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
+              fullWidth
+              variant="standard"
+            />
+            <TextField
+              margin="dense"
+              id="description"
+              label="Description"
+              type="text"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              fullWidth
+              variant="standard"
+            />
+            <TextField
+              margin="dense"
+              id="date"
+              label="Date"
+              type="date"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+              fullWidth
+              variant="standard"
+            />
+            {/* Add more form fields as needed */}
+            <DialogActions>
+              <Button onClick={handleDialogClose} color="primary">
+                Cancel
+              </Button>
+              <Button
+                variant="contained"
+                type="button"
+                color="primary"
+                onClick={handleCreateCampaign}
+              >
+                Create Campaign
+              </Button>
+            </DialogActions>
           </DialogContent>
         </Dialog>
         <Grid container>
