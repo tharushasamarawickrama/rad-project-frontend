@@ -7,21 +7,24 @@ import {
   Typography,
 } from "@mui/material";
 import { loginApi } from "../api/api";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { ReactComponent as Logo } from "../assets/logo.svg";
 import { NavLink, useNavigate } from "react-router-dom";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 import { saveUser } from "../services/user.service";
+import { AuthContext } from "../App";
 
 function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { setUser } = useContext(AuthContext);
 
   const handleLogin = async () => {
     const response = await loginApi({ email, password });
     saveUser(response.user);
+    setUser(response.user);
     if (response.user.userType === "ADMIN") {
       navigate("/admin/dashboard");
     } else if (response.user.userType === "REQUESTER") {

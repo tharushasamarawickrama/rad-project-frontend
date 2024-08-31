@@ -28,6 +28,7 @@ import { useEffect, useState } from "react";
 import { useTheme } from "@emotion/react";
 import SideBar from "../components/SideBar";
 import UpcomingEvents from "../components/UpcomingEvents";
+import Logout from "../components/Logout";
 
 function AdminDashboard() {
   const [drawerOpen, setDrawerOpen] = useState(true);
@@ -70,7 +71,7 @@ function AdminDashboard() {
             >
               Admin Dashboard
             </Typography>
-            <Button color="primary">LogOut</Button>
+            <Logout />
           </Toolbar>
         </AppBar>
         <Grid container>

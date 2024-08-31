@@ -15,6 +15,7 @@ import {
 } from "@mui/material";
 import React, { useEffect } from "react";
 import { ReactComponent as Logo } from "../assets/logo.svg";
+import { useNavigate } from "react-router-dom";
 
 export default function SideBar({
   drawerOpen,
@@ -22,28 +23,41 @@ export default function SideBar({
   isMobile,
   userType,
 }) {
+  const navigate = useNavigate();
   const [menuItems, setMenuItems] = React.useState([]);
   useEffect(() => {
     switch (userType) {
       case "REQUESTER":
         setMenuItems([
-          { label: "Dashboard", icon: <Dashboard />, link: "dashboard" },
-          { label: "Requests", icon: <RequestPage />, link: "requests" },
-          { label: "Profile", icon: <AccountCircle />, link: "profile" },
+          {
+            label: "Dashboard",
+            icon: <Dashboard />,
+            link: "/requester/dashboard",
+          },
+          {
+            label: "Requests",
+            icon: <RequestPage />,
+            link: "/requester/requests",
+          },
+          {
+            label: "Profile",
+            icon: <AccountCircle />,
+            link: "/requester/profile",
+          },
         ]);
         break;
       case "ADMIN":
         setMenuItems([
-          { label: "Dashboard", icon: <Dashboard />, link: "dashboard" },
-          { label: "Requests", icon: <RequestPage />, link: "requests" },
-          { label: "Campaigns", icon: <Campaign />, link: "campaigns" },
+          { label: "Dashboard", icon: <Dashboard />, link: "/admin/dashboard" },
+          { label: "Requests", icon: <RequestPage />, link: "/admin/requests" },
+          { label: "Campaigns", icon: <Campaign />, link: "/admin/campaigns" },
         ]);
         break;
       default:
         setMenuItems([
-          { label: "Dashboard", icon: <Dashboard />, link: "dashboard" },
-          { label: "Requests", icon: <RequestPage />, link: "requests" },
-          { label: "Campaigns", icon: <Campaign />, link: "campaigns" },
+          { label: "Dashboard", icon: <Dashboard />, link: "/admin/dashboard" },
+          { label: "Requests", icon: <RequestPage />, link: "/admin/requests" },
+          { label: "Campaigns", icon: <Campaign />, link: "/admin/campaigns" },
         ]);
     }
   }, [userType]);
@@ -51,7 +65,7 @@ export default function SideBar({
   const renderMenuItems = () =>
     menuItems.map((item, index) => (
       <ListItem key={index}>
-        <ListItemButton onClick={() => (window.location.href = item.link)}>
+        <ListItemButton onClick={() => navigate(item?.link)}>
           <ListItemIcon>{item.icon}</ListItemIcon>
           <ListItemText primary={item.label} />
         </ListItemButton>

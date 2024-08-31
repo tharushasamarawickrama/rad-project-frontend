@@ -133,20 +133,32 @@ function App() {
               <Route
                 path="/admin/dashboard"
                 element={
-                  user?.userType === "ADMIN" ? <AdminDashboard /> : <Login />
+                  user?.userType === "ADMIN" ? (
+                    <AdminDashboard />
+                  ) : (
+                    <Login />
+                  )
                 }
               />
               <Route
                 path="/admin/requests"
                 element={
-                  user?.userType === "ADMIN" ? <AdminRequests /> : <Login />
+                  user?.userType === "ADMIN" ? (
+                    <AdminRequests />
+                  ) : (
+                    <Login />
+                  )
                 }
               />
 
               <Route
                 path="/admin/campaigns"
                 element={
-                  user?.userType === "ADMIN" ? <AdminCampaigns /> : <Login />
+                  user?.userType === "ADMIN" ? (
+                    <AdminCampaigns />
+                  ) : (
+                    <Login />
+                  )
                 }
               />
 
