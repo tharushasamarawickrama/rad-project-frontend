@@ -3,9 +3,9 @@ import React from "react";
 
 export default function Request({ data, setSelectedRequest }) {
   const handleRequest = () => {
-    setSelectedRequest(data._id)
+    setSelectedRequest(data._id);
   };
-  
+
   return (
     <Box
       sx={{
@@ -22,20 +22,19 @@ export default function Request({ data, setSelectedRequest }) {
       }}
     >
       <Box sx={{ display: "flex", alignItems: "center", mt: 2 }}>
-        <Avatar sx={{ mr: 2 }}>U</Avatar>
+        <Avatar sx={{ mr: 2 }}>{data?.userId?.email[0]}</Avatar>
         <Box>
           <Typography variant="h6" component="div" color="primary">
-            User Name
+            {data?.userId?.email}
           </Typography>
-          <Typography variant="body2">Date and Time</Typography>
+          <Typography variant="body2">
+            {new Date(data?.date).toLocaleString()}
+          </Typography>
         </Box>
       </Box>
 
       <Typography variant="body1" component="div" color="primary">
-        Lorem ipsum dolor sit amet consectetur. In facilisis auctor proin sit
-        dui quis. Lacus et donec pellentesque phasellusLorem ipsum dolor sit
-        amet consectetur. In facilisis auctor proin sit dui quis. Lacus et donec
-        pellentesque phasellus
+        {data?.description}
       </Typography>
       <Button
         variant="contained"
