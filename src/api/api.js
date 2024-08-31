@@ -55,3 +55,12 @@ export const upcomingCampaignsApi = async () => {
     return error;
   }
 };
+
+export const campaignsApi = async () => {
+  try {
+    const response = await axiosInstance.get("/open/get-campaigns");
+    return response?.data;
+  } catch (error) {
+    return error;
+  }
+};

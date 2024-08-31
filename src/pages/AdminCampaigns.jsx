@@ -15,13 +15,22 @@ import Request from "../components/Request";
 import ChatBox from "../components/ChatBox";
 import Campaign from "../components/Campaign";
 import UpcomingEvents from "../components/UpcomingEvents";
-import { upcomingCampaignsApi } from "../api/api";
+import { campaignsApi, upcomingCampaignsApi } from "../api/api";
 import { Menu } from "@mui/icons-material";
 
 export default function AdminCampaigns() {
   const [drawerOpen, setDrawerOpen] = useState(true);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const [campaign, setCampaign] = useState([]);
+
+  useEffect(() => {
+    campaignsApi().then((data) => {
+      console.log(data);
+
+      setCampaign(data.campaigns);
+    });
+  }, []);
 
   useEffect(() => {
     if (isMobile) {
@@ -81,7 +90,13 @@ export default function AdminCampaigns() {
                 borderRadius: "15px",
               }}
             >
-              <Campaign />
+              {campaign.map((event) => (
+                <Campaign
+                  key={event._id}
+                  title={event.title}
+                  description={event.description}
+                />
+              ))}
             </Box>
           </Grid>
           <Grid item lg={4} md={9} xs={12}>
