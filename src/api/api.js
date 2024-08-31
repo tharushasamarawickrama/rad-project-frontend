@@ -93,13 +93,14 @@ export const getMessagesApi = async (requestId) => {
   }
 };
 
-export const sendMessageApi = async (data) => {
+export const sendMessageApi = async (requestId, message) => {
   try {
-    const response = await axiosInstance.post("/user/send-message", data);
+    const response = await axiosInstance.post(
+      `/user/send-message/${requestId}`,
+      { message }
+    );
     return response?.data;
   } catch (error) {
     return error;
   }
 };
-
-

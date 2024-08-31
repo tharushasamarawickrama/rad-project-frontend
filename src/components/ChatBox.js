@@ -11,7 +11,7 @@ import {
 import { Avatar, Box } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { ReactComponent as UserAvatar } from "../assets/avatar_1.svg";
-import { getMessagesApi } from "../api/api";
+import { getMessagesApi, sendMessageApi } from "../api/api";
 
 export default function ChatBox({ requestId }) {
   const [messageList, setMessageList] = useState([]);
@@ -28,7 +28,7 @@ export default function ChatBox({ requestId }) {
       />
     ));
 
-  const onSend = (innerHtml, textContent, innerText, nodes) => {
+  const onSend = async (innerHtml, textContent, innerText, nodes) => {
     setMessageList((preVal) => [
       ...preVal,
       {
@@ -36,13 +36,29 @@ export default function ChatBox({ requestId }) {
         direction: "outgoing",
       },
     ]);
+    await sendMessageApi(requestId, textContent);
   };
 
   useEffect(() => {
-    getMessagesApi(requestId).then((res) => {
-      setMessageList(res.messages);
-    });
+    if (requestId) {
+      const intervalId = setInterval(() => {
+        getMessagesApi(requestId).then((res) => {
+          //if message list empty set it otherwise push missing messages
+          if (!messageList) {
+            setMessageList(res.messages);
+          } else {
+            const newMessages = res.messages
+              .filter((msg) => !messageList.includes(msg))
+              .concat(messageList)
+              .sort((a, b) => a.date - b.date);
+            setMessageList(newMessages);
+          }
+        });
+      }, 5000);
+      return () => clearInterval(intervalId);
+    }
   }, [requestId]);
+
   return (
     <Box
       sx={{
