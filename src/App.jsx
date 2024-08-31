@@ -20,8 +20,9 @@ export const ThemeContext = createContext();
 export const AuthContext = createContext();
 
 function App() {
+  const savedUser = JSON.parse(localStorage.getItem("user")) || null;
   const [mode, setMode] = useState("light");
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(savedUser);
 
   const changeTheme = () => {
     setMode(mode === "light" ? "dark" : "light");
@@ -73,9 +74,9 @@ function App() {
   }, [mode]);
 
   useEffect(() => {
-    const user = localStorage.getItem("user");
-    if (user) {
-      setUser(JSON.parse(user));
+    const savedUser = localStorage.getItem("user");
+    if (savedUser) {
+      setUser(JSON.parse(savedUser));
     }
   }, []);
 
@@ -133,32 +134,20 @@ function App() {
               <Route
                 path="/admin/dashboard"
                 element={
-                  user?.userType === "ADMIN" ? (
-                    <AdminDashboard />
-                  ) : (
-                    <Login />
-                  )
+                  user?.userType === "ADMIN" ? <AdminDashboard /> : <Login />
                 }
               />
               <Route
                 path="/admin/requests"
                 element={
-                  user?.userType === "ADMIN" ? (
-                    <AdminRequests />
-                  ) : (
-                    <Login />
-                  )
+                  user?.userType === "ADMIN" ? <AdminRequests /> : <Login />
                 }
               />
 
               <Route
                 path="/admin/campaigns"
                 element={
-                  user?.userType === "ADMIN" ? (
-                    <AdminCampaigns />
-                  ) : (
-                    <Login />
-                  )
+                  user?.userType === "ADMIN" ? <AdminCampaigns /> : <Login />
                 }
               />
 

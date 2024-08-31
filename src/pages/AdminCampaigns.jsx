@@ -4,10 +4,15 @@ import {
   Button,
   Grid,
   IconButton,
-  Menu,
   Toolbar,
   useMediaQuery,
   Typography,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  TextField,
+  DialogActions,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import SideBar from "../components/SideBar";
@@ -16,11 +21,35 @@ import Request from "../components/Request";
 import ChatBox from "../components/ChatBox";
 import Campaign from "../components/Campaign";
 import UpcomingEvents from "../components/UpcomingEvents";
+import {
+  campaignsApi,
+  createCampaignApi,
+  upcomingCampaignsApi,
+} from "../api/api";
+import { Menu } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 
 export default function AdminCampaigns() {
-  const [drawerOpen, setDrawerOpen] = useState(true);
+  const navigate = useNavigate();
   const theme = useTheme();
+  const [drawerOpen, setDrawerOpen] = useState(true);
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [campaign, setCampaign] = useState([]);
+
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [location, setLocation] = useState("");
+  const [date, setDate] = useState("");
+
+  useEffect(() => {
+    campaignsApi().then((data) => {
+      console.log(data);
+
+      setCampaign(data.campaigns);
+    });
+  }, []);
+
   useEffect(() => {
     if (isMobile) {
       setDrawerOpen(false);
@@ -28,9 +57,24 @@ export default function AdminCampaigns() {
       setDrawerOpen(true);
     }
   }, [isMobile]);
-  const handleNewRequest = () => {
-    alert("New Rquest caputured");
+  const handleCreateCampaign = async () => {
+    const response = await createCampaignApi({
+      title,
+      description,
+      location,
+      date,
+    });
+    handleDialogClose();
   };
+
+  const handleDialogOpen = () => {
+    setDialogOpen(true);
+  };
+
+  const handleDialogClose = () => {
+    setDialogOpen(false);
+  };
+
   return (
     <Grid container>
       <Grid item md={3} lg={2}>
@@ -55,6 +99,70 @@ export default function AdminCampaigns() {
             )}
           </Toolbar>
         </AppBar>
+        <Dialog open={dialogOpen} onClose={handleDialogClose}>
+          <DialogTitle>Create New Campaign</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Please fill out the form below to create a new campaign.
+            </DialogContentText>
+
+            <TextField
+              autoFocus
+              margin="dense"
+              id="name"
+              label="Title"
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              fullWidth
+              variant="standard"
+            />
+            <TextField
+              margin="dense"
+              id="location"
+              label="Location"
+              type="text"
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
+              fullWidth
+              variant="standard"
+            />
+            <TextField
+              margin="dense"
+              id="description"
+              label="Description"
+              type="text"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              fullWidth
+              variant="standard"
+            />
+            <TextField
+              margin="dense"
+              id="date"
+              label="Date"
+              type="date"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+              fullWidth
+              variant="standard"
+            />
+            {/* Add more form fields as needed */}
+            <DialogActions>
+              <Button onClick={handleDialogClose} color="primary">
+                Cancel
+              </Button>
+              <Button
+                variant="contained"
+                type="button"
+                color="primary"
+                onClick={handleCreateCampaign}
+              >
+                Create Campaign
+              </Button>
+            </DialogActions>
+          </DialogContent>
+        </Dialog>
         <Grid container>
           <Typography variant="h4" component="div" color="primary">
             Campaigns
@@ -62,7 +170,7 @@ export default function AdminCampaigns() {
           <Button
             variant="contained"
             color="primary"
-            onClick={handleNewRequest}
+            onClick={handleDialogOpen}
             mx={2}
           >
             Add Campaign
@@ -78,10 +186,16 @@ export default function AdminCampaigns() {
                 borderRadius: "15px",
               }}
             >
-              <Campaign />
+              {campaign.map((event) => (
+                <Campaign
+                  key={event._id}
+                  title={event.title}
+                  description={event.description}
+                />
+              ))}
             </Box>
           </Grid>
-          <Grid item lg={4} md={9}>
+          <Grid item lg={4} md={9} xs={12}>
             <UpcomingEvents />
           </Grid>
         </Grid>

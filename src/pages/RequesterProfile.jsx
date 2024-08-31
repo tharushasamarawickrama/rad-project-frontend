@@ -4,7 +4,6 @@ import {
   Button,
   Grid,
   IconButton,
-  Menu,
   Toolbar,
   useMediaQuery,
   Typography,
@@ -14,6 +13,7 @@ import SideBar from "../components/SideBar";
 import { Box } from "@mui/system";
 import Request from "../components/Request";
 import ChatBox from "../components/ChatBox";
+import { Menu } from "@mui/icons-material";
 
 export default function RequesterProfile() {
   const [drawerOpen, setDrawerOpen] = useState(true);
@@ -58,8 +58,7 @@ export default function RequesterProfile() {
             Profile
           </Typography>
         </Box>
-        <Grid container gap={1} 
-        sx={{paddingLeft: 2, paddingRight: 2}} >
+        <Grid container gap={1} sx={{ paddingLeft: 2, paddingRight: 2 }}>
           <Grid item lg={7} md={12} xs={12}>
             <Box
               sx={{
