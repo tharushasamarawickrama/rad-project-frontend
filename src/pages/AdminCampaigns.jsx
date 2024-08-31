@@ -7,6 +7,12 @@ import {
   Toolbar,
   useMediaQuery,
   Typography,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  TextField,
+  DialogActions,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import SideBar from "../components/SideBar";
@@ -17,11 +23,15 @@ import Campaign from "../components/Campaign";
 import UpcomingEvents from "../components/UpcomingEvents";
 import { campaignsApi, upcomingCampaignsApi } from "../api/api";
 import { Menu } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 
 export default function AdminCampaigns() {
-  const [drawerOpen, setDrawerOpen] = useState(true);
+  const navigate = useNavigate();
   const theme = useTheme();
+
+  const [drawerOpen, setDrawerOpen] = useState(true);
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const [dialogOpen, setDialogOpen] = useState(false);
   const [campaign, setCampaign] = useState([]);
 
   useEffect(() => {
@@ -41,6 +51,19 @@ export default function AdminCampaigns() {
   }, [isMobile]);
   const handleNewRequest = () => {
     alert("New Rquest caputured");
+  };
+
+  const handleDialogOpen = () => {
+    setDialogOpen(true);
+  };
+
+  const handleDialogClose = () => {
+    setDialogOpen(false);
+  };
+
+  const handleFormSubmit = (event) => {
+    event.preventDefault();
+    handleDialogClose();
   };
 
   return (
@@ -67,6 +90,42 @@ export default function AdminCampaigns() {
             )}
           </Toolbar>
         </AppBar>
+        <Dialog open={dialogOpen} onClose={handleDialogClose}>
+          <DialogTitle>New Request</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Please fill out the form below to create a new request.
+            </DialogContentText>
+            <form onSubmit={handleFormSubmit}>
+              <TextField
+                autoFocus
+                margin="dense"
+                id="name"
+                label="Name"
+                type="text"
+                fullWidth
+                variant="standard"
+              />
+              <TextField
+                margin="dense"
+                id="email"
+                label="Email Address"
+                type="email"
+                fullWidth
+                variant="standard"
+              />
+              {/* Add more form fields as needed */}
+              <DialogActions>
+                <Button onClick={handleDialogClose} color="primary">
+                  Cancel
+                </Button>
+                <Button type="submit" color="primary">
+                  Submit
+                </Button>
+              </DialogActions>
+            </form>
+          </DialogContent>
+        </Dialog>
         <Grid container>
           <Typography variant="h4" component="div" color="primary">
             Campaigns
@@ -74,7 +133,7 @@ export default function AdminCampaigns() {
           <Button
             variant="contained"
             color="primary"
-            onClick={handleNewRequest}
+            onClick={handleDialogOpen}
             mx={2}
           >
             Add Campaign
