@@ -196,10 +196,9 @@ function Home() {
       <Grid
         container
         sx={{
-          pt: 20,
+          py: 5,
           background: "url(/footer_background.png) no-repeat center center",
           backgroundSize: "cover",
-          height: "80vh",
         }}
       >
         <Grid
