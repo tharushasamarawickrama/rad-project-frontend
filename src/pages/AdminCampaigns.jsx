@@ -24,6 +24,9 @@ import UpcomingEvents from "../components/UpcomingEvents";
 import {
   campaignsApi,
   createCampaignApi,
+  deleteCampaignApi,
+  editCampaignApi,
+  getCampaignApi,
   upcomingCampaignsApi,
 } from "../api/api";
 import { Menu } from "@mui/icons-material";
@@ -35,12 +38,16 @@ export default function AdminCampaigns() {
   const [drawerOpen, setDrawerOpen] = useState(true);
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [deleteDialogOpen, setdeleteDialogOpen] = useState(false);
+  const [updateDialogOpen, setUpdateDialogOpen] = useState(false);
   const [campaign, setCampaign] = useState([]);
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [location, setLocation] = useState("");
   const [date, setDate] = useState("");
+  const [imgURL, setURL] = useState("");
+  const [campaignId, setCampaignId] = useState("");
 
   useEffect(() => {
     campaignsApi().then((data) => {
@@ -63,6 +70,7 @@ export default function AdminCampaigns() {
       description,
       location,
       date,
+      imgURL,
     });
     handleDialogClose();
   };
@@ -73,6 +81,45 @@ export default function AdminCampaigns() {
 
   const handleDialogClose = () => {
     setDialogOpen(false);
+  };
+
+  const handleUpdateOpen = async (id) => {
+    const res = await getCampaignApi(id);
+    setCampaignId(res.campaign._id);
+    setTitle(res.campaign?.title);
+    setDescription(res.campaign?.description);
+    setLocation(res.campaign?.location);
+    setDate(new Date(res.campaign?.date).toLocaleDateString());
+    setURL(res.campaign?.imgURL);
+
+    setUpdateDialogOpen(true);
+    setDialogOpen(true);
+  };
+
+  const handleUpdateClose = () => {
+    setUpdateDialogOpen(false);
+    setDialogOpen(false);
+  };
+
+  const handleUpdateCampaign = async () => {
+    const response = await editCampaignApi(campaignId, {
+      title,
+      description,
+      location,
+      date,
+      imgURL,
+    });
+    handleUpdateClose();
+  };
+
+  const handleDeleteDialogOpen = (id) => {
+    setdeleteDialogOpen(true);
+    setCampaignId(id);
+  };
+
+  const handleDelete = async () => {
+    const response = await deleteCampaignApi(campaignId);
+    setdeleteDialogOpen(false);
   };
 
   return (
@@ -100,10 +147,13 @@ export default function AdminCampaigns() {
           </Toolbar>
         </AppBar>
         <Dialog open={dialogOpen} onClose={handleDialogClose}>
-          <DialogTitle>Create New Campaign</DialogTitle>
+          <DialogTitle>
+            {updateDialogOpen ? "Update Campaign" : "Create New Campaign"}
+          </DialogTitle>
           <DialogContent>
             <DialogContentText>
-              Please fill out the form below to create a new campaign.
+              Please fill out the form below to
+              {updateDialogOpen ? " update campaign" : " create new campaign"}
             </DialogContentText>
 
             <TextField
@@ -147,22 +197,72 @@ export default function AdminCampaigns() {
               fullWidth
               variant="standard"
             />
+            <TextField
+              margin="dense"
+              id="imgurl"
+              label="Image URL"
+              type="url"
+              value={imgURL}
+              onChange={(e) => setURL(e.target.value)}
+              fullWidth
+              variant="standard"
+            />
             {/* Add more form fields as needed */}
             <DialogActions>
               <Button onClick={handleDialogClose} color="primary">
+                Cancel
+              </Button>
+              {updateDialogOpen ? (
+                <Button
+                  variant="contained"
+                  type="button"
+                  color="primary"
+                  onClick={handleUpdateCampaign}
+                >
+                  Update Campaign
+                </Button>
+              ) : (
+                <Button
+                  variant="contained"
+                  type="button"
+                  color="primary"
+                  onClick={handleCreateCampaign}
+                >
+                  Create Campaign
+                </Button>
+              )}
+            </DialogActions>
+          </DialogContent>
+        </Dialog>
+
+        {/* Delete Confirmation Dialog */}
+        <Dialog
+          open={deleteDialogOpen}
+          onClose={() => setdeleteDialogOpen(false)}
+        >
+          <DialogContent>
+            <DialogContentText>
+              Are you sure you want to delete this event?
+            </DialogContentText>
+            <DialogActions>
+              <Button
+                onClick={() => setdeleteDialogOpen(false)}
+                color="primary"
+              >
                 Cancel
               </Button>
               <Button
                 variant="contained"
                 type="button"
                 color="primary"
-                onClick={handleCreateCampaign}
+                onClick={handleDelete}
               >
-                Create Campaign
+                Delete
               </Button>
             </DialogActions>
           </DialogContent>
         </Dialog>
+
         <Grid container>
           <Typography variant="h4" component="div" color="primary">
             Campaigns
@@ -191,6 +291,9 @@ export default function AdminCampaigns() {
                   key={event._id}
                   title={event.title}
                   description={event.description}
+                  imgURL={event.imgURL}
+                  handleEdit={() => handleUpdateOpen(event._id)}
+                  handleDelete={() => handleDeleteDialogOpen(event._id)}
                 />
               ))}
             </Box>
