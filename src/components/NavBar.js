@@ -9,7 +9,6 @@ import {
   Typography,
   useMediaQuery,
 } from "@mui/material";
-import { ReactComponent as Logo } from "../assets/logo.svg";
 import { useTheme } from "@emotion/react";
 import { useNavigate } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -41,7 +40,7 @@ const NavBar = ({ backgroundColor }) => {
       }}
     >
       <Toolbar>
-        <Logo height={70} width={150} />
+        <img src="/logo.png" alt="logo" height={90} />
         {isMobile ? (
           <>
             <IconButton

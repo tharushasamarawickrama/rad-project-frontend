@@ -8,7 +8,6 @@ import {
 } from "@mui/material";
 import { loginApi } from "../api/api";
 import { useContext, useState } from "react";
-import { ReactComponent as Logo } from "../assets/logo.svg";
 import { NavLink, useNavigate } from "react-router-dom";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";

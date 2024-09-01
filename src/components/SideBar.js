@@ -14,7 +14,6 @@ import {
   ListItemText,
 } from "@mui/material";
 import React, { useEffect } from "react";
-import { ReactComponent as Logo } from "../assets/logo.svg";
 import { useNavigate } from "react-router-dom";
 
 export default function SideBar({
@@ -80,7 +79,7 @@ export default function SideBar({
       onClose={() => setDrawerOpen(false)}
     >
       <List>
-        <Logo height={70} width={150} />
+      <img src="/logo.png" alt="logo" height={90} />
         {/* <ListItem>
           <ListItemButton onClick={() => (window.location.href = "dashboard")}>
             <ListItemIcon>

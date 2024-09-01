@@ -14,7 +14,6 @@ import {
   Typography,
   useMediaQuery,
 } from "@mui/material";
-import { ReactComponent as Logo } from "../assets/logo.svg";
 import {
   Campaign,
   Close,
