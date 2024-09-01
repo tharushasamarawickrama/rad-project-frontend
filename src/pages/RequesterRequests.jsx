@@ -7,13 +7,19 @@ import {
   Toolbar,
   useMediaQuery,
   Typography,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  TextField,
+  DialogActions,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import SideBar from "../components/SideBar";
 import { Box } from "@mui/system";
 import Request from "../components/Request";
 import ChatBox from "../components/ChatBox";
-import { getRequestsApi } from "../api/api";
+import { createBloodRequestApi, getRequestsApi } from "../api/api";
 import { Menu } from "@mui/icons-material";
 
 export default function RequesterRequests() {
@@ -21,11 +27,29 @@ export default function RequesterRequests() {
   const [requests, setRequests] = useState([]);
   const [selectedRequest, setSelectedRequest] = useState(null);
 
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [bloodGroup, setBloodGroup] = useState("");
+  const [location, setLocation] = useState("");
+  const [description, setDescription] = useState("");
+
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
-  const handleNewRequest = () => {
-    alert("New Rquest caputured");
+  const handleDialogOpen = () => {
+    setDialogOpen(true);
+  };
+
+  const handleDialogClose = () => {
+    setDialogOpen(false);
+  };
+
+  const handleNewRequest = async () => {
+    await createBloodRequestApi({
+      bloodGroup,
+      location,
+      description,
+    });
+    setDialogOpen(false);
   };
 
   useEffect(() => {
@@ -66,6 +90,62 @@ export default function RequesterRequests() {
             )}
           </Toolbar>
         </AppBar>
+        <Dialog open={dialogOpen} onClose={handleDialogClose}>
+          <DialogTitle>New Blood Request</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Please fill out the form below to create a new blood request
+            </DialogContentText>
+
+            <TextField
+              autoFocus
+              margin="dense"
+              id="name"
+              label="Blood Group"
+              type="text"
+              value={bloodGroup}
+              onChange={(e) => setBloodGroup(e.target.value)}
+              fullWidth
+              variant="standard"
+            />
+            <TextField
+              margin="dense"
+              id="location"
+              label="Location"
+              type="text"
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
+              fullWidth
+              variant="standard"
+            />
+            <TextField
+              margin="dense"
+              id="description"
+              label="Description"
+              type="text"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              fullWidth
+              variant="standard"
+              multiline
+              rows={5}
+            />
+            <DialogActions>
+              <Button onClick={handleDialogClose} color="primary">
+                Cancel
+              </Button>
+
+              <Button
+                variant="contained"
+                type="button"
+                color="primary"
+                onClick={handleNewRequest}
+              >
+                Send Request
+              </Button>
+            </DialogActions>
+          </DialogContent>
+        </Dialog>
         <Grid container gap={1} sx={{ paddingLeft: 2, paddingRight: 2 }}>
           <Grid item lg={7} md={12} xs={12}>
             <Box
@@ -81,7 +161,7 @@ export default function RequesterRequests() {
               <Button
                 variant="contained"
                 color="primary"
-                onClick={handleNewRequest}
+                onClick={handleDialogOpen}
               >
                 New Request
               </Button>
