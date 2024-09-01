@@ -30,7 +30,6 @@ export default function Campaign({
         width: "100%",
         justifyContent: "space-between",
       }}
-      onClick={openCampaign}
     >
       <Grid item md={8} sx={{ py: 3 }}>
         <Box>
@@ -44,7 +43,7 @@ export default function Campaign({
       </Grid>
       <Grid item md={4}>
         <img src={imgURL} alt="Event Image" style={{ maxWidth: "100%" }} />
-        {user?.userType === "ADMIN" && (
+        {user?.userType === "ADMIN" ? (
           <Box sx={{ display: "flex", justifyContent: "flex-end", my: 2 }}>
             <Button>
               <DeleteOutlineRoundedIcon onClick={handleDelete} />
@@ -56,6 +55,17 @@ export default function Campaign({
               onClick={handleEdit}
             >
               Edit
+            </Button>
+          </Box>
+        ) : (
+          <Box sx={{ display: "flex", justifyContent: "flex-end", my: 2 }}>
+            <Button
+              variant="contained"
+              color="primary"
+              sx={{ borderRadius: "20px", px: 3, marginRight: 2 }}
+              onClick={openCampaign}
+            >
+              View
             </Button>
           </Box>
         )}
