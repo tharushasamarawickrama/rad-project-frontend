@@ -9,28 +9,17 @@ import {
   TypingIndicator,
 } from "@chatscope/chat-ui-kit-react";
 import { Avatar, Box } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ReactComponent as UserAvatar } from "../assets/avatar_1.svg";
+import { getMessagesApi, sendMessageApi } from "../api/api";
 
-export default function ChatBox() {
-  const [messageList, setMessageList] = useState([
-    {
-      message: "Hi",
-      direction: "incoming",
-    },
-    {
-      message: "Hello",
-      direction: "outgoing",
-    },
-    {
-      message: "how are you🤔",
-      direction: "outgoing",
-    },
-  ]);
+export default function ChatBox({ requestId }) {
+  const [messageList, setMessageList] = useState([]);
 
   const renderMessages = () =>
     messageList.map((item) => (
       <Message
+        key={item._id}
         model={{
           direction: item.direction,
           message: item.message,
@@ -39,15 +28,35 @@ export default function ChatBox() {
       />
     ));
 
-  const onSend = (innerHtml, textContent, innerText, nodes) => {
-    setMessageList((preVal) => [
-      ...preVal,
-      {
-        message: textContent,
-        direction: "outgoing",
-      },
-    ]);
+  const fetchMessages = () => {
+    getMessagesApi(requestId).then((res) => {
+      if (res.messages.length !== messageList.length) {
+        setMessageList(res.messages);
+      }
+    });
   };
+
+  const onSend = async (innerHtml, textContent, innerText, nodes) => {
+    // setMessageList((preVal) => [
+    //   ...preVal,
+    //   {
+    //     message: textContent,
+    //     direction: "outgoing",
+    //     date: Date.now(),
+    //   },
+    // ]);
+    await sendMessageApi(requestId, textContent);
+    fetchMessages();
+  };
+
+  useEffect(() => {
+    if (requestId) {
+      fetchMessages();
+      const intervalId = setInterval(fetchMessages, 2000);
+      return () => clearInterval(intervalId);
+    }
+  }, [requestId]);
+
   return (
     <Box
       sx={{
@@ -65,18 +74,21 @@ export default function ChatBox() {
       >
         <ConversationHeader>
           <ConversationHeader.Content
-            info="Active 10 mins ago"
-            userName="Kalpa Suraweera"
+            info={
+              messageList?.length > 0
+                ? "Last Seen " +
+                  new Date(
+                    messageList[messageList.length - 1].date
+                  ).toLocaleString()
+                : "Offline"
+            }
+            userName={`Request ID: ${requestId}`}
           />
           <ConversationHeader.Actions>
             <InfoButton />
           </ConversationHeader.Actions>
         </ConversationHeader>
-        <MessageList
-          typingIndicator={<TypingIndicator content="Kalpa is typing" />}
-        >
-          {renderMessages()}
-        </MessageList>
+        <MessageList>{renderMessages()}</MessageList>
         <MessageInput placeholder="Type message here" onSend={onSend} />
       </ChatContainer>
     </Box>

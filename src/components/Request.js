@@ -1,10 +1,14 @@
 import { Avatar, Box, Button, Typography } from "@mui/material";
 import React from "react";
+import { getUser } from "../services/user.service";
 
-export default function Request() {
+export default function Request({ data, setSelectedRequest }) {
   const handleRequest = () => {
-    alert("View Request");
+    setSelectedRequest(data._id);
   };
+
+  const user = getUser();
+
   return (
     <Box
       sx={{
@@ -21,29 +25,58 @@ export default function Request() {
       }}
     >
       <Box sx={{ display: "flex", alignItems: "center", mt: 2 }}>
-        <Avatar sx={{ mr: 2 }}>U</Avatar>
+        <Avatar sx={{ mr: 2 }}>{data?.userId?.email[0]}</Avatar>
         <Box>
           <Typography variant="h6" component="div" color="primary">
-            User Name
+            {data?.userId?.email}
           </Typography>
-          <Typography variant="body2">Date and Time</Typography>
+          <Typography variant="body2">
+            {new Date(data?.date).toLocaleString()}
+          </Typography>
         </Box>
       </Box>
 
       <Typography variant="body1" component="div" color="primary">
-        Lorem ipsum dolor sit amet consectetur. In facilisis auctor proin sit
-        dui quis. Lacus et donec pellentesque phasellusLorem ipsum dolor sit
-        amet consectetur. In facilisis auctor proin sit dui quis. Lacus et donec
-        pellentesque phasellus
+        {data?.description}
       </Typography>
-      <Button
-        variant="contained"
-        color="primary"
-        sx={{ borderRadius: "20px", px: 3, mt: 2, alignSelf: "flex-end" }}
-        onClick={handleRequest}
+
+      <Box
+        sx={{
+          display: "flex",
+          gap: 1,
+          justifyContent: "flex-end",
+          width: "100%",
+        }}
       >
-        View
-      </Button>
+        <Button
+          variant="contained"
+          color="primary"
+          sx={{ borderRadius: "20px", px: 3, mt: 2, alignSelf: "flex-end" }}
+          onClick={handleRequest}
+        >
+          View
+        </Button>
+        {user.userType === "ADMIN" && (
+          <Button
+            variant="contained"
+            color="primary"
+            sx={{ borderRadius: "20px", px: 3, mt: 2, alignSelf: "flex-end" }}
+            onClick={handleRequest}
+          >
+            Approve
+          </Button>
+        )}
+        {user.userType === "ADMIN" && (
+          <Button
+            variant="contained"
+            color="primary"
+            sx={{ borderRadius: "20px", px: 3, mt: 2, alignSelf: "flex-end" }}
+            onClick={handleRequest}
+          >
+            Decline
+          </Button>
+        )}
+      </Box>
     </Box>
   );
 }
