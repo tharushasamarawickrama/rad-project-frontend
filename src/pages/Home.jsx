@@ -12,7 +12,7 @@ function Home() {
         sx={{
           background: "url(/hero_background.png) no-repeat center center",
           backgroundSize: "cover",
-          height: "90vh",
+          height: "80vh",
         }}
       >
         <Grid item md={6} xs={12}>
