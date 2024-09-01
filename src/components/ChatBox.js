@@ -30,7 +30,7 @@ export default function ChatBox({ requestId }) {
 
   const fetchMessages = () => {
     getMessagesApi(requestId).then((res) => {
-      if (res.messages.length !== messageList.length) {
+      if (res.messages?.length !== messageList?.length) {
         setMessageList(res.messages);
       }
     });
@@ -58,39 +58,30 @@ export default function ChatBox({ requestId }) {
   }, [requestId]);
 
   return (
-    <Box
-      sx={{
-        backgroundColor: "white",
-        borderRadius: "15px",
+    <ChatContainer
+      style={{
+        height: "500px",
         width: "100%",
-        height: "100%",
       }}
     >
-      <ChatContainer
-        style={{
-          height: "500px",
-          width: "100%",
-        }}
-      >
-        <ConversationHeader>
-          <ConversationHeader.Content
-            info={
-              messageList?.length > 0
-                ? "Last Seen " +
-                  new Date(
-                    messageList[messageList.length - 1].date
-                  ).toLocaleString()
-                : "Offline"
-            }
-            userName={`Request ID: ${requestId}`}
-          />
-          <ConversationHeader.Actions>
-            <InfoButton />
-          </ConversationHeader.Actions>
-        </ConversationHeader>
-        <MessageList>{renderMessages()}</MessageList>
-        <MessageInput placeholder="Type message here" onSend={onSend} />
-      </ChatContainer>
-    </Box>
+      <ConversationHeader>
+        <ConversationHeader.Content
+          info={
+            messageList?.length > 0
+              ? "Last Seen " +
+                new Date(
+                  messageList[messageList?.length - 1].date
+                ).toLocaleString()
+              : "Offline"
+          }
+          userName={`Request ID: ${requestId}`}
+        />
+        <ConversationHeader.Actions>
+          <InfoButton />
+        </ConversationHeader.Actions>
+      </ConversationHeader>
+      <MessageList>{renderMessages()}</MessageList>
+      <MessageInput placeholder="Type message here" onSend={onSend} />
+    </ChatContainer>
   );
 }

@@ -167,6 +167,15 @@ export const deleteCampaignApi = async (id) => {
   }
 };
 
+export const createBloodRequestApi = async (data) => {
+  try {
+    const response = await axiosInstance.post("/user/request-blood", data);
+    return response?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
 export const joinCampaignApi = async (id, data) => {
   try {
     const response = await axiosInstance.post(
