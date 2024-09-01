@@ -97,6 +97,7 @@ function App() {
                 element={<BloodRequesterDashboard />}
               />
               <Route path="/signup" element={<SignUp />} />
+              <Route path="/campaigns" element={<Campaigns />} />
 
               {/* Blood Requester Routes */}
               <Route
