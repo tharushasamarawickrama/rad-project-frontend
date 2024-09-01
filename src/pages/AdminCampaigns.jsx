@@ -24,6 +24,7 @@ import UpcomingEvents from "../components/UpcomingEvents";
 import {
   campaignsApi,
   createCampaignApi,
+  deleteCampaignApi,
   editCampaignApi,
   getCampaignApi,
   upcomingCampaignsApi,
@@ -37,6 +38,7 @@ export default function AdminCampaigns() {
   const [drawerOpen, setDrawerOpen] = useState(true);
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [deleteDialogOpen, setdeleteDialogOpen] = useState(false);
   const [updateDialogOpen, setUpdateDialogOpen] = useState(false);
   const [campaign, setCampaign] = useState([]);
 
@@ -108,6 +110,16 @@ export default function AdminCampaigns() {
       imgURL,
     });
     handleUpdateClose();
+  };
+
+  const handleDeleteDialogOpen = (id) => {
+    setdeleteDialogOpen(true);
+    setCampaignId(id);
+  };
+
+  const handleDelete = async () => {
+    const response = await deleteCampaignApi(campaignId);
+    setdeleteDialogOpen(false);
   };
 
   return (
@@ -222,6 +234,35 @@ export default function AdminCampaigns() {
             </DialogActions>
           </DialogContent>
         </Dialog>
+
+        {/* Delete Confirmation Dialog */}
+        <Dialog
+          open={deleteDialogOpen}
+          onClose={() => setdeleteDialogOpen(false)}
+        >
+          <DialogContent>
+            <DialogContentText>
+              Are you sure you want to delete this event?
+            </DialogContentText>
+            <DialogActions>
+              <Button
+                onClick={() => setdeleteDialogOpen(false)}
+                color="primary"
+              >
+                Cancel
+              </Button>
+              <Button
+                variant="contained"
+                type="button"
+                color="primary"
+                onClick={handleDelete}
+              >
+                Delete
+              </Button>
+            </DialogActions>
+          </DialogContent>
+        </Dialog>
+
         <Grid container>
           <Typography variant="h4" component="div" color="primary">
             Campaigns
@@ -252,7 +293,7 @@ export default function AdminCampaigns() {
                   description={event.description}
                   imgURL={event.imgURL}
                   handleEdit={() => handleUpdateOpen(event._id)}
-                  handleDelete={handleUpdateCampaign}
+                  handleDelete={() => handleDeleteDialogOpen(event._id)}
                 />
               ))}
             </Box>

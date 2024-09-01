@@ -3,7 +3,13 @@ import React from "react";
 import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
 import { editCampaignApi } from "../api/api";
 
-export default function Campaign({ title, description, imgURL, handleEdit }) {
+export default function Campaign({
+  title,
+  description,
+  imgURL,
+  handleEdit,
+  handleDelete,
+}) {
   return (
     <Box
       sx={{
@@ -38,7 +44,7 @@ export default function Campaign({ title, description, imgURL, handleEdit }) {
 
       <Box sx={{ display: "flex", alignSelf: "flex-end", mt: 2 }}>
         <Button>
-          <DeleteOutlineRoundedIcon />
+          <DeleteOutlineRoundedIcon onClick={handleDelete} />
         </Button>
         <Button
           variant="contained"
