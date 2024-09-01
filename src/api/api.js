@@ -175,3 +175,16 @@ export const createBloodRequestApi = async (data) => {
     return error;
   }
 };
+
+export const joinCampaignApi = async (id, data) => {
+  try {
+    const response = await axiosInstance.post(
+      `/open/join-campaign/${id}`,
+      data
+    );
+    return response?.data;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};

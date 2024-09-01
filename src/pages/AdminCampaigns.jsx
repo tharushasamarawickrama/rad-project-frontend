@@ -186,6 +186,8 @@ export default function AdminCampaigns() {
               onChange={(e) => setDescription(e.target.value)}
               fullWidth
               variant="standard"
+              multiline
+              rows={5}
             />
             <TextField
               margin="dense"
@@ -288,6 +290,7 @@ export default function AdminCampaigns() {
             >
               {campaign.map((event) => (
                 <Campaign
+                  _id={event._id}
                   key={event._id}
                   title={event.title}
                   description={event.description}
