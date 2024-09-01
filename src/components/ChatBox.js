@@ -30,7 +30,7 @@ export default function ChatBox({ requestId }) {
 
   const fetchMessages = () => {
     getMessagesApi(requestId).then((res) => {
-      if (res.messages.length !== messageList.length) {
+      if (res.messages?.length !== messageList?.length) {
         setMessageList(res.messages);
       }
     });
@@ -70,7 +70,7 @@ export default function ChatBox({ requestId }) {
             messageList?.length > 0
               ? "Last Seen " +
                 new Date(
-                  messageList[messageList.length - 1].date
+                  messageList[messageList?.length - 1].date
                 ).toLocaleString()
               : "Offline"
           }
