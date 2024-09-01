@@ -6,12 +6,14 @@ function Home() {
   return (
     <>
       <NavBar backgroundColor="#FF5959" />
-      <Grid container px={2} 
-       sx={{
-        background: 'url(/hero_background.png) no-repeat center center',
-        backgroundSize: 'cover',
-        height:"90vh"
-      }}
+      <Grid
+        container
+        px={2}
+        sx={{
+          background: "url(/hero_background.png) no-repeat center center",
+          backgroundSize: "cover",
+          height: "90vh",
+        }}
       >
         <Grid item md={6} xs={12}>
           <Box
@@ -32,7 +34,7 @@ function Home() {
               Condimentum massa sapien est libero quisque feugiat risus nec
               vulputate. At nunc et non volutpat amet at.
             </Typography>
-            <Box sx={{ display: "flex", gap: 2, my:5 }}>
+            <Box sx={{ display: "flex", gap: 2, my: 5 }}>
               <Button variant="contained" color="primary">
                 Request Blood
               </Button>
@@ -191,22 +193,48 @@ function Home() {
           </Box>
         </Grid>
       </Grid>
-      <Grid container>
-        <Grid item md={6} xs={12}>
-          <img src="/logo.png" alt="hero" width="100%" />
+      <Grid
+        container
+        sx={{
+          pt: 20,
+          background: "url(/footer_background.png) no-repeat center center",
+          backgroundSize: "cover",
+          height: "80vh",
+        }}
+      >
+        <Grid
+          item
+          md={6}
+          xs={12}
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <img src="/logo.png" alt="footer logo" style={{ width: "250px" }} />
         </Grid>
-        <Grid item md={6} xs={12}>
+        <Grid
+          item
+          md={6}
+          xs={12}
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
           <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-            <Typography variant="h3" color="primary">
+            <Typography variant="h3" color="white">
               Our Services
             </Typography>
-            <Typography variant="h6" color="primary">
+            <Typography variant="h6" color="white">
               Request Blood
             </Typography>
-            <Typography variant="h6" color="primary">
+            <Typography variant="h6" color="white">
               Donate Blood
             </Typography>
-            <Typography variant="h6" color="primary">
+            <Typography variant="h6" color="white">
               Blood Campaigns
             </Typography>
           </Box>
