@@ -22,8 +22,8 @@ const NavBar = ({ backgroundColor }) => {
 
   const menuItems = [
     { text: "Home", path: "/" },
-    { text: "About", path: "/about" },
     { text: "Campaigns", path: "/campaigns" },
+    { text: "About", path: "/about" },
     { text: "Contact", path: "/contact" },
     { text: "Login", path: "/login" },
   ];
