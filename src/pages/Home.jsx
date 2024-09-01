@@ -6,10 +6,16 @@ function Home() {
   return (
     <>
       <NavBar />
-      <Grid container>
+      <Grid container px={2}>
         <Grid item md={6} xs={12}>
-          <Box>
-            <Typography variant="h3" color="primary">
+          <Box sx={{
+            display:"flex",
+            flexDirection:"column",
+            justifyContent:"center",
+            height:"100%",
+            gap:1
+          }}>
+            <Typography variant="h1" color="primary">
               Be a Hero
             </Typography>
             <Typography variant="p" color="primary">
@@ -22,17 +28,24 @@ function Home() {
               <Button variant="contained" color="primary">
                 Request Blood
               </Button>
-              <Button variant="outlined" color="primary">
+              <Button variant="contained" color="primary">
                 Join Campaign
               </Button>
             </Box>
           </Box>
         </Grid>
-        <Grid item md={6} xs={12}>
-          <img src="/hero.png" alt="hero" style={{ height: "60vh" }} />
+        <Grid item md={6} xs={12} sx={{
+            display:"flex",
+            flexDirection:"column",
+            justifyContent:"center",
+            alignItems:"center"
+        }}>
+          <img src="/hero.png" alt="hero" style={{ height: 500, width :400 }} />
         </Grid>
       </Grid>
-      <Grid container>
+      <Grid container
+      py={10}
+      >
         <Grid item md={6} xs={12}>
           <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
             <img src="/who.png" alt="hero" />
@@ -45,7 +58,11 @@ function Home() {
             </Typography>
           </Box>
         </Grid>
-        <Grid item md={6} xs={12}>
+        <Grid item md={6} xs={12} 
+        sx={{
+          display:"flex"
+        }}
+        >
           <img src="/donations.png" alt="hero" />
         </Grid>
       </Grid>
