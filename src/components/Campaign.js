@@ -43,32 +43,32 @@ export default function Campaign({
       </Grid>
       <Grid item md={4}>
         <img src={imgURL} alt="Event Image" style={{ maxWidth: "100%" }} />
-        {user?.userType === "ADMIN" ? (
-          <Box sx={{ display: "flex", justifyContent: "flex-end", my: 2 }}>
-            <Button>
-              <DeleteOutlineRoundedIcon onClick={handleDelete} />
-            </Button>
-            <Button
-              variant="contained"
-              color="primary"
-              sx={{ borderRadius: "20px", px: 3, marginRight: 2 }}
-              onClick={handleEdit}
-            >
-              Edit
-            </Button>
-          </Box>
-        ) : (
-          <Box sx={{ display: "flex", justifyContent: "flex-end", my: 2 }}>
-            <Button
-              variant="contained"
-              color="primary"
-              sx={{ borderRadius: "20px", px: 3, marginRight: 2 }}
-              onClick={openCampaign}
-            >
-              View
-            </Button>
-          </Box>
-        )}
+
+        <Box sx={{ display: "flex", justifyContent: "flex-end", my: 2 }}>
+          {user?.userType === "ADMIN" && (
+            <>
+              <Button>
+                <DeleteOutlineRoundedIcon onClick={handleDelete} />
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                sx={{ borderRadius: "20px", px: 3, marginRight: 2 }}
+                onClick={handleEdit}
+              >
+                Edit
+              </Button>
+            </>
+          )}
+          <Button
+            variant="contained"
+            color="primary"
+            sx={{ borderRadius: "20px", px: 3, marginRight: 2 }}
+            onClick={openCampaign}
+          >
+            View
+          </Button>
+        </Box>
       </Grid>
     </Grid>
   );
