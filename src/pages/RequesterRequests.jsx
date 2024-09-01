@@ -180,14 +180,17 @@ export default function RequesterRequests() {
                 gap: 2,
               }}
             >
-              {requests &&
+              {requests ? (
                 requests.map((request) => (
                   <Request
                     key={request._id}
                     data={request}
                     setSelectedRequest={setSelectedRequest}
                   />
-                ))}
+                ))
+              ) : (
+                <Typography>No requests found</Typography>
+              )}
             </Box>
           </Grid>
           <Grid item lg={4} md={12} xs={12}>
