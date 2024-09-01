@@ -15,6 +15,8 @@ import AdminRequests from "./pages/AdminRequests";
 import AdminCampaigns from "./pages/AdminCampaigns";
 import RequesterRequests from "./pages/RequesterRequests";
 import RequesterProfile from "./pages/RequesterProfile";
+import Campaigns from "./pages/Campaigns";
+import CampaignOverview from "./pages/CampaignOverview";
 
 export const ThemeContext = createContext();
 export const AuthContext = createContext();
@@ -98,6 +100,10 @@ function App() {
               />
               <Route path="/signup" element={<SignUp />} />
               <Route path="/campaigns" element={<Campaigns />} />
+              <Route
+                path="/campaign/:campaignId"
+                element={<CampaignOverview />}
+              />
 
               {/* Blood Requester Routes */}
               <Route

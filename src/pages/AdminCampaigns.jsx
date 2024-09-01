@@ -186,6 +186,8 @@ export default function AdminCampaigns() {
               onChange={(e) => setDescription(e.target.value)}
               fullWidth
               variant="standard"
+              multiline
+              rows={5}
             />
             <TextField
               margin="dense"
