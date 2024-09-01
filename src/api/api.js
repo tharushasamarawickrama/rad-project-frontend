@@ -65,12 +65,42 @@ export const campaignsApi = async () => {
   }
 };
 
+export const getCampaignApi = async (id) => {
+  try {
+    const response = await axiosInstance.get(`/open/get-campaign/${id}`);
+    return response?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
 export const createCampaignApi = async (data) => {
   try {
     const response = await axiosInstance.post("/admin/add-campaign", data);
     return response?.data;
   } catch (error) {
     console.log(error);
+    return error;
+  }
+};
+
+export const editCampaignApi = async (id, data) => {
+  try {
+    const response = await axiosInstance.put(
+      `/admin/edit-campaign/${id}`,
+      data
+    );
+    return response?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const deleteCampaignApi = async (id) => {
+  try {
+    const response = await axiosInstance.delete(`/admin/delete-campaign/${id}`);
+    return response?.data;
+  } catch (error) {
     return error;
   }
 };

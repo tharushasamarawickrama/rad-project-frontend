@@ -1,11 +1,9 @@
 import { Avatar, Box, Button, Typography } from "@mui/material";
 import React from "react";
 import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
+import { editCampaignApi } from "../api/api";
 
-export default function Campaign({ title, description, imgURL }) {
-  const handleEdit = () => {
-    alert("Editing Event details");
-  };
+export default function Campaign({ title, description, imgURL, handleEdit }) {
   return (
     <Box
       sx={{
