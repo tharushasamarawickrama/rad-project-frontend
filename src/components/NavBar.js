@@ -23,6 +23,8 @@ const NavBar = () => {
   const menuItems = [
     { text: "Home", path: "/" },
     { text: "About", path: "/about" },
+    { text: "Campaigns", path: "/campaigns" },
+    { text: "Request Blood", path: "/request-blood" },
     { text: "Contact", path: "/contact" },
     { text: "Login", path: "/login" },
    
