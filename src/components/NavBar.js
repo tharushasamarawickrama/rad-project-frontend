@@ -14,7 +14,7 @@ import { useTheme } from "@emotion/react";
 import { useNavigate } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
 
-const NavBar = () => {
+const NavBar = ({ backgroundColor }) => {
   const theme = useTheme();
   const navigation = useNavigate();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
@@ -26,7 +26,6 @@ const NavBar = () => {
     { text: "Campaigns", path: "/campaigns" },
     { text: "Contact", path: "/contact" },
     { text: "Login", path: "/login" },
-   
   ];
 
   const handleNavigation = (path) => {
@@ -38,7 +37,7 @@ const NavBar = () => {
       position="static"
       elevation={0}
       sx={{
-        backgroundColor: "transparent",
+        backgroundColor: backgroundColor || "transparent",
       }}
     >
       <Toolbar>
@@ -84,7 +83,9 @@ const NavBar = () => {
                 key={item.text}
                 onClick={() => handleNavigation(item.path)}
               >
-                <Typography color={theme.palette.primary.main}>
+                <Typography
+                  color={backgroundColor ? "white" : theme.palette.primary.main}
+                >
                   {item.text}
                 </Typography>
               </MenuItem>
