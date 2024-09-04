@@ -27,6 +27,7 @@ export default function RequesterProfile() {
       setDrawerOpen(true);
     }
   }, [isMobile]);
+  
 
   return (
     <Grid container>

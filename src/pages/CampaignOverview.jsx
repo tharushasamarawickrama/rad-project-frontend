@@ -26,6 +26,9 @@ export default function CampaignOverview() {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [address, setAddress] = useState("");
   const [bloodGroup, setBloodGroup] = useState("");
+  const [isJoined, setIsJoined] = useState(false);
+  
+ 
 
   useEffect(() => {
     getCampaignApi(campaignId).then((data) => {
