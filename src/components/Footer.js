@@ -4,7 +4,7 @@ import { Typography } from "@mui/material";
 const Footer = () => {
   return (
     <Typography variant="body2" color="text.secondary" align="center">
-      Team 29 &copy; {new Date().getFullYear()}
+      Team 28 &copy; {new Date().getFullYear()}
     </Typography>
   );
 };
