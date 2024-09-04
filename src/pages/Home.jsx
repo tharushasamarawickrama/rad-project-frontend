@@ -29,10 +29,11 @@ function Home() {
               Be a Hero
             </Typography>
             <Typography variant="p" color="white">
-              Lorem ipsum dolor sit amet consectetur. In facilisis auctor proin
-              sit dui quis. Lacus et donec pellentesque phasellus etiam eu vel.
-              Condimentum massa sapien est libero quisque feugiat risus nec
-              vulputate. At nunc et non volutpat amet at.
+            Welcome to our Blood Donation Platform! Save lives by joining
+            our community of donors. Easily find nearby donation centers, 
+            track your donation history, and stay updated on blood drives. 
+            Together, we can make a difference—one donation at a time. Start 
+            your life-saving journey today!
             </Typography>
             <Box sx={{ display: "flex", gap: 2, my: 5 }}>
               <Button variant="contained" color="primary">
