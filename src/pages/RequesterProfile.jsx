@@ -8,6 +8,7 @@ import {
   useMediaQuery,
   Typography,
   TextField,
+  InputLabel,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import SideBar from "../components/SideBar";
@@ -15,9 +16,11 @@ import { Box } from "@mui/system";
 import Request from "../components/Request";
 import ChatBox from "../components/ChatBox";
 import { Menu } from "@mui/icons-material";
+import { getUserData } from "../api/api";
 
 export default function RequesterProfile() {
   const [drawerOpen, setDrawerOpen] = useState(true);
+  const [userData, setUserData] = useState();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   useEffect(() => {
@@ -27,6 +30,14 @@ export default function RequesterProfile() {
       setDrawerOpen(true);
     }
   }, [isMobile]);
+
+  useEffect(() => {
+  getUserData().then(data=>{
+    console.log(data);
+    setUserData(data.user);
+  })
+  }, [])
+  
 
   return (
     <Grid container>
@@ -81,8 +92,8 @@ export default function RequesterProfile() {
                       gap: 2,
                     }}
                   >
-                    <TextField label="Name" variant="outlined" fullWidth />
-                    <TextField label="Email" variant="outlined" fullWidth />
+                    <InputLabel>Email</InputLabel>
+                    <TextField variant="outlined" fullWidth value={userData?.email} />
                     <TextField label="Phone" variant="outlined" fullWidth />
                   </Box>
                 </Grid>
