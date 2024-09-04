@@ -188,3 +188,12 @@ export const joinCampaignApi = async (id, data) => {
     return error;
   }
 };
+
+export const updateUserData = async (data) => {
+  try {
+    const response = await axiosInstance.put("/user/update-user", data);
+    return response?.data;
+  } catch (error) {
+    return error;
+  }
+};
