@@ -20,7 +20,10 @@ import { getUserData } from "../api/api";
 
 export default function RequesterProfile() {
   const [drawerOpen, setDrawerOpen] = useState(true);
-  const [userData, setUserData] = useState();
+  const [userData, setUserData] = useState({
+    email:"",
+    bloodGroup:""
+  });
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   useEffect(() => {
@@ -32,12 +35,11 @@ export default function RequesterProfile() {
   }, [isMobile]);
 
   useEffect(() => {
-  getUserData().then(data=>{
-    console.log(data);
-    setUserData(data.user);
-  })
-  }, [])
-  
+    getUserData().then((data) => {
+      console.log(data);
+      setUserData(data.user);
+    });
+  }, []);
 
   return (
     <Grid container>
@@ -93,8 +95,36 @@ export default function RequesterProfile() {
                     }}
                   >
                     <InputLabel>Email</InputLabel>
-                    <TextField variant="outlined" fullWidth value={userData?.email} />
-                    <TextField label="Phone" variant="outlined" fullWidth />
+                    <TextField
+                      variant="outlined"
+                      fullWidth
+                      value={userData?.email}
+                      onChange={(e) =>
+                        setUserData({ ...userData, email: e.target.value })
+                      }
+                    />
+                    <InputLabel>Blood Group</InputLabel>
+                    <TextField
+                      variant="outlined"
+                      fullWidth
+                      value={userData?.bloodGroup}
+                      onChange={(e) =>
+                        setUserData({ ...userData, bloodGroup: e.target.value })
+                      }
+                    />
+
+                    <InputLabel>Address</InputLabel>
+                    <TextField
+                      variant="outlined"
+                      fullWidth
+                      value={userData?.address}
+                      onChange={(e) =>
+                        setUserData({ ...userData, address: e.target.value })
+                      }
+                    />
+
+                    <InputLabel>Phone</InputLabel>
+                    <TextField  variant="outlined" fullWidth />
                   </Box>
                 </Grid>
               </Grid>
