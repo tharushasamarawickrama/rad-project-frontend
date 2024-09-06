@@ -2,6 +2,11 @@ import {
   AppBar,
   Box,
   Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   Drawer,
   Grid,
   IconButton,
@@ -10,6 +15,7 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  TextField,
   Toolbar,
   Typography,
   useMediaQuery,
@@ -28,7 +34,7 @@ import { useTheme } from "@emotion/react";
 import SideBar from "../components/SideBar";
 import UpcomingEvents from "../components/UpcomingEvents";
 import Logout from "../components/Logout";
-import { dashboardApi } from "../api/api";
+import { dashboardApi, updateDashboardApi } from "../api/api";
 import { getUser } from "../services/user.service";
 import { AuthContext } from "../App";
 
@@ -38,6 +44,12 @@ function AdminDashboard() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const [dashboardData, setDashboardData] = useState({});
+  const [updateDialogOpen, setUpdateDialogOpen] = useState(false);
+  const [aplus, setAplus] = useState(0);
+  const [bplus, setBplus] = useState(0);
+  const [oplus, setOplus] = useState(0);
+  const [ominus, setOminus] = useState(0);
+
   useEffect(() => {
     if (isMobile) {
       setDrawerOpen(false);
@@ -50,11 +62,96 @@ function AdminDashboard() {
     dashboardApi().then((data) => {
       console.log(data);
       setDashboardData(data);
+      setAplus(data.bloodData[0].stock);
+      setBplus(data.bloodData[1].stock);
+      setOplus(data.bloodData[2].stock);
+      setOminus(data.bloodData[3].stock);
     });
   }, []);
 
+  const handleUpdateDialogOpen = () => {
+    setUpdateDialogOpen(true);
+  };
+
+  const handleUpdateDialogClose = () => {
+    setUpdateDialogOpen(false);
+  };
+
+  const handleUpdateStock = async () => {
+    await updateDashboardApi({
+      bloodData: [
+        { group: "A+", stock: aplus },
+        { group: "B+", stock: bplus },
+        { group: "O+", stock: oplus },
+        { group: "O-", stock: ominus },
+      ],
+    });
+    await dashboardApi().then((data) => {
+      setDashboardData(data);
+    });
+    handleUpdateDialogClose();
+  };
+
   return (
     <Grid container>
+      <Dialog open={updateDialogOpen} onClose={handleUpdateDialogClose}>
+        <DialogTitle>Join Campaign</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Please fill out the form below to join the campaign.
+          </DialogContentText>
+          <TextField
+            margin="dense"
+            id="aplus"
+            label="A+"
+            type="number"
+            fullWidth
+            value={aplus}
+            onChange={(e) => setAplus(e.target.value)}
+          />
+          <TextField
+            margin="dense"
+            id="bplus"
+            label="B+"
+            type="number"
+            fullWidth
+            value={bplus}
+            onChange={(e) => setBplus(e.target.value)}
+          />
+          <TextField
+            margin="dense"
+            id="oplus"
+            label="O+"
+            type="number"
+            fullWidth
+            value={oplus}
+            onChange={(e) => setOplus(e.target.value)}
+          />
+          <TextField
+            margin="dense"
+            id="ominus"
+            label="O-"
+            type="number"
+            fullWidth
+            value={ominus}
+            onChange={(e) => setOminus(e.target.value)}
+          />
+          <DialogActions>
+            <Button onClick={handleUpdateDialogClose} color="primary">
+              Cancel
+            </Button>
+
+            <Button
+              variant="contained"
+              type="button"
+              color="primary"
+              onClick={handleUpdateStock}
+            >
+              Join
+            </Button>
+          </DialogActions>
+        </DialogContent>
+      </Dialog>
       <Grid item md={3} lg={2}>
         <SideBar
           drawerOpen={drawerOpen}
@@ -155,9 +252,22 @@ function AdminDashboard() {
                 </Typography>
               </Box>
             </Box>
-            <Typography variant="h5" sx={{ my: 5 }}>
-              Blood Stock Statistics
-            </Typography>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                m: 2,
+              }}
+            >
+              <Typography variant="h5">Blood Stock Statistics</Typography>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleUpdateDialogOpen}
+              >
+                Update Stock
+              </Button>
+            </Box>
             {/* Bar chart */}
             <BarChart
               series={[

@@ -188,3 +188,12 @@ export const joinCampaignApi = async (id, data) => {
     return error;
   }
 };
+
+export const updateDashboardApi = async (data) => {
+  try {
+    const response = await axiosInstance.put("/admin/update-dashboard", data);
+    return response?.data;
+  } catch (error) {
+    return error;
+  }
+};
