@@ -188,3 +188,12 @@ export const joinCampaignApi = async (id, data) => {
     return error;
   }
 };
+
+export const contactApi = async (data) => {
+  try {
+    const response = await axiosInstance.post("/open/contact", data);
+    return response?.data;
+  } catch (error) {
+    return error;
+  }
+}
