@@ -16,13 +16,13 @@ import { Box } from "@mui/system";
 import Request from "../components/Request";
 import ChatBox from "../components/ChatBox";
 import { Menu } from "@mui/icons-material";
-import { getUserData } from "../api/api";
+import { getUserData, updateUserData } from "../api/api";
 
 export default function RequesterProfile() {
   const [drawerOpen, setDrawerOpen] = useState(true);
   const [userData, setUserData] = useState({
-    email:"",
-    bloodGroup:""
+    email: "",
+    bloodGroup: "",
   });
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
@@ -36,10 +36,13 @@ export default function RequesterProfile() {
 
   useEffect(() => {
     getUserData().then((data) => {
-      console.log(data);
       setUserData(data.user);
     });
   }, []);
+
+  const handleUpdate = async () => {
+    await updateUserData(userData);
+  };
 
   return (
     <Grid container>
@@ -124,7 +127,14 @@ export default function RequesterProfile() {
                     />
 
                     <InputLabel>Phone</InputLabel>
-                    <TextField  variant="outlined" fullWidth />
+                    <TextField
+                      variant="outlined"
+                      fullWidth
+                      value={userData?.phoneNumber}
+                      onChange={(e) =>
+                        setUserData({ ...userData, phoneNumber: e.target.value })
+                      }
+                    />
                   </Box>
                 </Grid>
               </Grid>
@@ -135,7 +145,11 @@ export default function RequesterProfile() {
                   flexDirection: "row-reverse",
                 }}
               >
-                <Button variant="contained" color="primary">
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={handleUpdate}
+                >
                   Update
                 </Button>
               </Grid>

@@ -214,3 +214,12 @@ export const contactApi = async (data) => {
     return error;
   }
 }
+
+export const getRequesterDashboardData = async () => {
+  try {
+    const response = await axiosInstance.get("/user/dashboard");
+    return response?.data;
+  } catch (error) {
+    return error;
+  }
+}
