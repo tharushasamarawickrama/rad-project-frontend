@@ -14,7 +14,7 @@ import {
   Typography,
 } from "@mui/material";
 import NavBar from "../components/NavBar";
-import { getUser } from "../services/user.service";
+import { getUser, saveUser } from "../services/user.service";
 
 export default function CampaignOverview() {
   const { campaignId } = useParams();
@@ -23,7 +23,7 @@ export default function CampaignOverview() {
   const [viewDialogOpen, setViewDialogOpen] = useState(false);
   const [updateDialogOpen, setUpdateDialogOpen] = useState(false);
   const [saveDialogOpen, setSaveDialogOpen] = useState(false);
-  
+
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -31,27 +31,31 @@ export default function CampaignOverview() {
   const [bloodGroup, setBloodGroup] = useState("");
   const [user, setUser] = useState({});
   const [isJoined, setIsJoined] = useState(false);
-  
- 
 
   useEffect(() => {
     getCampaignApi(campaignId).then((data) => {
       console.log(data);
       setCampaign(data.campaign);
-    
+
       const user = getUser();
       console.log(user);
-    const storedIsJoined = localStorage.getItem(`campaign_${campaignId}_joined`);
-    if (storedIsJoined) {
-      setIsJoined(JSON.parse(storedIsJoined));
-    }
+      const storedIsJoined = localStorage.getItem(
+        `campaign_${campaignId}_joined`
+      );
+      if (storedIsJoined) {
+        setIsJoined(JSON.parse(storedIsJoined));
+        setFullName(user?.fullName);
+        setEmail(user?.email);
+        setPhoneNumber(user?.phoneNumber);
+        setAddress(user?.address);
+        setBloodGroup(user?.bloodGroup);
+      }
     });
   }, [campaignId]);
 
   const formattedDate = campaign?.date
     ? new Date(campaign.date).toLocaleDateString()
     : "";
-
 
   const handleDialogOpen = () => {
     setDialogOpen(true);
@@ -87,6 +91,13 @@ export default function CampaignOverview() {
     });
     setIsJoined(true);
     localStorage.setItem(`campaign_${campaignId}_joined`, true);
+    saveUser({
+      fullName,
+      email,
+      phoneNumber,
+      address,
+      bloodGroup,
+    });
     handleDialogClose();
   };
 
@@ -185,15 +196,18 @@ export default function CampaignOverview() {
               variant="contained"
               type="button"
               color="primary"
-              onClick={handleViewDialogClose} 
+              onClick={handleViewDialogClose}
             >
               Close
             </Button>
-            <Button 
+            <Button
               variant="contained"
               type="button"
               color="primary"
-              onClick={ () => {handleUpdateDialogOpen(); handleViewDialogClose();}}
+              onClick={() => {
+                handleUpdateDialogOpen();
+                handleViewDialogClose();
+              }}
             >
               Update
             </Button>
@@ -205,35 +219,35 @@ export default function CampaignOverview() {
         <DialogTitle>Update Your Registration Details</DialogTitle>
         <DialogContent>
           <TextField
-              margin="dense"
-              id="phoneNumber"
-              label="Phone Number"
-              type="text"
-              fullWidth
-              variant="standard"
-              value={phoneNumber}
-              onChange={(e) => setPhoneNumber(e.target.value)}
-            />
-            <TextField
-              margin="dense"
-              id="address"
-              label="Address"
-              type="text"
-              fullWidth
-              variant="standard"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-            />
-            <TextField
-              margin="dense"
-              id="bloodGroup"
-              label="Blood Group"
-              type="text"
-              fullWidth
-              variant="standard"
-              value={bloodGroup}
-              onChange={(e) => setBloodGroup(e.target.value)}
-            />
+            margin="dense"
+            id="phoneNumber"
+            label="Phone Number"
+            type="text"
+            fullWidth
+            variant="standard"
+            value={phoneNumber}
+            onChange={(e) => setPhoneNumber(e.target.value)}
+          />
+          <TextField
+            margin="dense"
+            id="address"
+            label="Address"
+            type="text"
+            fullWidth
+            variant="standard"
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
+          />
+          <TextField
+            margin="dense"
+            id="bloodGroup"
+            label="Blood Group"
+            type="text"
+            fullWidth
+            variant="standard"
+            value={bloodGroup}
+            onChange={(e) => setBloodGroup(e.target.value)}
+          />
           <DialogActions>
             <Button
               variant="contained"
@@ -323,20 +337,19 @@ export default function CampaignOverview() {
                   color="primary"
                   onClick={handleViewDialogOpen}
                   sx={{ mt: 2 }}
-                  >
-                    View
-                  </Button>
+                >
+                  View
+                </Button>
               ) : (
                 <Button
-                variant="contained"
-                color="primary"
-                onClick={handleDialogOpen}
-                sx={{ mt: 2 }}
-              >
-                Join Now
-              </Button>
-              )
-              }
+                  variant="contained"
+                  color="primary"
+                  onClick={handleDialogOpen}
+                  sx={{ mt: 2 }}
+                >
+                  Join Now
+                </Button>
+              )}
             </Box>
           </Grid>
           <Grid item lg={6} md={6}>
