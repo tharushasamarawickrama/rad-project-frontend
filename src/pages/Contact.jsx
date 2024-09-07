@@ -1,8 +1,22 @@
 import { Box, Button, Grid, TextField, Typography } from "@mui/material";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
+import { useState } from "react";
+import { contactApi } from "../api/api";
 
 function Contact() {
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const [success, setSuccess] = useState(false);
+
+  const handleContactSubmit = async () => {
+    await contactApi({ fullName, email, message });
+    setFullName("");
+    setEmail("");
+    setMessage("");
+    setSuccess(true);
+  }
   return (
     <>
       <NavBar backgroundColor="#FF5959" />
@@ -33,16 +47,19 @@ function Contact() {
               to you as soon as possible.
             </Typography>
             <Box component="form" sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 3 }}>
-              <TextField label="Your Name" variant="outlined" fullWidth />
-              <TextField label="Your Email" variant="outlined" fullWidth />
+              <TextField label="Your Name" variant="outlined" fullWidth value={fullName} onChange={(e) => setFullName(e.target.value)} />
+              <TextField label="Your Email" variant="outlined" fullWidth value={email} onChange={(e) => setEmail(e.target.value)} />
               <TextField
                 label="Your Message"
                 variant="outlined"
                 multiline
                 rows={4}
                 fullWidth
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
               />
-              <Button variant="contained" color="primary">
+              {success && <Typography color="success">Message sent successfully!</Typography>}
+              <Button variant="contained" color="primary" onClick={handleContactSubmit}>
                 Send Message
               </Button>
             </Box>
