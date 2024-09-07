@@ -223,3 +223,21 @@ export const getRequesterDashboardData = async () => {
     return error;
   }
 }
+
+export const acceptRequestApi = async (id) => {
+  try {
+    const response = await axiosInstance.put(`/admin/accept-request/${id}`);
+    return response?.data;
+  } catch (error) {
+    return error;
+  }
+}
+
+export const declineRequestApi = async (id) => {
+  try {
+    const response = await axiosInstance.put(`/admin/reject-request/${id}`);
+    return response?.data;
+  } catch (error) {
+    return error;
+  }
+}

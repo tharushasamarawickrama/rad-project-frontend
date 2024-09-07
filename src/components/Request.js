@@ -1,10 +1,19 @@
 import { Avatar, Box, Button, Typography } from "@mui/material";
 import React from "react";
 import { getUser } from "../services/user.service";
+import { acceptRequestApi, declineRequestApi } from "../api/api";
 
 export default function Request({ data, setSelectedRequest }) {
   const handleRequest = () => {
     setSelectedRequest(data._id);
+  };
+
+  const acceptRequest = async () => {
+    await acceptRequestApi(data._id);
+  };
+
+  const declineRequest = async () => {
+    await declineRequestApi(data._id);
   };
 
   const user = getUser();
@@ -61,7 +70,7 @@ export default function Request({ data, setSelectedRequest }) {
             variant="contained"
             color="primary"
             sx={{ borderRadius: "20px", px: 3, mt: 2, alignSelf: "flex-end" }}
-            onClick={handleRequest}
+            onClick={acceptRequest}
           >
             Approve
           </Button>
@@ -71,7 +80,7 @@ export default function Request({ data, setSelectedRequest }) {
             variant="contained"
             color="primary"
             sx={{ borderRadius: "20px", px: 3, mt: 2, alignSelf: "flex-end" }}
-            onClick={handleRequest}
+            onClick={declineRequest}
           >
             Decline
           </Button>
