@@ -17,6 +17,7 @@ import Request from "../components/Request";
 import ChatBox from "../components/ChatBox";
 import { Menu } from "@mui/icons-material";
 import { getUserData, updateUserData } from "../api/api";
+import Logout from "../components/Logout";
 
 export default function RequesterProfile() {
   const [drawerOpen, setDrawerOpen] = useState(true);
@@ -54,7 +55,7 @@ export default function RequesterProfile() {
           userType="REQUESTER"
         />
       </Grid>
-      <Grid item md={10} lg={10}>
+      <Grid item md={9} lg={10}>
         <AppBar
           position="static"
           sx={{ background: "transparent", my: 2 }}
@@ -66,15 +67,19 @@ export default function RequesterProfile() {
                 <Menu />
               </IconButton>
             )}
+            <Typography
+              variant="h4"
+              component="div"
+              color="primary"
+              sx={{ flexGrow: 1 }}
+            >
+              Blood Requester Profile
+            </Typography>
+            <Logout />
           </Toolbar>
         </AppBar>
-        <Box sx={{ display: "flex", mb: 2 }}>
-          <Typography variant="h4" component="div" color="primary">
-            Profile
-          </Typography>
-        </Box>
-        <Grid container gap={1} sx={{ paddingLeft: 2, paddingRight: 2 }}>
-          <Grid item lg={7} md={12} xs={12}>
+        <Grid container sx={{ paddingLeft: 2, paddingRight: 2 }}>
+          <Grid item lg={7} xs={12} md={10}>
             <Box
               sx={{
                 display: "flex",
@@ -132,7 +137,10 @@ export default function RequesterProfile() {
                       fullWidth
                       value={userData?.phoneNumber}
                       onChange={(e) =>
-                        setUserData({ ...userData, phoneNumber: e.target.value })
+                        setUserData({
+                          ...userData,
+                          phoneNumber: e.target.value,
+                        })
                       }
                     />
                   </Box>
@@ -155,6 +163,7 @@ export default function RequesterProfile() {
               </Grid>
             </Box>
           </Grid>
+          <Grid item lg={4} xs={12} md={2}></Grid>
         </Grid>
       </Grid>
     </Grid>
