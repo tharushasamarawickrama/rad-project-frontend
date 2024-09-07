@@ -8,6 +8,7 @@ import {
   useMediaQuery,
   Typography,
   TextField,
+  InputLabel,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import SideBar from "../components/SideBar";
@@ -15,9 +16,15 @@ import { Box } from "@mui/system";
 import Request from "../components/Request";
 import ChatBox from "../components/ChatBox";
 import { Menu } from "@mui/icons-material";
+import { getUserData, updateUserData } from "../api/api";
+import Logout from "../components/Logout";
 
 export default function RequesterProfile() {
   const [drawerOpen, setDrawerOpen] = useState(true);
+  const [userData, setUserData] = useState({
+    email: "",
+    bloodGroup: "",
+  });
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   useEffect(() => {
@@ -27,6 +34,16 @@ export default function RequesterProfile() {
       setDrawerOpen(true);
     }
   }, [isMobile]);
+
+  useEffect(() => {
+    getUserData().then((data) => {
+      setUserData(data.user);
+    });
+  }, []);
+
+  const handleUpdate = async () => {
+    await updateUserData(userData);
+  };
 
   return (
     <Grid container>
@@ -38,7 +55,7 @@ export default function RequesterProfile() {
           userType="REQUESTER"
         />
       </Grid>
-      <Grid item md={10} lg={10}>
+      <Grid item md={9} lg={10}>
         <AppBar
           position="static"
           sx={{ background: "transparent", my: 2 }}
@@ -50,15 +67,19 @@ export default function RequesterProfile() {
                 <Menu />
               </IconButton>
             )}
+            <Typography
+              variant="h4"
+              component="div"
+              color="primary"
+              sx={{ flexGrow: 1 }}
+            >
+              Blood Requester Profile
+            </Typography>
+            <Logout />
           </Toolbar>
         </AppBar>
-        <Box sx={{ display: "flex", mb: 2 }}>
-          <Typography variant="h4" component="div" color="primary">
-            Profile
-          </Typography>
-        </Box>
-        <Grid container gap={1} sx={{ paddingLeft: 2, paddingRight: 2 }}>
-          <Grid item lg={7} md={12} xs={12}>
+        <Grid container sx={{ paddingLeft: 2, paddingRight: 2 }}>
+          <Grid item lg={7} xs={12} md={10}>
             <Box
               sx={{
                 display: "flex",
@@ -81,9 +102,47 @@ export default function RequesterProfile() {
                       gap: 2,
                     }}
                   >
-                    <TextField label="Name" variant="outlined" fullWidth />
-                    <TextField label="Email" variant="outlined" fullWidth />
-                    <TextField label="Phone" variant="outlined" fullWidth />
+                    <InputLabel>Email</InputLabel>
+                    <TextField
+                      variant="outlined"
+                      fullWidth
+                      value={userData?.email}
+                      onChange={(e) =>
+                        setUserData({ ...userData, email: e.target.value })
+                      }
+                    />
+                    <InputLabel>Blood Group</InputLabel>
+                    <TextField
+                      variant="outlined"
+                      fullWidth
+                      value={userData?.bloodGroup}
+                      onChange={(e) =>
+                        setUserData({ ...userData, bloodGroup: e.target.value })
+                      }
+                    />
+
+                    <InputLabel>Address</InputLabel>
+                    <TextField
+                      variant="outlined"
+                      fullWidth
+                      value={userData?.address}
+                      onChange={(e) =>
+                        setUserData({ ...userData, address: e.target.value })
+                      }
+                    />
+
+                    <InputLabel>Phone</InputLabel>
+                    <TextField
+                      variant="outlined"
+                      fullWidth
+                      value={userData?.phoneNumber}
+                      onChange={(e) =>
+                        setUserData({
+                          ...userData,
+                          phoneNumber: e.target.value,
+                        })
+                      }
+                    />
                   </Box>
                 </Grid>
               </Grid>
@@ -94,12 +153,17 @@ export default function RequesterProfile() {
                   flexDirection: "row-reverse",
                 }}
               >
-                <Button variant="contained" color="primary">
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={handleUpdate}
+                >
                   Update
                 </Button>
               </Grid>
             </Box>
           </Grid>
+          <Grid item lg={4} xs={12} md={2}></Grid>
         </Grid>
       </Grid>
     </Grid>

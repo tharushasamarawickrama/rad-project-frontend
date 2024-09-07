@@ -64,7 +64,7 @@ export default function AdminRequests() {
         </AppBar>
         <Box sx={{ display: "flex", mb: 2 }}>
           <Typography variant="h4" component="div" color="primary">
-            Blood Requests
+            Pending Requests
           </Typography>
         </Box>
         <Grid container gap={1} sx={{ paddingLeft: 2, paddingRight: 2 }}>
