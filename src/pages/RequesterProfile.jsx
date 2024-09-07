@@ -8,6 +8,7 @@ import {
   useMediaQuery,
   Typography,
   TextField,
+  InputLabel,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import SideBar from "../components/SideBar";
@@ -15,9 +16,14 @@ import { Box } from "@mui/system";
 import Request from "../components/Request";
 import ChatBox from "../components/ChatBox";
 import { Menu } from "@mui/icons-material";
+import { getUserData } from "../api/api";
 
 export default function RequesterProfile() {
   const [drawerOpen, setDrawerOpen] = useState(true);
+  const [userData, setUserData] = useState({
+    email:"",
+    bloodGroup:""
+  });
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   useEffect(() => {
@@ -27,6 +33,13 @@ export default function RequesterProfile() {
       setDrawerOpen(true);
     }
   }, [isMobile]);
+
+  useEffect(() => {
+    getUserData().then((data) => {
+      console.log(data);
+      setUserData(data.user);
+    });
+  }, []);
 
   return (
     <Grid container>
@@ -81,9 +94,37 @@ export default function RequesterProfile() {
                       gap: 2,
                     }}
                   >
-                    <TextField label="Name" variant="outlined" fullWidth />
-                    <TextField label="Email" variant="outlined" fullWidth />
-                    <TextField label="Phone" variant="outlined" fullWidth />
+                    <InputLabel>Email</InputLabel>
+                    <TextField
+                      variant="outlined"
+                      fullWidth
+                      value={userData?.email}
+                      onChange={(e) =>
+                        setUserData({ ...userData, email: e.target.value })
+                      }
+                    />
+                    <InputLabel>Blood Group</InputLabel>
+                    <TextField
+                      variant="outlined"
+                      fullWidth
+                      value={userData?.bloodGroup}
+                      onChange={(e) =>
+                        setUserData({ ...userData, bloodGroup: e.target.value })
+                      }
+                    />
+
+                    <InputLabel>Address</InputLabel>
+                    <TextField
+                      variant="outlined"
+                      fullWidth
+                      value={userData?.address}
+                      onChange={(e) =>
+                        setUserData({ ...userData, address: e.target.value })
+                      }
+                    />
+
+                    <InputLabel>Phone</InputLabel>
+                    <TextField  variant="outlined" fullWidth />
                   </Box>
                 </Grid>
               </Grid>
