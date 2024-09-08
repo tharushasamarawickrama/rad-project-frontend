@@ -49,13 +49,15 @@ export default function CampaignOverview() {
   };
 
   const handleJoinCampaign = async () => {
-    await joinCampaignApi(campaignId, {
+    const response = await joinCampaignApi(campaignId, {
       fullName,
       email,
       phoneNumber,
       address,
       bloodGroup,
     });
+    console.log(response);
+
     handleDialogClose();
   };
 

@@ -82,6 +82,7 @@ function AdminDashboard() {
   };
 
   const handleUpdateDialogClose = async () => {
+    setUpdateDialogOpen(false);
     await dashboardApi().then((data) => {
       setDashboardData(data);
       setAplus(data.bloodData[0].stock);
@@ -93,7 +94,6 @@ function AdminDashboard() {
       setOplus(data.bloodData[6].stock);
       setOminus(data.bloodData[7].stock);
     });
-    setUpdateDialogOpen(false);
   };
 
   const handleUpdateStock = async () => {
@@ -108,11 +108,6 @@ function AdminDashboard() {
         { group: "O+", stock: oplus },
         { group: "O-", stock: ominus },
       ],
-    });
-    console.log(response);
-
-    await dashboardApi().then((data) => {
-      setDashboardData(data);
     });
     handleUpdateDialogClose();
   };
