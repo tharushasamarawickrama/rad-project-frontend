@@ -266,17 +266,31 @@ export default function AdminCampaigns() {
         </Dialog>
 
         <Grid container>
-          <Typography variant="h4" component="div" color="primary">
-            Campaigns
-          </Typography>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleDialogOpen}
-            mx={2}
+          <Grid
+            item
+            lg={7}
+            md={9}
+            xs={12}
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              gap: 2,
+              marginBottom: 2,
+            }}
           >
-            Add Campaign
-          </Button>
+            <Typography variant="h4" component="div" color="primary">
+              Campaigns
+            </Typography>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleDialogOpen}
+              mx={2}
+            >
+              Add Campaign
+            </Button>
+          </Grid>
         </Grid>
         <Grid container gap={1}>
           <Grid item lg={7} md={9} xs={12}>

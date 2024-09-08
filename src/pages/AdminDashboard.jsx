@@ -49,6 +49,10 @@ function AdminDashboard() {
   const [bplus, setBplus] = useState(0);
   const [oplus, setOplus] = useState(0);
   const [ominus, setOminus] = useState(0);
+  const [aminus, setAminus] = useState(0);
+  const [bminus, setBminus] = useState(0);
+  const [abplus, setAbplus] = useState(0);
+  const [abminus, setAbminus] = useState(0);
 
   useEffect(() => {
     if (isMobile) {
@@ -63,9 +67,13 @@ function AdminDashboard() {
       console.log(data);
       setDashboardData(data);
       setAplus(data.bloodData[0].stock);
-      setBplus(data.bloodData[1].stock);
-      setOplus(data.bloodData[2].stock);
-      setOminus(data.bloodData[3].stock);
+      setAminus(data.bloodData[1].stock);
+      setBplus(data.bloodData[2].stock);
+      setBminus(data.bloodData[3].stock);
+      setAbplus(data.bloodData[4].stock);
+      setAbminus(data.bloodData[5].stock);
+      setOplus(data.bloodData[6].stock);
+      setOminus(data.bloodData[7].stock);
     });
   }, []);
 
@@ -73,19 +81,36 @@ function AdminDashboard() {
     setUpdateDialogOpen(true);
   };
 
-  const handleUpdateDialogClose = () => {
+  const handleUpdateDialogClose = async () => {
+    await dashboardApi().then((data) => {
+      setDashboardData(data);
+      setAplus(data.bloodData[0].stock);
+      setAminus(data.bloodData[1].stock);
+      setBplus(data.bloodData[2].stock);
+      setBminus(data.bloodData[3].stock);
+      setAbplus(data.bloodData[4].stock);
+      setAbminus(data.bloodData[5].stock);
+      setOplus(data.bloodData[6].stock);
+      setOminus(data.bloodData[7].stock);
+    });
     setUpdateDialogOpen(false);
   };
 
   const handleUpdateStock = async () => {
-    await updateDashboardApi({
+    const response = await updateDashboardApi({
       bloodData: [
         { group: "A+", stock: aplus },
+        { group: "A-", stock: aminus },
         { group: "B+", stock: bplus },
+        { group: "B-", stock: bminus },
+        { group: "AB+", stock: abplus },
+        { group: "AB-", stock: abminus },
         { group: "O+", stock: oplus },
         { group: "O-", stock: ominus },
       ],
     });
+    console.log(response);
+
     await dashboardApi().then((data) => {
       setDashboardData(data);
     });
@@ -95,10 +120,10 @@ function AdminDashboard() {
   return (
     <Grid container>
       <Dialog open={updateDialogOpen} onClose={handleUpdateDialogClose}>
-        <DialogTitle>Join Campaign</DialogTitle>
+        <DialogTitle>Update the Blood Stock</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Please fill out the form below to join the campaign.
+            Fill out the following fields to update the blood stock
           </DialogContentText>
           <TextField
             margin="dense"
@@ -136,6 +161,42 @@ function AdminDashboard() {
             value={ominus}
             onChange={(e) => setOminus(e.target.value)}
           />
+          <TextField
+            margin="dense"
+            id="aminus"
+            label="A-"
+            type="number"
+            fullWidth
+            value={aminus}
+            onChange={(e) => setAminus(e.target.value)}
+          />
+          <TextField
+            margin="dense"
+            id="bminus"
+            label="B-"
+            type="number"
+            fullWidth
+            value={bminus}
+            onChange={(e) => setBminus(e.target.value)}
+          />
+          <TextField
+            margin="dense"
+            id="abplus"
+            label="AB+"
+            type="number"
+            fullWidth
+            value={abplus}
+            onChange={(e) => setAbplus(e.target.value)}
+          />
+          <TextField
+            margin="dense"
+            id="abminus"
+            label="AB-"
+            type="number"
+            fullWidth
+            value={abminus}
+            onChange={(e) => setAbminus(e.target.value)}
+          />
           <DialogActions>
             <Button onClick={handleUpdateDialogClose} color="primary">
               Cancel
@@ -147,7 +208,7 @@ function AdminDashboard() {
               color="primary"
               onClick={handleUpdateStock}
             >
-              Join
+              Update
             </Button>
           </DialogActions>
         </DialogContent>
@@ -268,17 +329,28 @@ function AdminDashboard() {
                 Update Stock
               </Button>
             </Box>
-            {/* Bar chart */}
             <BarChart
               series={[
                 {
-                  data: dashboardData?.bloodData
-                    ? dashboardData.bloodData.map((group) => group.stock)
-                    : [],
+                  data: [
+                    aplus,
+                    aminus,
+                    bplus,
+                    bminus,
+                    abplus,
+                    abminus,
+                    oplus,
+                    ominus,
+                  ],
                 },
               ]}
               height={290}
-              xAxis={[{ data: ["A+", "O+", "B+", "O-"], scaleType: "band" }]}
+              xAxis={[
+                {
+                  data: ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"],
+                  scaleType: "band",
+                },
+              ]}
               margin={{ top: 10, bottom: 30, left: 40, right: 10 }}
             />
           </Grid>

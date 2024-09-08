@@ -140,9 +140,14 @@ function BloodRequesterDashboard() {
               Blood Stock Statistics
             </Typography>
             <BarChart
-              series={[{ data: [15, 25, 30, 50] }]}
+              series={[{ data: [15, 25, 30, 50, 40, 60, 70, 80] }]}
               height={290}
-              xAxis={[{ data: ["A+", "O+", "B+", "O-"], scaleType: "band" }]}
+              xAxis={[
+                {
+                  data: ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"],
+                  scaleType: "band",
+                },
+              ]}
               margin={{ top: 10, bottom: 30, left: 40, right: 10 }}
             />
           </Grid>
