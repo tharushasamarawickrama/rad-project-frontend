@@ -23,6 +23,7 @@ export default function CampaignOverview() {
   const [viewDialogOpen, setViewDialogOpen] = useState(false);
   const [updateDialogOpen, setUpdateDialogOpen] = useState(false);
   const [saveDialogOpen, setSaveDialogOpen] = useState(false);
+  const [leaveDialogOpen, setLeaveDialogOpen] = useState(false);
 
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
@@ -80,6 +81,15 @@ export default function CampaignOverview() {
   };
   const handleSaveDialogOpen = () => {
     setSaveDialogOpen(true);
+  };
+  const handleSaveDialogClose = () => {
+    setSaveDialogOpen(false);
+  };
+  const handleLeaveDialogOpen = () => {
+    setLeaveDialogOpen(true);
+  };
+  const handleLeaveDialogClose = () => {
+    setLeaveDialogOpen(false);
   };
   const handleJoinCampaign = async () => {
     await joinCampaignApi(campaignId, {
@@ -185,6 +195,7 @@ export default function CampaignOverview() {
             Here are the details you provided for this campaign.
           </DialogContentText>
             <Typography variant="body1">Full Name: {fullName}</Typography>
+            {console.log(fullName)}{console.log(user)}
             <Typography variant="body1">Email: {email}</Typography>
             <Typography variant="body1">Phone Number: {phoneNumber}</Typography>
             <Typography variant="body1">Address: {address}</Typography>
@@ -330,14 +341,24 @@ export default function CampaignOverview() {
                 people have joined
               </Typography>
               {isJoined ? (
+                <>
                 <Button
                   variant="contained"
                   color="primary"
                   onClick={handleViewDialogOpen}
-                  sx={{ mt: 2 }}
+                  sx={{ mt: 2, mr: 2 }}
                 >
                   View
                 </Button>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={handleLeaveDialogOpen}
+                  sx={{ mt: 2 }}
+                >
+                  Leave
+                </Button>
+                </>
               ) : (
                 <Button
                   variant="contained"
