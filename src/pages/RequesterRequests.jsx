@@ -156,7 +156,7 @@ export default function RequesterRequests() {
               }}
             >
               <Typography variant="h4" component="div" color="primary">
-                Requests
+                All Requests
               </Typography>
               <Button
                 variant="contained"
