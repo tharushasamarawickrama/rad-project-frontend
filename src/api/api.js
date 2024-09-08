@@ -189,6 +189,14 @@ export const joinCampaignApi = async (id, data) => {
   }
 };
 
+export const updateDashboardApi = async (data) => {
+  try {
+    const response = await axiosInstance.put("/admin/update-dashboard", data);
+    return response?.data;
+  } catch (error) {
+    return error;
+  }
+};
 export const contactApi = async (data) => {
   try {
     const response = await axiosInstance.post("/open/contact", data);
@@ -196,4 +204,4 @@ export const contactApi = async (data) => {
   } catch (error) {
     return error;
   }
-}
+};
