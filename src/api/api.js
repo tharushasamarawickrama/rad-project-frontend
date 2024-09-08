@@ -206,17 +206,45 @@ export const getUserData = async () => {
     return error;
   }
 };
-export const updateDashboardApi = async (data) => {
+export const contactApi = async (data) => {
   try {
-    const response = await axiosInstance.put("/admin/update-dashboard", data);
+    const response = await axiosInstance.post("/open/contact", data);
     return response?.data;
   } catch (error) {
     return error;
   }
 };
-export const contactApi = async (data) => {
+
+export const getRequesterDashboardData = async () => {
   try {
-    const response = await axiosInstance.post("/open/contact", data);
+    const response = await axiosInstance.get("/user/dashboard");
+    return response?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const acceptRequestApi = async (id) => {
+  try {
+    const response = await axiosInstance.put(`/admin/accept-request/${id}`);
+    return response?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const declineRequestApi = async (id) => {
+  try {
+    const response = await axiosInstance.put(`/admin/reject-request/${id}`);
+    return response?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const updateDashboardApi = async (data) => {
+  try {
+    const response = await axiosInstance.put("/admin/update-dashboard", data);
     return response?.data;
   } catch (error) {
     return error;
