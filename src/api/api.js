@@ -205,3 +205,30 @@ export const contactApi = async (data) => {
     return error;
   }
 };
+
+export const getRequesterDashboardData = async () => {
+  try {
+    const response = await axiosInstance.get("/user/dashboard");
+    return response?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const acceptRequestApi = async (id) => {
+  try {
+    const response = await axiosInstance.put(`/admin/accept-request/${id}`);
+    return response?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const declineRequestApi = async (id) => {
+  try {
+    const response = await axiosInstance.put(`/admin/reject-request/${id}`);
+    return response?.data;
+  } catch (error) {
+    return error;
+  }
+};
