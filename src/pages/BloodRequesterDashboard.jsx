@@ -28,9 +28,11 @@ import { useTheme } from "@emotion/react";
 import SideBar from "../components/SideBar";
 import UpcomingEvents from "../components/UpcomingEvents";
 import Logout from "../components/Logout";
+import { getRequesterDashboardData } from "../api/api";
 
 function BloodRequesterDashboard() {
   const [drawerOpen, setDrawerOpen] = useState(true);
+  const [requestData, setRequestData] = useState([]);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   useEffect(() => {
@@ -40,6 +42,13 @@ function BloodRequesterDashboard() {
       setDrawerOpen(true);
     }
   }, [isMobile]);
+
+  useEffect(() => {
+    getRequesterDashboardData().then((data) => {
+      setRequestData(data);
+    });
+  }, []);
+
   return (
     <Grid container>
       <Grid item md={3} lg={2}>
@@ -91,9 +100,11 @@ function BloodRequesterDashboard() {
                 }}
               >
                 <Typography variant="h5" sx={{ textAlign: "center" }}>
-                  All Requests
+                  Pending
                 </Typography>
-                <Typography variant="h3">100</Typography>
+                <Typography variant="h3">
+                  {requestData.pendingRequests}
+                </Typography>
               </Box>
 
               <Box
@@ -113,7 +124,9 @@ function BloodRequesterDashboard() {
                 <Typography variant="h5" sx={{ textAlign: "center" }}>
                   Accepted
                 </Typography>
-                <Typography variant="h3">20</Typography>
+                <Typography variant="h3">
+                  {requestData.acceptedRequests}
+                </Typography>
               </Box>
 
               <Box
@@ -133,7 +146,9 @@ function BloodRequesterDashboard() {
                 <Typography variant="h5" sx={{ textAlign: "center" }}>
                   Rejected
                 </Typography>
-                <Typography variant="h3">200</Typography>
+                <Typography variant="h3">
+                  {requestData.rejectedRequests}
+                </Typography>
               </Box>
             </Box>
             <Typography variant="h5" sx={{ my: 5 }}>
