@@ -1,11 +1,12 @@
-import { useTheme } from "@emotion/react";
+import { useTheme, } from "@emotion/react";
+import { useMediaQuery } from "@mui/material";
+
 import {
   AppBar,
   Button,
   Grid,
   IconButton,
   Toolbar,
-  useMediaQuery,
   Typography,
   Dialog,
   DialogTitle,
@@ -19,7 +20,7 @@ import SideBar from "../components/SideBar";
 import { Box } from "@mui/system";
 import Request from "../components/Request";
 import ChatBox from "../components/ChatBox";
-import { createBloodRequestApi, getRequestsApi } from "../api/api";
+import { createBloodRequestApi, getRequestsApi, deleteBloodRequestApi } from "../api/api";
 import { Menu } from "@mui/icons-material";
 
 export default function RequesterRequests() {
@@ -31,6 +32,9 @@ export default function RequesterRequests() {
   const [bloodGroup, setBloodGroup] = useState("");
   const [location, setLocation] = useState("");
   const [description, setDescription] = useState("");
+
+  const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
+  const [requestToDelete, setRequestToDelete] = useState(null);
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
@@ -50,6 +54,22 @@ export default function RequesterRequests() {
       description,
     });
     setDialogOpen(false);
+  };
+
+  const openConfirmDialog = (requestId) => {
+    setRequestToDelete(requestId);
+    setConfirmDialogOpen(true);
+  };
+
+  const handleDeleteRequest = async () => {
+    try {
+      await deleteBloodRequestApi(requestToDelete);
+      setRequests(requests.filter((request) => request._id !== requestToDelete));
+      setConfirmDialogOpen(false);
+      setRequestToDelete(null);
+    } catch (error) {
+      console.error("Failed to delete request:", error);
+    }
   };
 
   useEffect(() => {
@@ -182,11 +202,19 @@ export default function RequesterRequests() {
             >
               {requests ? (
                 requests.map((request) => (
-                  <Request
-                    key={request._id}
-                    data={request}
-                    setSelectedRequest={setSelectedRequest}
-                  />
+                  <Box key={request._id}>
+                    <Request
+                      data={request}
+                      setSelectedRequest={setSelectedRequest}
+                    />
+                    <Button
+                      variant="contained"
+                      color="secondary"
+                      onClick={() => openConfirmDialog(request._id)}
+                    >
+                      Delete
+                    </Button>
+                  </Box>
                 ))
               ) : (
                 <Typography>No requests found</Typography>
@@ -197,6 +225,29 @@ export default function RequesterRequests() {
             {selectedRequest && <ChatBox requestId={selectedRequest} />}
           </Grid>
         </Grid>
+
+        {/* Confirmation Dialog */}
+        <Dialog
+          open={confirmDialogOpen}
+          onClose={() => setConfirmDialogOpen(false)}
+        >
+          <DialogTitle>Confirm Deletion</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Are you sure you want to delete this blood request?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setConfirmDialogOpen(false)}>Cancel</Button>
+            <Button
+              onClick={handleDeleteRequest}
+              color="secondary"
+              variant="contained"
+            >
+              Delete
+            </Button>
+          </DialogActions>
+        </Dialog>
       </Grid>
     </Grid>
   );
