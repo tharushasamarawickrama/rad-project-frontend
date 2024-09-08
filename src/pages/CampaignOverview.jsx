@@ -173,13 +173,11 @@ export default function CampaignOverview() {
           <DialogContentText>
             Here are the details you provided for this campaign.
           </DialogContentText>
-          <Box>
             <Typography variant="body1">Full Name: {fullName}</Typography>
             <Typography variant="body1">Email: {email}</Typography>
             <Typography variant="body1">Phone Number: {phoneNumber}</Typography>
             <Typography variant="body1">Address: {address}</Typography>
             <Typography variant="body1">Blood Group: {bloodGroup}</Typography>
-          </Box>
           <DialogActions>
             <Button
               variant="contained"
