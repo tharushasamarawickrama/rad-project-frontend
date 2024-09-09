@@ -70,9 +70,8 @@ export default function RequesterRequests() {
   const handleDeleteRequest = async () => {
     try {
       await deleteBloodRequestApi(requestToDelete);
-      setRequests(
-        requests.filter((request) => request._id !== requestToDelete)
-      );
+      const res = await getRequestsApi();
+      setRequests(res.requests);
       setConfirmDialogOpen(false);
       setRequestToDelete(null);
     } catch (error) {
