@@ -9,7 +9,7 @@ function About() {
       <Grid
         container
         sx={{
-          background: "url(/about_background.png) no-repeat center center",
+          background: "url(https://files.123freevectors.com/wp-content/original/111138-dark-red-blurred-background-vector.jpg) no-repeat center center",
           backgroundSize: "cover",
           height: "70vh",
           display: "flex",

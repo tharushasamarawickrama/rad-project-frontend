@@ -9,8 +9,18 @@ function Contact() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [success, setSuccess] = useState(false);
+  const [error, setError] = useState("");
 
   const handleContactSubmit = async () => {
+    if(!email || !fullName || !message){
+      setError("Please Fill All Fields")
+      return;
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setError("Invalid email format");
+      return;
+    }
     await contactApi({ fullName, email, message });
     setFullName("");
     setEmail("");
@@ -23,7 +33,7 @@ function Contact() {
       <Grid
         container
         sx={{
-          background: "url(/contact_background.png) no-repeat center center",
+          background: "url(https://files.123freevectors.com/wp-content/original/111138-dark-red-blurred-background-vector.jpg) no-repeat center center",
           backgroundSize: "cover",
           height: "70vh",
           display: "flex",
@@ -59,6 +69,7 @@ function Contact() {
                 onChange={(e) => setMessage(e.target.value)}
               />
               {success && <Typography color="success">Message sent successfully!</Typography>}
+              {!success && error && <Typography color="success">{error}</Typography>}
               <Button variant="contained" color="primary" onClick={handleContactSubmit}>
                 Send Message
               </Button>
