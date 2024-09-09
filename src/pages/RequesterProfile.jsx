@@ -34,6 +34,7 @@ export default function RequesterProfile() {
       setDrawerOpen(true);
     }
   }, [isMobile]);
+  
 
   useEffect(() => {
     getUserData().then((data) => {

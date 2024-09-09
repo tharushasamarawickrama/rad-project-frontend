@@ -250,3 +250,17 @@ export const updateDashboardApi = async (data) => {
     return error;
   }
 };
+
+};
+
+export const leaveCampaignApi = async (id, data) => {
+  try {
+    const response = await axiosInstance.post(
+      `/open/leave-campaign/${id}`,
+      data
+    );
+    return response?.data;
+  } catch (error) {
+    return error;
+  }
+};
