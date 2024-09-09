@@ -1,4 +1,4 @@
-import { useTheme, } from "@emotion/react";
+import { useTheme } from "@emotion/react";
 import { useMediaQuery } from "@mui/material";
 
 import {
@@ -20,7 +20,11 @@ import SideBar from "../components/SideBar";
 import { Box } from "@mui/system";
 import Request from "../components/Request";
 import ChatBox from "../components/ChatBox";
-import { createBloodRequestApi, getRequestsApi, deleteBloodRequestApi } from "../api/api";
+import {
+  createBloodRequestApi,
+  getRequestsApi,
+  deleteBloodRequestApi,
+} from "../api/api";
 import { Menu } from "@mui/icons-material";
 
 export default function RequesterRequests() {
@@ -53,6 +57,8 @@ export default function RequesterRequests() {
       location,
       description,
     });
+    const res = await getRequestsApi();
+    setRequests(res.requests);
     setDialogOpen(false);
   };
 
@@ -64,7 +70,9 @@ export default function RequesterRequests() {
   const handleDeleteRequest = async () => {
     try {
       await deleteBloodRequestApi(requestToDelete);
-      setRequests(requests.filter((request) => request._id !== requestToDelete));
+      setRequests(
+        requests.filter((request) => request._id !== requestToDelete)
+      );
       setConfirmDialogOpen(false);
       setRequestToDelete(null);
     } catch (error) {
@@ -214,19 +222,12 @@ export default function RequesterRequests() {
             >
               {requests ? (
                 requests.map((request) => (
-                  <Box key={request._id}>
-                    <Request
-                      data={request}
-                      setSelectedRequest={setSelectedRequest}
-                    />
-                    <Button
-                      variant="contained"
-                      color="secondary"
-                      onClick={() => openConfirmDialog(request._id)}
-                    >
-                      Delete
-                    </Button>
-                  </Box>
+                  <Request
+                    key={request._id}
+                    data={request}
+                    setSelectedRequest={setSelectedRequest}
+                    openConfirmDialog={openConfirmDialog}
+                  />
                 ))
               ) : (
                 <Typography>No requests found</Typography>
