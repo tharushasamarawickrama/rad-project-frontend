@@ -251,8 +251,6 @@ export const updateDashboardApi = async (data) => {
   }
 };
 
-};
-
 export const leaveCampaignApi = async (id, data) => {
   try {
     const response = await axiosInstance.post(

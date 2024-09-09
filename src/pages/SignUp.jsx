@@ -18,6 +18,8 @@ function SignUp() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [fullName, setFullName] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const { setUser } = useContext(AuthContext);
 
   const handleLogin = async () => {
@@ -71,6 +73,13 @@ function SignUp() {
               Sign Up
             </Typography>
             <TextField
+              label="Full Name"
+              type="text"
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
+            />
+
+            <TextField
               label="Email"
               type="email"
               value={email}
@@ -81,6 +90,12 @@ function SignUp() {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+            />
+            <TextField
+              label="Confirm Password"
+              type="password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
             />
             <Box
               sx={{
