@@ -3,7 +3,11 @@ import React from "react";
 import { getUser } from "../services/user.service";
 import { acceptRequestApi, declineRequestApi } from "../api/api";
 
-export default function Request({ data, setSelectedRequest }) {
+export default function Request({
+  data,
+  setSelectedRequest,
+  openConfirmDialog,
+}) {
   const handleRequest = () => {
     setSelectedRequest(data._id);
   };
@@ -65,6 +69,16 @@ export default function Request({ data, setSelectedRequest }) {
         >
           View
         </Button>
+        {user.userType === "REQUESTER" && (
+          <Button
+            variant="contained"
+            color="primary"
+            sx={{ borderRadius: "20px", px: 3, mt: 2, alignSelf: "flex-end" }}
+            onClick={() => openConfirmDialog(data._id)}
+          >
+            Delete
+          </Button>
+        )}
         {user.userType === "ADMIN" && (
           <Button
             variant="contained"
