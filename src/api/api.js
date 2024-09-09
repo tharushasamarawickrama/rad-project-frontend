@@ -224,7 +224,7 @@ export const contactApi = async (data) => {
   } catch (error) {
     return error;
   }
-}
+};
 
 export const getRequesterDashboardData = async () => {
   try {
@@ -233,7 +233,7 @@ export const getRequesterDashboardData = async () => {
   } catch (error) {
     return error;
   }
-}
+};
 
 export const acceptRequestApi = async (id) => {
   try {
@@ -242,7 +242,7 @@ export const acceptRequestApi = async (id) => {
   } catch (error) {
     return error;
   }
-}
+};
 
 export const declineRequestApi = async (id) => {
   try {
@@ -251,4 +251,27 @@ export const declineRequestApi = async (id) => {
   } catch (error) {
     return error;
   }
-}
+};
+
+export const updateDashboardApi = async (data) => {
+  try {
+    const response = await axiosInstance.put("/admin/update-dashboard", data);
+    return response?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+};
+
+export const leaveCampaignApi = async (id, data) => {
+  try {
+    const response = await axiosInstance.post(
+      `/open/leave-campaign/${id}`,
+      data
+    );
+    return response?.data;
+  } catch (error) {
+    return error;
+  }
+};

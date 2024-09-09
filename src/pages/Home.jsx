@@ -1,8 +1,19 @@
 import { Box, Button, Grid, Typography } from "@mui/material";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
+  const navigate = useNavigate();
+
+  const handleRequestBlood = () => {
+    navigate("/signup");
+  };
+
+  const handleJoinCampaign = () => {
+    navigate("/campaigns");
+  };
+
   return (
     <>
       <NavBar backgroundColor="#FF5959" />
@@ -23,23 +34,32 @@ function Home() {
               justifyContent: "center",
               height: "100%",
               gap: 1,
+              marginLeft: 10,
             }}
           >
             <Typography variant="h1" color="white">
               Be a Hero
             </Typography>
             <Typography variant="p" color="white">
-            Welcome to our Blood Donation Platform! Save lives by joining
-            our community of donors. Easily find nearby donation centers, 
-            track your donation history, and stay updated on blood drives. 
-            Together, we can make a difference—one donation at a time. Start 
-            your life-saving journey today!
+              Welcome to our Blood Donation Platform! Save lives by joining our
+              community of donors. Easily find nearby donation centers, track
+              your donation history, and stay updated on blood drives. Together,
+              we can make a difference—one donation at a time. Start your
+              life-saving journey today!
             </Typography>
             <Box sx={{ display: "flex", gap: 2, my: 5 }}>
-              <Button variant="contained" color="primary">
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() => handleRequestBlood()}
+              >
                 Request Blood
               </Button>
-              <Button variant="contained" color="primary">
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() => handleJoinCampaign()}
+              >
                 Join Campaign
               </Button>
             </Box>
@@ -62,7 +82,11 @@ function Home() {
       <Grid container py={10}>
         <Grid item md={6} xs={12}>
           <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-            <img src="/who.png" alt="who we are" style={{ width: 300 }} />
+            <img
+              src="/heroimg.png"
+              alt="who we are"
+              style={{ width: 500, height: 400, marginLeft: 100 }}
+            />
 
             <Typography variant="p" color="primary" sx={{ px: 10 }}>
               Lorem ipsum dolor sit amet consectetur. In facilisis auctor proin
@@ -121,7 +145,7 @@ function Home() {
           <img
             src="/can.png"
             alt="who can"
-            style={{ width: 300, height: 300 }}
+            style={{ width: 400, height: 400 }}
           />
         </Grid>
       </Grid>
@@ -138,7 +162,7 @@ function Home() {
           <img
             src="/how.png"
             alt="how to join"
-            style={{ width: 300, height: 300 }}
+            style={{ width: 400, height: 400 }}
           />
         </Grid>
         <Grid
@@ -185,10 +209,14 @@ function Home() {
             <Typography variant="h3" color="primary" textAlign="center">
               Join Us
             </Typography>
-            <Typography variant="h3" color="primary" textAlign="center">
+            <Typography variant="h1" color="primary" textAlign="center">
               Today
             </Typography>
-            <Button variant="contained" color="primary">
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => handleRequestBlood()}
+            >
               Register
             </Button>
           </Box>
@@ -228,13 +256,25 @@ function Home() {
             <Typography variant="h3" color="white">
               Our Services
             </Typography>
-            <Typography variant="h6" color="white">
+            <Typography
+              variant="h6"
+              color="white"
+              onClick={() => handleRequestBlood()}
+            >
               Request Blood
             </Typography>
-            <Typography variant="h6" color="white">
+            <Typography
+              variant="h6"
+              color="white"
+              onClick={() => handleJoinCampaign()}
+            >
               Donate Blood
             </Typography>
-            <Typography variant="h6" color="white">
+            <Typography
+              variant="h6"
+              color="white"
+              onClick={() => handleJoinCampaign()}
+            >
               Blood Campaigns
             </Typography>
           </Box>

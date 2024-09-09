@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { campaignsApi, getCampaignApi, joinCampaignApi } from "../api/api";
+import {
+  campaignsApi,
+  getCampaignApi,
+  joinCampaignApi,
+  leaveCampaignApi,
+} from "../api/api";
 import { useParams } from "react-router-dom";
 import {
   Box,
@@ -14,31 +19,48 @@ import {
   Typography,
 } from "@mui/material";
 import NavBar from "../components/NavBar";
-import { getUser } from "../services/user.service";
+import { getUser, saveUser } from "../services/user.service";
 
 export default function CampaignOverview() {
   const { campaignId } = useParams();
   const [campaign, setCampaign] = useState([]);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [viewDialogOpen, setViewDialogOpen] = useState(false);
+  const [updateDialogOpen, setUpdateDialogOpen] = useState(false);
+  const [leaveDialogOpen, setLeaveDialogOpen] = useState(false);
 
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [address, setAddress] = useState("");
   const [bloodGroup, setBloodGroup] = useState("");
+  const [user, setUser] = useState({});
+  const [isJoined, setIsJoined] = useState(false);
 
   useEffect(() => {
     getCampaignApi(campaignId).then((data) => {
       console.log(data);
       setCampaign(data.campaign);
+
+      const user = getUser();
+      console.log(user);
+      const storedIsJoined = localStorage.getItem(
+        `campaign_${campaignId}_joined`
+      );
+      if (storedIsJoined) {
+        setIsJoined(JSON.parse(storedIsJoined));
+        setFullName(user?.fullName);
+        setEmail(user?.email);
+        setPhoneNumber(user?.phoneNumber);
+        setAddress(user?.address);
+        setBloodGroup(user?.bloodGroup);
+      }
     });
-  }, []);
+  }, [campaignId]);
 
   const formattedDate = campaign?.date
     ? new Date(campaign.date).toLocaleDateString()
     : "";
-
-  const user = getUser();
 
   const handleDialogOpen = () => {
     setDialogOpen(true);
@@ -48,15 +70,61 @@ export default function CampaignOverview() {
     setDialogOpen(false);
   };
 
+  const handleViewDialogOpen = () => {
+    setViewDialogOpen(true);
+  };
+
+  const handleViewDialogClose = () => {
+    setViewDialogOpen(false);
+  };
+  const handleUpdateDialogOpen = () => {
+    setUpdateDialogOpen(true);
+  };
+  const handleUpdateDialogClose = () => {
+    setUpdateDialogOpen(false);
+  };
+  const handleSaveUpdates = () => {
+    saveUser({
+      _id: user._id,
+      fullName: user.fullName,
+      email: user.email,
+      phoneNumber,
+      address,
+      bloodGroup,
+    });
+    handleUpdateDialogClose();
+  };
+  const handleLeaveDialogOpen = () => {
+    setLeaveDialogOpen(true);
+  };
+  const handleLeaveDialogClose = () => {
+    setLeaveDialogOpen(false);
+  };
+  const handleLeaveCampaign = async () => {
+    localStorage.removeItem(`campaign_${campaignId}_joined`);
+    await leaveCampaignApi(campaignId, { fullName, email, phoneNumber });
+    setIsJoined(false);
+    setLeaveDialogOpen(false);
+  };
   const handleJoinCampaign = async () => {
-    await joinCampaignApi(campaignId, {
+    setIsJoined(true);
+    localStorage.setItem(`campaign_${campaignId}_joined`, true);
+    const response = await joinCampaignApi(campaignId, {
       fullName,
       email,
       phoneNumber,
       address,
       bloodGroup,
     });
-    handleDialogClose();
+    saveUser({
+      _id: response?.user?._id,
+      fullName,
+      email,
+      phoneNumber,
+      address,
+      bloodGroup,
+    });
+    setDialogOpen(false);
   };
 
   return (
@@ -110,15 +178,28 @@ export default function CampaignOverview() {
             onChange={(e) => setAddress(e.target.value)}
           />
           <TextField
+            select
             margin="dense"
             id="bloodGroup"
             label="Blood Group"
-            type="text"
             fullWidth
             variant="standard"
             value={bloodGroup}
             onChange={(e) => setBloodGroup(e.target.value)}
-          />
+            SelectProps={{
+              native: true,
+            }}
+          >
+            <option value=""></option>
+            <option value="A+">A+</option>
+            <option value="A-">A-</option>
+            <option value="B+">B+</option>
+            <option value="B-">B-</option>
+            <option value="AB+">AB+</option>
+            <option value="AB-">AB-</option>
+            <option value="O+">O+</option>
+            <option value="O-">O-</option>
+          </TextField>
           <DialogActions>
             <Button onClick={handleDialogClose} color="primary">
               Cancel
@@ -135,6 +216,123 @@ export default function CampaignOverview() {
           </DialogActions>
         </DialogContent>
       </Dialog>
+
+      <Dialog open={viewDialogOpen} onClose={handleViewDialogClose}>
+        <DialogTitle>Your Registration Details</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Here are the details you provided for this campaign.
+          </DialogContentText>
+          <Typography variant="body1">Full Name: {fullName}</Typography>
+          <Typography variant="body1">Email: {email}</Typography>
+          <Typography variant="body1">Phone Number: {phoneNumber}</Typography>
+          <Typography variant="body1">Address: {address}</Typography>
+          <Typography variant="body1">Blood Group: {bloodGroup}</Typography>
+          <DialogActions>
+            <Button
+              variant="contained"
+              type="button"
+              color="primary"
+              onClick={handleViewDialogClose}
+            >
+              Close
+            </Button>
+            <Button
+              variant="contained"
+              type="button"
+              color="primary"
+              onClick={() => {
+                handleUpdateDialogOpen();
+                handleViewDialogClose();
+              }}
+            >
+              Update
+            </Button>
+          </DialogActions>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={updateDialogOpen} onClose={handleUpdateDialogClose}>
+        <DialogTitle>Update Your Registration Details</DialogTitle>
+        <DialogContent>
+          <TextField
+            margin="dense"
+            id="phoneNumber"
+            label="Phone Number"
+            type="text"
+            fullWidth
+            variant="standard"
+            value={phoneNumber}
+            onChange={(e) => setPhoneNumber(e.target.value)}
+          />
+          <TextField
+            margin="dense"
+            id="address"
+            label="Address"
+            type="text"
+            fullWidth
+            variant="standard"
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
+          />
+          <TextField
+            margin="dense"
+            id="bloodGroup"
+            label="Blood Group"
+            type="text"
+            fullWidth
+            variant="standard"
+            value={bloodGroup}
+            onChange={(e) => setBloodGroup(e.target.value)}
+          />
+          <DialogActions>
+            <Button
+              variant="contained"
+              type="button"
+              color="primary"
+              onClick={handleSaveUpdates}
+            >
+              Save
+            </Button>
+            <Button
+              variant="contained"
+              type="button"
+              color="primary"
+              onClick={handleUpdateDialogClose}
+            >
+              Cancel
+            </Button>
+          </DialogActions>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={leaveDialogOpen} onClose={handleLeaveDialogClose}>
+        <DialogTitle>Leave Campaign</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Are you sure you want to leave this campaign?
+          </DialogContentText>
+          <DialogActions>
+            <Button
+              variant="contained"
+              type="button"
+              color="primary"
+              onClick={handleLeaveCampaign}
+            >
+              Leave
+            </Button>
+            <Button
+              variant="contained"
+              type="button"
+              color="primary"
+              onClick={handleLeaveDialogClose}
+            >
+              Cancel
+            </Button>
+          </DialogActions>
+        </DialogContent>
+      </Dialog>
+
       <Grid container sx={{ p: 5 }} gap={5}>
         <Typography variant="h4">{campaign?.title}</Typography>
         <Grid
@@ -198,20 +396,41 @@ export default function CampaignOverview() {
                 {campaign?.participants ? campaign.participants.length : 0}{" "}
                 people have joined
               </Typography>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={handleDialogOpen}
-                sx={{ mt: 2 }}
-              >
-                Join Now
-              </Button>
+              {isJoined ? (
+                <>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleViewDialogOpen}
+                    sx={{ mt: 2, mr: 2 }}
+                  >
+                    View
+                  </Button>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleLeaveDialogOpen}
+                    sx={{ mt: 2 }}
+                  >
+                    Leave
+                  </Button>
+                </>
+              ) : (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={handleDialogOpen}
+                  sx={{ mt: 2 }}
+                >
+                  Join Now
+                </Button>
+              )}
             </Box>
           </Grid>
           <Grid item lg={6} md={6}>
             <img
               src={campaign?.imgURL}
-              alt="Event Image"
+              alt="Event"
               style={{ maxWidth: "100%" }}
             />
           </Grid>

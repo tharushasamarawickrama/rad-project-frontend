@@ -45,20 +45,20 @@ export default function Campaign({
         <img src={imgURL} alt="Event Image" style={{ maxWidth: "100%" }} />
 
         <Box sx={{ display: "flex", justifyContent: "flex-end", my: 2 }}>
-          {user?.userType === "ADMIN" && (
-            <>
-              <Button>
-                <DeleteOutlineRoundedIcon onClick={handleDelete} />
-              </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                sx={{ borderRadius: "20px", px: 3, marginRight: 2 }}
-                onClick={handleEdit}
-              >
-                Edit
-              </Button>
-            </>
+          {handleDelete && (
+            <Button>
+              <DeleteOutlineRoundedIcon onClick={handleDelete} />
+            </Button>
+          )}
+          {handleEdit && (
+            <Button
+              variant="contained"
+              color="primary"
+              sx={{ borderRadius: "20px", px: 3, marginRight: 2 }}
+              onClick={handleEdit}
+            >
+              Edit
+            </Button>
           )}
           <Button
             variant="contained"
