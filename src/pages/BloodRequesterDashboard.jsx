@@ -33,6 +33,15 @@ import { getRequesterDashboardData } from "../api/api";
 function BloodRequesterDashboard() {
   const [drawerOpen, setDrawerOpen] = useState(true);
   const [requestData, setRequestData] = useState([]);
+  const [aplus, setAplus] = useState(0);
+  const [bplus, setBplus] = useState(0);
+  const [oplus, setOplus] = useState(0);
+  const [ominus, setOminus] = useState(0);
+  const [aminus, setAminus] = useState(0);
+  const [bminus, setBminus] = useState(0);
+  const [abplus, setAbplus] = useState(0);
+  const [abminus, setAbminus] = useState(0);
+
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   useEffect(() => {
@@ -45,6 +54,26 @@ function BloodRequesterDashboard() {
 
   useEffect(() => {
     getRequesterDashboardData().then((data) => {
+      console.log(data);
+
+      setAplus(data.bloodStock.find((item) => item.bloodGroup === "A+")?.stock);
+      setAminus(
+        data.bloodStock.find((item) => item.bloodGroup === "A-")?.stock
+      );
+      setBplus(data.bloodStock.find((item) => item.bloodGroup === "B+")?.stock);
+      setBminus(
+        data.bloodStock.find((item) => item.bloodGroup === "B-")?.stock
+      );
+      setOplus(data.bloodStock.find((item) => item.bloodGroup === "O+")?.stock);
+      setOminus(
+        data.bloodStock.find((item) => item.bloodGroup === "O-")?.stock
+      );
+      setAbplus(
+        data.bloodStock.find((item) => item.bloodGroup === "AB+")?.stock
+      );
+      setAbminus(
+        data.bloodStock.find((item) => item.bloodGroup === "AB-")?.stock
+      );
       setRequestData(data);
     });
   }, []);
@@ -155,7 +184,20 @@ function BloodRequesterDashboard() {
               Blood Stock Statistics
             </Typography>
             <BarChart
-              series={[{ data: [15, 25, 30, 50, 40, 60, 70, 80] }]}
+              series={[
+                {
+                  data: [
+                    aplus,
+                    aminus,
+                    bplus,
+                    bminus,
+                    abplus,
+                    abminus,
+                    oplus,
+                    ominus,
+                  ],
+                },
+              ]}
               height={290}
               xAxis={[
                 {
