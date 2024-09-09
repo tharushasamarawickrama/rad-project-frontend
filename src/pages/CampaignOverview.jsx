@@ -178,15 +178,28 @@ export default function CampaignOverview() {
             onChange={(e) => setAddress(e.target.value)}
           />
           <TextField
+            select
             margin="dense"
             id="bloodGroup"
             label="Blood Group"
-            type="text"
             fullWidth
             variant="standard"
             value={bloodGroup}
             onChange={(e) => setBloodGroup(e.target.value)}
-          />
+            SelectProps={{
+              native: true,
+            }}
+          >
+            <option value=""></option>
+            <option value="A+">A+</option>
+            <option value="A-">A-</option>
+            <option value="B+">B+</option>
+            <option value="B-">B-</option>
+            <option value="AB+">AB+</option>
+            <option value="AB-">AB-</option>
+            <option value="O+">O+</option>
+            <option value="O-">O-</option>
+          </TextField>
           <DialogActions>
             <Button onClick={handleDialogClose} color="primary">
               Cancel

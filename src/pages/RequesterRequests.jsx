@@ -98,16 +98,28 @@ export default function RequesterRequests() {
             </DialogContentText>
 
             <TextField
-              autoFocus
+              select
               margin="dense"
-              id="name"
+              id="bloodGroup"
               label="Blood Group"
-              type="text"
               value={bloodGroup}
               onChange={(e) => setBloodGroup(e.target.value)}
               fullWidth
               variant="standard"
-            />
+              SelectProps={{
+                native: true,
+              }}
+            >
+              <option value="" />
+              <option value="A+">A+</option>
+              <option value="A-">A-</option>
+              <option value="B+">B+</option>
+              <option value="B-">B-</option>
+              <option value="AB+">AB+</option>
+              <option value="AB-">AB-</option>
+              <option value="O+">O+</option>
+              <option value="O-">O-</option>
+            </TextField>
             <TextField
               margin="dense"
               id="location"
