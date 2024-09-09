@@ -72,6 +72,7 @@ function Home() {
           sx={{
             display: "flex",
             flexDirection: "column",
+            
             justifyContent: "center",
             alignItems: "center",
           }}
@@ -89,10 +90,9 @@ function Home() {
             />
 
             <Typography variant="p" color="primary" sx={{ px: 10 }}>
-              Lorem ipsum dolor sit amet consectetur. In facilisis auctor proin
-              sit dui quis. Lacus et donec pellentesque phasellus etiam eu vel.
-              Condimentum massa sapien est libero quisque feugiat risus nec
-              vulputate. At nunc et non volutpat amet at.
+            We are a dedicated community committed to saving lives through blood donations. Our mission
+             is to connect generous donors with those in need, providing a platform to request and donate blood 
+             efficiently. Together, we can help save lives and make a positive impact in the healthcare system.
             </Typography>
           </Box>
         </Grid>
@@ -116,16 +116,15 @@ function Home() {
         <Grid item md={6} xs={12}>
           <Box sx={{ display: "flex", flexDirection: "column", gap: 2, p: 10 }}>
             <Typography variant="p" color="primary">
-              Lorem ipsum dolor sit amet consectetur. In facilisis auctor proin
-              sit dui quis. Lacus et donec pellentesque phasellus etiam eu vel.
-              Condimentum massa sapien est libero quisque feugiat risus nec
-              vulputate. At nunc et non volutpat amet at.
+            Donating blood through our platform is simple and impactful. Start by registering as 
+            a donor on our website, where you'll create a profile and provide necessary information.
+             After registration, you'll be able to check your eligibility by answering a few health-related 
+             questions. If you're eligible, you can then schedule a donation appointment at one of our nearby partner centers.
             </Typography>
             <Typography variant="p" color="primary">
-              Lorem ipsum dolor sit amet consectetur. In facilisis auctor proin
-              sit dui quis. Lacus et donec pellentesque phasellus etiam eu vel.
-              Condimentum massa sapien est libero quisque feugiat risus nec
-              vulputate. At nunc et non volutpat amet at.
+            On the day of your donation, you’ll undergo a quick health screening to ensure you’re
+             fit to donate. After donating, you'll be provided with refreshments and a brief recovery period. Your contribution will be tracked,
+              and you’ll receive notifications when your blood has been used to save lives.
             </Typography>
           </Box>
         </Grid>
@@ -177,10 +176,10 @@ function Home() {
           }}
         >
           <Typography variant="p" color="primary">
-            Lorem ipsum dolor sit amet consectetur. In facilisis auctor proin
-            sit dui quis. Lacus et donec pellentesque phasellus etiam eu vel.
-            Condimentum massa sapien est libero quisque feugiat risus nec
-            vulputate. At nunc et non volutpat amet at.
+          Once registered, you'll be guided through the donation process, 
+          including pre-donation screening and scheduling an appointment. After
+           donating, you’ll receive updates on how your blood is used to help others.
+            Each step is designed to ensure a safe and effective donation experience.
           </Typography>
         </Grid>
       </Grid>
