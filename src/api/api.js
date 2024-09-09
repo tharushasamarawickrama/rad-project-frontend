@@ -242,6 +242,17 @@ export const declineRequestApi = async (id) => {
   }
 };
 
+export const updateDashboardApi = async (data) => {
+  try {
+    const response = await axiosInstance.put("/admin/update-dashboard", data);
+    return response?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+};
+
 export const leaveCampaignApi = async (id, data) => {
   try {
     const response = await axiosInstance.post(
