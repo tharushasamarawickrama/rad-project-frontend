@@ -105,6 +105,8 @@ export default function CampaignOverview() {
     await leaveCampaignApi(campaignId, { fullName, email, phoneNumber });
     setIsJoined(false);
     setLeaveDialogOpen(false);
+    const res = await getCampaignApi(campaignId);
+    setCampaign(res.campaign);
   };
   const handleJoinCampaign = async () => {
     setIsJoined(true);
@@ -124,6 +126,8 @@ export default function CampaignOverview() {
       address,
       bloodGroup,
     });
+    const res = await getCampaignApi(campaignId);
+    setCampaign(res.campaign);
     setDialogOpen(false);
   };
 
