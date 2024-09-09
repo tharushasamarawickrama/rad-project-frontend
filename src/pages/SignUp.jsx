@@ -18,19 +18,45 @@ function SignUp() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [fullName, setFullName] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const { setUser } = useContext(AuthContext);
+  const [error, setError] = useState("");
 
-  const handleLogin = async () => {
-    const response = await signUpApi({ email, password });
-    if (!response?.user) return;
-    saveUser(response.user);
-    setUser(response.user);
-    if (response.user?.userType === "ADMIN") {
-      navigate("/admin/dashboard");
-    } else if (response.user?.userType === "REQUESTER") {
-      navigate("/requester/dashboard");
-    } else {
-      navigate("/campaigns");
+  const handleSignup = async () => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setError("Invalid email format");
+    }
+    if (!(password.length >= 8)) {
+      console.log(password.length);
+
+      setError("Password should be atleast 8 characters long");
+    }
+    if (password !== confirmPassword) {
+      setError("Password and Confirm Password should be same");
+    }
+
+    if (
+      emailRegex.test(email) &&
+      password.length >= 8 &&
+      password === confirmPassword
+    ) {
+      const response = await signUpApi({ fullName, email, password });
+      if (response?.response?.status) {
+        setError(response.response.data.message);
+      }
+
+      if (!response?.user) return;
+      saveUser(response.user);
+      setUser(response.user);
+      if (response.user?.userType === "ADMIN") {
+        navigate("/admin/dashboard");
+      } else if (response.user?.userType === "REQUESTER") {
+        navigate("/requester/dashboard");
+      } else {
+        navigate("/campaigns");
+      }
     }
   };
   return (
@@ -71,6 +97,13 @@ function SignUp() {
               Sign Up
             </Typography>
             <TextField
+              label="Full Name"
+              type="text"
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
+            />
+
+            <TextField
               label="Email"
               type="email"
               value={email}
@@ -82,6 +115,12 @@ function SignUp() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
+            <TextField
+              label="Confirm Password"
+              type="password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
             <Box
               sx={{
                 display: "flex",
@@ -90,7 +129,14 @@ function SignUp() {
                 mt: 3,
               }}
             >
-              <Button variant="contained" color="primary" onClick={handleLogin}>
+              <Typography variant="body2" color="error">
+                {error}
+              </Typography>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleSignup}
+              >
                 SignUp
               </Button>
               <Typography variant="body2">Already have an account?</Typography>
