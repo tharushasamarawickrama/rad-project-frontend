@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { campaignsApi, getCampaignApi, joinCampaignApi } from "../api/api";
+import {
+  campaignsApi,
+  getCampaignApi,
+  joinCampaignApi,
+  leaveCampaignApi,
+} from "../api/api";
 import { useParams } from "react-router-dom";
 import {
   Box,
@@ -22,7 +27,6 @@ export default function CampaignOverview() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [viewDialogOpen, setViewDialogOpen] = useState(false);
   const [updateDialogOpen, setUpdateDialogOpen] = useState(false);
-  const [saveDialogOpen, setSaveDialogOpen] = useState(false);
   const [leaveDialogOpen, setLeaveDialogOpen] = useState(false);
 
   const [fullName, setFullName] = useState("");
@@ -79,11 +83,16 @@ export default function CampaignOverview() {
   const handleUpdateDialogClose = () => {
     setUpdateDialogOpen(false);
   };
-  const handleSaveDialogOpen = () => {
-    setSaveDialogOpen(true);
-  };
-  const handleSaveDialogClose = () => {
-    setSaveDialogOpen(false);
+  const handleSaveUpdates = () => {
+    saveUser({
+      _id: user._id,
+      fullName: user.fullName,
+      email: user.email,
+      phoneNumber,
+      address,
+      bloodGroup,
+    });
+    handleUpdateDialogClose();
   };
   const handleLeaveDialogOpen = () => {
     setLeaveDialogOpen(true);
@@ -91,24 +100,31 @@ export default function CampaignOverview() {
   const handleLeaveDialogClose = () => {
     setLeaveDialogOpen(false);
   };
+  const handleLeaveCampaign = async () => {
+    localStorage.removeItem(`campaign_${campaignId}_joined`);
+    await leaveCampaignApi(campaignId, { fullName, email, phoneNumber });
+    setIsJoined(false);
+    setLeaveDialogOpen(false);
+  };
   const handleJoinCampaign = async () => {
-    await joinCampaignApi(campaignId, {
-      fullName,
-      email,
-      phoneNumber,
-      address,
-      bloodGroup,
-    });
     setIsJoined(true);
     localStorage.setItem(`campaign_${campaignId}_joined`, true);
-    saveUser({
+    const response = await joinCampaignApi(campaignId, {
       fullName,
       email,
       phoneNumber,
       address,
       bloodGroup,
     });
-    handleDialogClose();
+    saveUser({
+      _id: response?.user?._id,
+      fullName,
+      email,
+      phoneNumber,
+      address,
+      bloodGroup,
+    });
+    setDialogOpen(false);
   };
 
   return (
@@ -194,12 +210,11 @@ export default function CampaignOverview() {
           <DialogContentText>
             Here are the details you provided for this campaign.
           </DialogContentText>
-            <Typography variant="body1">Full Name: {fullName}</Typography>
-            {console.log(fullName)}{console.log(user)}
-            <Typography variant="body1">Email: {email}</Typography>
-            <Typography variant="body1">Phone Number: {phoneNumber}</Typography>
-            <Typography variant="body1">Address: {address}</Typography>
-            <Typography variant="body1">Blood Group: {bloodGroup}</Typography>
+          <Typography variant="body1">Full Name: {fullName}</Typography>
+          <Typography variant="body1">Email: {email}</Typography>
+          <Typography variant="body1">Phone Number: {phoneNumber}</Typography>
+          <Typography variant="body1">Address: {address}</Typography>
+          <Typography variant="body1">Blood Group: {bloodGroup}</Typography>
           <DialogActions>
             <Button
               variant="contained"
@@ -262,7 +277,7 @@ export default function CampaignOverview() {
               variant="contained"
               type="button"
               color="primary"
-              onClick={handleSaveDialogOpen}
+              onClick={handleSaveUpdates}
             >
               Save
             </Button>
@@ -277,6 +292,34 @@ export default function CampaignOverview() {
           </DialogActions>
         </DialogContent>
       </Dialog>
+
+      <Dialog open={leaveDialogOpen} onClose={handleLeaveDialogClose}>
+        <DialogTitle>Leave Campaign</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Are you sure you want to leave this campaign?
+          </DialogContentText>
+          <DialogActions>
+            <Button
+              variant="contained"
+              type="button"
+              color="primary"
+              onClick={handleLeaveCampaign}
+            >
+              Leave
+            </Button>
+            <Button
+              variant="contained"
+              type="button"
+              color="primary"
+              onClick={handleLeaveDialogClose}
+            >
+              Cancel
+            </Button>
+          </DialogActions>
+        </DialogContent>
+      </Dialog>
+
       <Grid container sx={{ p: 5 }} gap={5}>
         <Typography variant="h4">{campaign?.title}</Typography>
         <Grid
@@ -342,22 +385,22 @@ export default function CampaignOverview() {
               </Typography>
               {isJoined ? (
                 <>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={handleViewDialogOpen}
-                  sx={{ mt: 2, mr: 2 }}
-                >
-                  View
-                </Button>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={handleLeaveDialogOpen}
-                  sx={{ mt: 2 }}
-                >
-                  Leave
-                </Button>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleViewDialogOpen}
+                    sx={{ mt: 2, mr: 2 }}
+                  >
+                    View
+                  </Button>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleLeaveDialogOpen}
+                    sx={{ mt: 2 }}
+                  >
+                    Leave
+                  </Button>
                 </>
               ) : (
                 <Button
@@ -374,7 +417,7 @@ export default function CampaignOverview() {
           <Grid item lg={6} md={6}>
             <img
               src={campaign?.imgURL}
-              alt="Event Image"
+              alt="Event"
               style={{ maxWidth: "100%" }}
             />
           </Grid>
