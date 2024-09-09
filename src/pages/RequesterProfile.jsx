@@ -113,13 +113,27 @@ export default function RequesterProfile() {
                     />
                     <InputLabel>Blood Group</InputLabel>
                     <TextField
+                      select
                       variant="outlined"
                       fullWidth
                       value={userData?.bloodGroup}
                       onChange={(e) =>
                         setUserData({ ...userData, bloodGroup: e.target.value })
                       }
-                    />
+                      SelectProps={{
+                        native: true,
+                      }}
+                    >
+                      <option value="">Select Blood Group</option>
+                      <option value="A+">A+</option>
+                      <option value="A-">A-</option>
+                      <option value="B+">B+</option>
+                      <option value="B-">B-</option>
+                      <option value="AB+">AB+</option>
+                      <option value="AB-">AB-</option>
+                      <option value="O+">O+</option>
+                      <option value="O-">O-</option>
+                    </TextField>
 
                     <InputLabel>Address</InputLabel>
                     <TextField
