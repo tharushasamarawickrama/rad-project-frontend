@@ -9,6 +9,12 @@ import {
   Typography,
   TextField,
   InputLabel,
+  CircularProgress,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  DialogContentText,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import SideBar from "../components/SideBar";
@@ -25,6 +31,8 @@ export default function RequesterProfile() {
     email: "",
     bloodGroup: "",
   });
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   useEffect(() => {
@@ -43,6 +51,16 @@ export default function RequesterProfile() {
 
   const handleUpdate = async () => {
     await updateUserData(userData);
+    setLoading(true);
+
+    setTimeout(() => {
+      setLoading(false);
+      setDialogOpen(true);
+    }, 2000);
+  };
+
+  const handleClose = () => {
+    setDialogOpen(false);
   };
 
   return (
@@ -171,10 +189,24 @@ export default function RequesterProfile() {
                   variant="contained"
                   color="primary"
                   onClick={handleUpdate}
+                  disabled={loading}
                 >
-                  Update
+                  {loading ? <CircularProgress size={24} /> : "Update"}
                 </Button>
               </Grid>
+              <Dialog open={dialogOpen} onClose={handleClose}>
+                <DialogTitle>{"Update Successful"}</DialogTitle>
+                <DialogContent>
+                  <DialogContentText>
+                    Your chnages has been updated successfully
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={handleClose} color="primary">
+                    OK
+                  </Button>
+                </DialogActions>
+              </Dialog>
             </Box>
           </Grid>
           <Grid item lg={4} xs={12} md={2}></Grid>
